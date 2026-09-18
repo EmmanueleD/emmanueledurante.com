@@ -14,7 +14,7 @@ const hasProfile = Boolean(
   site.profile.statement.trim() || site.profile.note.trim(),
 );
 const hasContact = Boolean(
-  site.contact.title.trim() || site.contact.note.trim(),
+  site.contact.title.trim() || site.contact.note.trim() || site.contact.email.trim(),
 );
 
 const sectionVisibility: Record<string, boolean> = {
@@ -83,8 +83,8 @@ const visibleSectionCount = 1 + [hasServices, hasProfile, hasContact].filter(Boo
     </section>
 
     <ServicesSection
-      eyebrow="Services"
-      title="Focused expertise, applied with care."
+      eyebrow={site.servicesSection.eyebrow}
+      title={site.servicesSection.title}
       services={site.services}
       accent={site.presentation.accents.serviceItem}
     />
@@ -121,7 +121,18 @@ const visibleSectionCount = 1 + [hasServices, hasProfile, hasContact].filter(Boo
             <Eyebrow>{site.contact.eyebrow}</Eyebrow>
           </div>
           {site.contact.title && <h2 id="contact-title">{site.contact.title}</h2>}
-          {site.contact.note && <p>{site.contact.note}</p>}
+          <div class="contact__details">
+            {site.contact.note && <p>{site.contact.note}</p>}
+            {site.contact.email && (
+              <TextLink
+                class="contact__email"
+                href={`mailto:${site.contact.email}`}
+                ariaLabel={`Email ${site.name}`}
+              >
+                {site.contact.email}
+              </TextLink>
+            )}
+          </div>
         </div>
       </section>
     )}
