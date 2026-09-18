@@ -37,6 +37,11 @@ export const site = {
 
   projects: [],
 
+  servicesSection: {
+    eyebrow: 'Services',
+    title: 'Focused expertise, applied with care.',
+  },
+
   services: [
     {
       index: '01',
@@ -71,5 +76,6 @@ export const site = {
     title: 'Have something to build or improve?',
     note:
       'I’m available for selected freelance projects, collaborations and frontend development work.',
+    email: 'hello@emmanueledurante.com',
   },
 } as const;

@@ -1,0 +1,72 @@
+---
+import Eyebrow from '../components/Eyebrow.astro';
+import TextLink from '../components/TextLink.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found — Emmanuele Durante"
+  description="The requested page could not be found."
+  noindex
+>
+  <main id="main-content" class="not-found shell">
+    <div>
+      <Eyebrow>Error 404</Eyebrow>
+      <h1>Page not found.</h1>
+    </div>
+
+    <div class="not-found__action">
+      <p>The page you requested does not exist or may have moved.</p>
+      <TextLink href="/">Return to the homepage</TextLink>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    align-content: space-between;
+    min-height: 100svh;
+    gap: var(--space-8);
+    padding-block: var(--space-7);
+  }
+
+  h1 {
+    max-width: 10ch;
+    margin-top: var(--space-3);
+    font-size: var(--type-display);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+  }
+
+  .not-found__action {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+    max-width: 30rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .not-found__action :global(.text-link) {
+    color: var(--color-text);
+  }
+
+  @media (min-width: 48rem) {
+    .not-found {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--space-4);
+      padding-block: var(--space-8);
+    }
+
+    .not-found > div:first-child {
+      grid-column: 1 / 9;
+    }
+
+    .not-found__action {
+      grid-column: 8 / 12;
+      align-self: end;
+    }
+  }
+</style>
