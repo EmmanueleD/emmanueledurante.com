@@ -1,0 +1,21 @@
+{
+  "name": "emmanueledurante-com",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "\"$npm_node_execpath\" ./node_modules/astro/bin/astro.mjs dev",
+    "build": "\"$npm_node_execpath\" ./node_modules/astro/bin/astro.mjs build",
+    "preview": "\"$npm_node_execpath\" ./node_modules/astro/bin/astro.mjs preview",
+    "check": "\"$npm_node_execpath\" ./node_modules/astro/bin/astro.mjs check",
+    "astro": "\"$npm_node_execpath\" ./node_modules/astro/bin/astro.mjs"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "astro": "^7.3.3",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@fontsource-variable/instrument-sans": "^5.3.0"
+  }
+}

@@ -1,0 +1,54 @@
+---
+import SectionHeading from './SectionHeading.astro';
+
+interface Service {
+  readonly index: string;
+  readonly title: string;
+  readonly detail: string;
+}
+
+type AccentMode = 'none' | 'interaction' | 'always';
+type AccentTarget = 'index' | 'title' | 'background';
+
+interface AccentConfig {
+  readonly mode: AccentMode;
+  readonly targets: readonly AccentTarget[];
+}
+
+interface Props {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  services: readonly Service[];
+  accent?: AccentConfig;
+}
+
+const {
+  id = 'services',
+  eyebrow,
+  title,
+  services,
+  accent = { mode: 'none', targets: [] },
+} = Astro.props;
+const titleId = `${id}-title`;
+---
+
+{services.length > 0 && (
+  <section class="services shell" id={id} aria-labelledby={titleId}>
+    <SectionHeading eyebrow={eyebrow} title={title} titleId={titleId} />
+
+    <ol class="service-list">
+      {services.map((service) => (
+        <li
+          class="service-item"
+          data-accent-mode={accent.mode}
+          data-accent-targets={accent.targets.join(' ')}
+        >
+          <span class="service-item__index">{service.index}</span>
+          <h3>{service.title}</h3>
+          <p>{service.detail}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+)}

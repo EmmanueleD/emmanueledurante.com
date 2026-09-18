@@ -1,0 +1,18 @@
+# dependencies
+node_modules/
+
+# Astro build output
+.astro/
+dist/
+
+# environment files
+.env
+.env.*
+!.env.example
+
+# local agent metadata
+.atl/
+
+# editor and OS files
+.DS_Store
+*.swp

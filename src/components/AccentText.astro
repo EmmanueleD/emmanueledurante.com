@@ -1,0 +1,16 @@
+---
+interface AccentSegment {
+  readonly text: string;
+  readonly accent?: boolean;
+}
+
+interface Props {
+  segments: readonly AccentSegment[];
+}
+
+const { segments } = Astro.props;
+---
+
+{segments.map((segment) =>
+  segment.accent ? <span class="accent-text">{segment.text}</span> : segment.text
+)}

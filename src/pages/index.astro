@@ -1,0 +1,134 @@
+---
+import { Image } from 'astro:assets';
+import profilePortrait from '../assets/emmanuele-durante.png';
+import AccentText from '../components/AccentText.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import TextLink from '../components/TextLink.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+const currentYear = new Date().getFullYear();
+const hasServices = site.services.length > 0;
+const hasProfile = Boolean(
+  site.profile.statement.trim() || site.profile.note.trim(),
+);
+const hasContact = Boolean(
+  site.contact.title.trim() || site.contact.note.trim(),
+);
+
+const sectionVisibility: Record<string, boolean> = {
+  '#services': hasServices,
+  '#profile': hasProfile,
+  '#contact': hasContact,
+};
+
+const visibleNavigation = site.navigation.filter(
+  (item) => sectionVisibility[item.href] ?? true,
+);
+const firstSection = visibleNavigation[0];
+const visibleSectionCount = 1 + [hasServices, hasProfile, hasContact].filter(Boolean).length;
+---
+
+<BaseLayout title={site.title} description={site.description}>
+  <header class="site-header shell">
+    <a class="wordmark" href="#top" aria-label={`${site.name}, home`}>
+      <span class="wordmark__mark" aria-hidden="true"></span>
+      {site.name}
+    </a>
+
+    {visibleNavigation.length > 0 && (
+      <nav aria-label="Primary navigation">
+        <ul class="site-nav">
+          {visibleNavigation.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    )}
+  </header>
+
+  <main id="main-content">
+    <section class="hero shell" id="top" aria-labelledby="hero-title">
+      <div class="hero__heading">
+        <Eyebrow>{site.hero.eyebrow}</Eyebrow>
+        <h1 id="hero-title"><AccentText segments={site.hero.title} /></h1>
+      </div>
+
+      <figure class="hero__portrait">
+        <Image
+          src={profilePortrait}
+          alt="Portrait of Emmanuele Durante"
+          width={480}
+          height={600}
+          widths={[240, 360, 480]}
+          sizes="(min-width: 48rem) 15rem, 52vw"
+          format="webp"
+          quality={85}
+        />
+      </figure>
+
+      <div class="hero__intro">
+        <p>{site.hero.introduction}</p>
+        {firstSection && (
+          <TextLink href={firstSection.href}>
+            Explore {firstSection.label.toLowerCase()}
+          </TextLink>
+        )}
+      </div>
+
+      <p class="hero__index" aria-hidden="true">
+        01 — {String(visibleSectionCount).padStart(2, '0')}
+      </p>
+    </section>
+
+    <ServicesSection
+      eyebrow="Services"
+      title="Focused expertise, applied with care."
+      services={site.services}
+      accent={site.presentation.accents.serviceItem}
+    />
+
+    {hasProfile && (
+      <section
+        class="profile shell"
+        id="profile"
+        aria-labelledby={site.profile.statement ? 'profile-title' : undefined}
+        aria-label={site.profile.statement ? undefined : site.profile.eyebrow}
+      >
+        <Eyebrow>{site.profile.eyebrow}</Eyebrow>
+        <div class="profile__content">
+          {site.profile.statement && (
+            <h2 id="profile-title">{site.profile.statement}</h2>
+          )}
+          {site.profile.note && <p>{site.profile.note}</p>}
+        </div>
+      </section>
+    )}
+
+    {hasContact && (
+      <section
+        class="contact"
+        id="contact"
+        aria-labelledby={site.contact.title ? 'contact-title' : undefined}
+        aria-label={site.contact.title ? undefined : site.contact.eyebrow}
+      >
+        <div class="contact__inner shell">
+          <div class="contact__heading">
+            {site.presentation.accents.contactRule && (
+              <span class="contact__accent-rule" aria-hidden="true"></span>
+            )}
+            <Eyebrow>{site.contact.eyebrow}</Eyebrow>
+          </div>
+          {site.contact.title && <h2 id="contact-title">{site.contact.title}</h2>}
+          {site.contact.note && <p>{site.contact.note}</p>}
+        </div>
+      </section>
+    )}
+  </main>
+
+  <footer class="site-footer shell">
+    <p>© {currentYear} {site.name}</p>
+    <TextLink href="#top">Back to top</TextLink>
+  </footer>
+</BaseLayout>

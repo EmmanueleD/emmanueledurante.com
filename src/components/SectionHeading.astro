@@ -1,0 +1,16 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  titleId: string;
+}
+
+const { eyebrow, title, titleId } = Astro.props;
+---
+
+<div class="section-heading">
+  <Eyebrow>{eyebrow}</Eyebrow>
+  <h2 id={titleId}>{title}</h2>
+</div>

@@ -1,0 +1,235 @@
+---
+import AccentText from '../../components/AccentText.astro';
+import ActionLink from '../../components/ActionLink.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ServicesSection from '../../components/ServicesSection.astro';
+import TextLink from '../../components/TextLink.astro';
+import { site } from '../../data/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { page: 'components' } }] : [];
+}
+
+const colors = [
+  { name: 'Background', token: '--color-bg', value: '#081a2c' },
+  { name: 'Background deep', token: '--color-bg-deep', value: '#04111e' },
+  { name: 'Surface', token: '--color-surface', value: '#102a43' },
+  { name: 'Text', token: '--color-text', value: '#f4f1ea' },
+  { name: 'Text muted', token: '--color-text-muted', value: '#a7adb4' },
+  { name: 'Accent', token: '--color-accent', value: '#ff641e' },
+] as const;
+
+const accentTitle = [
+  { text: 'Accent only what ' },
+  { text: 'matters.', accent: true },
+] as const;
+---
+
+<BaseLayout
+  title="Component gallery — Emmanuele Durante"
+  description="Development-only component and design-token gallery."
+>
+  <header class="gallery-header shell">
+    <div>
+      <Eyebrow>Development only</Eyebrow>
+      <h1>Component gallery</h1>
+    </div>
+    <TextLink href="/">Return to website</TextLink>
+  </header>
+
+  <main id="main-content" class="gallery-main">
+    <section class="gallery-section shell" aria-labelledby="colors-title">
+      <SectionHeading
+        eyebrow="Foundations"
+        title="Color system"
+        titleId="colors-title"
+      />
+      <ul class="swatch-grid">
+        {colors.map((color) => (
+          <li>
+            <span
+              class="swatch"
+              style={`--gallery-swatch: ${color.value}`}
+              aria-hidden="true"
+            ></span>
+            <strong>{color.name}</strong>
+            <code>{color.token}</code>
+            <span>{color.value}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="gallery-section shell" aria-labelledby="type-title">
+      <SectionHeading
+        eyebrow="Foundations"
+        title="Typography and accent"
+        titleId="type-title"
+      />
+      <div class="type-samples">
+        <p class="type-display"><AccentText segments={accentTitle} /></p>
+        <p class="type-heading">Clear structure before decoration.</p>
+        <p class="type-body">
+          Body copy remains quiet, readable and subordinate to the main message.
+        </p>
+        <Eyebrow>Caption and eyebrow</Eyebrow>
+      </div>
+    </section>
+
+    <section class="gallery-section shell" aria-labelledby="actions-title">
+      <SectionHeading
+        eyebrow="Primitives"
+        title="Links and actions"
+        titleId="actions-title"
+      />
+      <div class="gallery-actions">
+        <TextLink href="#actions-title">Text link</TextLink>
+        <ActionLink href="#actions-title">Primary action</ActionLink>
+        <ActionLink href="#actions-title" variant="accent">Accent action</ActionLink>
+        <ActionLink href="#actions-title" variant="quiet">Quiet action</ActionLink>
+      </div>
+    </section>
+
+    <ServicesSection
+      id="services-interaction"
+      eyebrow="Composition"
+      title="Services · index, title and background on interaction"
+      services={site.services}
+      accent={{ mode: 'interaction', targets: ['index', 'title', 'background'] }}
+    />
+
+    <ServicesSection
+      id="services-background"
+      eyebrow="Composition"
+      title="Services · background only on interaction"
+      services={site.services.slice(0, 2)}
+      accent={{ mode: 'interaction', targets: ['background'] }}
+    />
+
+    <ServicesSection
+      id="services-always"
+      eyebrow="Composition"
+      title="Services · persistent text and background"
+      services={site.services.slice(0, 2)}
+      accent={{ mode: 'always', targets: ['index', 'title', 'background'] }}
+    />
+
+    <section class="gallery-section shell" aria-labelledby="empty-title">
+      <SectionHeading
+        eyebrow="Composition"
+        title="Empty-state contract"
+        titleId="empty-title"
+      />
+      <ServicesSection
+        id="services-empty"
+        eyebrow="Hidden"
+        title="This section must not render"
+        services={[]}
+      />
+      <p class="empty-proof">
+        The Services component emitted no section because its collection was empty.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .gallery-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding-block: var(--space-7);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .gallery-header h1 {
+    max-width: 10ch;
+    margin-top: var(--space-3);
+    font-size: clamp(var(--type-heading-small), 7vw, var(--type-heading));
+    font-weight: 500;
+    line-height: 1.05;
+  }
+
+  .gallery-main {
+    padding-bottom: var(--space-9);
+  }
+
+  .gallery-section {
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-4);
+  }
+
+  .swatch-grid li {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--type-caption);
+  }
+
+  .swatch {
+    display: block;
+    aspect-ratio: 3 / 2;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--gallery-swatch);
+  }
+
+  .swatch-grid strong {
+    color: var(--color-text);
+    font-size: var(--type-body);
+    font-weight: 500;
+  }
+
+  .swatch-grid code {
+    color: var(--color-text-muted);
+  }
+
+  .type-samples {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .type-display {
+    max-width: 11ch;
+    font-size: var(--type-display);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+  }
+
+  .type-heading {
+    max-width: 16ch;
+    font-size: var(--type-heading-small);
+    line-height: 1.15;
+  }
+
+  .type-body,
+  .empty-proof {
+    max-width: 36rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .gallery-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .empty-proof {
+    padding: var(--space-4);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+  }
+</style>
