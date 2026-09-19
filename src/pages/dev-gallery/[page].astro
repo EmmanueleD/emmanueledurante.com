@@ -95,7 +95,7 @@ const accentTitle = [
     <ServicesSection
       id="services-interaction"
       eyebrow="Composition"
-      title="Services · index, title and background on interaction"
+      title="Service mini-cards · interactive accent treatment"
       services={site.services}
       accent={{ mode: 'interaction', targets: ['index', 'title', 'background'] }}
     />
@@ -115,6 +115,19 @@ const accentTitle = [
       services={site.services.slice(0, 2)}
       accent={{ mode: 'always', targets: ['index', 'title', 'background'] }}
     />
+
+    <section class="gallery-section shell" aria-labelledby="badges-title">
+      <SectionHeading
+        eyebrow="Composition"
+        title="Technology badges"
+        titleId="badges-title"
+      />
+      <ul class="technology-list" aria-label="Technology badge examples">
+        {site.expertise.technologies.map((technology) => (
+          <li>{technology}</li>
+        ))}
+      </ul>
+    </section>
 
     <section class="gallery-section shell" aria-labelledby="empty-title">
       <SectionHeading

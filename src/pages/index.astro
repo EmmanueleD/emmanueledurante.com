@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import profilePortrait from '../assets/emmanuele-durante.png';
 import AccentText from '../components/AccentText.astro';
+import ActionLink from '../components/ActionLink.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Eyebrow from '../components/Eyebrow.astro';
 import ServicesSection from '../components/ServicesSection.astro';
@@ -11,6 +12,7 @@ import { site } from '../data/site';
 
 const currentYear = new Date().getFullYear();
 const hasServices = site.services.length > 0;
+const hasExpertise = site.expertise.technologies.length > 0;
 const hasProfile = Boolean(
   site.profile.statement.trim() || site.profile.note.trim(),
 );
@@ -20,6 +22,7 @@ const hasContact = Boolean(
 
 const sectionVisibility: Record<string, boolean> = {
   '#services': hasServices,
+  '#expertise': hasExpertise,
   '#profile': hasProfile,
   '#contact': hasContact,
 };
@@ -27,8 +30,12 @@ const sectionVisibility: Record<string, boolean> = {
 const visibleNavigation = site.navigation.filter(
   (item) => sectionVisibility[item.href] ?? true,
 );
-const firstSection = visibleNavigation[0];
-const visibleSectionCount = 1 + [hasServices, hasProfile, hasContact].filter(Boolean).length;
+const visibleSectionCount = 1 + [
+  hasServices,
+  hasExpertise,
+  hasProfile,
+  hasContact,
+].filter(Boolean).length;
 ---
 
 <BaseLayout title={site.title} description={site.description}>
@@ -71,11 +78,7 @@ const visibleSectionCount = 1 + [hasServices, hasProfile, hasContact].filter(Boo
 
       <div class="hero__intro">
         <p>{site.hero.introduction}</p>
-        {firstSection && (
-          <TextLink href={firstSection.href}>
-            Explore {firstSection.label.toLowerCase()}
-          </TextLink>
-        )}
+        <ActionLink href="#contact" variant="accent">Start a project</ActionLink>
       </div>
 
       <p class="hero__index" aria-hidden="true">
@@ -89,6 +92,25 @@ const visibleSectionCount = 1 + [hasServices, hasProfile, hasContact].filter(Boo
       services={site.services}
       accent={site.presentation.accents.serviceItem}
     />
+
+    {hasExpertise && (
+      <section
+        class="expertise shell"
+        id="expertise"
+        aria-labelledby="expertise-title"
+      >
+        <Eyebrow>{site.expertise.eyebrow}</Eyebrow>
+        <div class="expertise__content">
+          <h2 id="expertise-title">{site.expertise.title}</h2>
+          <p>{site.expertise.introduction}</p>
+          <ul class="technology-list" aria-label="Prioritized technologies">
+            {site.expertise.technologies.map((technology) => (
+              <li>{technology}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
 
     {hasProfile && (
       <section

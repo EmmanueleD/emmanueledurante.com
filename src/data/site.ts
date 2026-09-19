@@ -1,8 +1,8 @@
 export const site = {
   name: 'Emmanuele Durante',
-  title: 'Emmanuele Durante — Frontend Developer',
+  title: 'Emmanuele Durante — Frontend Developer for Shopify & E-commerce',
   description:
-    'Frontend developer working across e-commerce, Shopify and modern JavaScript.',
+    'Emmanuele Durante is a Frontend Developer building and improving Shopify and e-commerce storefronts with modern JavaScript.',
 
   presentation: {
     accents: {
@@ -20,62 +20,76 @@ export const site = {
 
   navigation: [
     { label: 'Services', href: '#services' },
-    { label: 'Profile', href: '#profile' },
+    { label: 'Expertise', href: '#expertise' },
+    { label: 'About', href: '#profile' },
     { label: 'Contact', href: '#contact' },
   ],
 
   hero: {
-    eyebrow: 'Frontend Developer · E-commerce · Shopify',
+    eyebrow: 'Frontend Developer · Shopify · E-commerce',
     title: [
-      { text: 'I build and ' },
-      { text: 'improve', accent: true },
-      { text: ' digital storefronts.' },
+      { text: 'Shopify & frontend', accent: true },
+      { text: ' development for e-commerce teams.' },
     ],
     introduction:
-      'I help businesses and teams build, improve and maintain e-commerce experiences across Shopify and modern web stacks.',
+      'I build, improve and maintain e-commerce storefronts using Shopify and modern JavaScript.',
   },
 
   projects: [],
 
   servicesSection: {
     eyebrow: 'Services',
-    title: 'Focused expertise, applied with care.',
+    title: 'What I can help with',
   },
 
   services: [
     {
       index: '01',
-      title: 'Shopify development',
+      title: 'Shopify storefronts',
       detail:
-        'Theme development, custom sections, storefront customisation and ongoing improvements.',
+        'Theme development, custom sections, integrations and focused storefront improvements.',
     },
     {
       index: '02',
       title: 'Frontend implementation',
       detail:
-        'Responsive interfaces built from designs using modern JavaScript, Vue, React and component-based workflows.',
+        'Responsive, maintainable interfaces built from designs with modern JavaScript.',
     },
     {
       index: '03',
-      title: 'E-commerce support',
+      title: 'E-commerce improvements',
       detail:
-        'Frontend fixes, integrations, maintenance and improvements for existing online stores.',
+        'Booking and payment integrations, bug fixing, performance work and practical UX improvements.',
+    },
+    {
+      index: '04',
+      title: 'Ongoing support',
+      detail:
+        'Reliable maintenance and development support for agencies and e-commerce teams.',
     },
   ],
 
+  expertise: {
+    eyebrow: 'Expertise',
+    title: 'E-commerce platforms and frontend tools',
+    introduction:
+      'A focused set of technologies for building and maintaining production storefronts.',
+    technologies: ['Shopify', 'Shopware', 'Vue', 'React', 'TypeScript', 'Astro'],
+  },
+
   profile: {
-    eyebrow: 'Profile',
+    eyebrow: 'About',
     statement:
-      'I’m a frontend developer with a strong focus on e-commerce. I work with Shopify, Vue, React and modern JavaScript stacks, turning designs and requirements into clear, maintainable interfaces.',
+      'I’m a frontend developer focused on e-commerce, with professional agency experience delivering production e-commerce projects.',
     note:
-      'Alongside my agency work, I take on selected independent projects for businesses and professionals.',
+      'Based in Italy and available remotely across Europe for freelance projects, agency collaborations and remote job opportunities.',
   },
 
   contact: {
     eyebrow: 'Contact',
     title: 'Have something to build or improve?',
     note:
-      'I’m available for selected freelance projects, collaborations and frontend development work.',
+      'Share your project, role or collaboration needs and I’ll get back to you.',
     email: 'hello@emmanueledurante.com',
   },
 } as const;
