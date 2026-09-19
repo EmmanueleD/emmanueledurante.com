@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import profilePortrait from '../assets/emmanuele-durante.png';
 import AccentText from '../components/AccentText.astro';
+import ContactForm from '../components/ContactForm.astro';
 import Eyebrow from '../components/Eyebrow.astro';
 import ServicesSection from '../components/ServicesSection.astro';
 import TextLink from '../components/TextLink.astro';
@@ -123,13 +124,17 @@ const visibleSectionCount = 1 + [hasServices, hasProfile, hasContact].filter(Boo
           {site.contact.title && <h2 id="contact-title">{site.contact.title}</h2>}
           <div class="contact__details">
             {site.contact.note && <p>{site.contact.note}</p>}
+            <ContactForm />
             {site.contact.email && (
-              <TextLink
-                class="contact__email"
-                href={`mailto:${site.contact.email}`}
-              >
-                {site.contact.email}
-              </TextLink>
+              <p class="contact__fallback">
+                Prefer email?{' '}
+                <TextLink
+                  class="contact__email"
+                  href={`mailto:${site.contact.email}`}
+                >
+                  {site.contact.email}
+                </TextLink>
+              </p>
             )}
           </div>
         </div>
