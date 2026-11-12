@@ -47,10 +47,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   </div>
 
   <div
-    class="cf-turnstile"
-    data-sitekey={turnstileSiteKey}
-    data-theme="light"
-    data-size="flexible"
+    class="contact-form__turnstile"
+    data-turnstile-sitekey={turnstileSiteKey}
+    aria-label="Spam verification"
   ></div>
 
   <div class="contact-form__actions">
@@ -59,19 +58,34 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   </div>
 </form>
 
-<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
 <script>
+  // Load the captcha only when the contact section is approached or used.
+  // Rendering explicitly avoids downloading Cloudflare's challenge on every page visit.
   interface TurnstileApi {
-    getResponse: () => string;
-    reset: () => void;
+    render: (
+      element: HTMLElement,
+      options: {
+        sitekey: string;
+        theme: 'light';
+        size: 'flexible';
+        'error-callback': (errorCode: string) => void;
+      },
+    ) => string | undefined;
+    getResponse: (widgetId?: string) => string;
+    reset: (widgetId?: string) => void;
   }
+
+  type TurnstileWindow = Window & { turnstile?: TurnstileApi };
 
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
 
   if (form) {
     const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     const status = form.querySelector<HTMLElement>('[data-contact-status]');
+    const captchaContainer = form.querySelector<HTMLElement>('[data-turnstile-sitekey]');
+    const siteKey = captchaContainer?.dataset.turnstileSitekey ?? '';
+    let widgetId: string | undefined;
+    let captchaPromise: Promise<void> | undefined;
     let startedAt = Date.now();
 
     const setStatus = (message: string, isError = false) => {
@@ -79,6 +93,80 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       status.textContent = message;
       status.dataset.state = isError ? 'error' : 'success';
     };
+
+    const ensureCaptcha = (): Promise<void> => {
+      if (captchaPromise) return captchaPromise;
+
+      captchaPromise = new Promise<void>((resolve, reject) => {
+        if (!captchaContainer || !siteKey) {
+          reject(new Error('Turnstile site key is not configured'));
+          return;
+        }
+
+        const renderCaptcha = () => {
+          const turnstile = (window as TurnstileWindow).turnstile;
+          if (!turnstile) {
+            reject(new Error('Turnstile did not initialize'));
+            return;
+          }
+
+          try {
+            widgetId = turnstile.render(captchaContainer, {
+              sitekey: siteKey,
+              theme: 'light',
+              size: 'flexible',
+              'error-callback': (errorCode) => {
+                console.warn('[ContactForm] Turnstile error code:', errorCode);
+                setStatus('Verification failed. Please try again.', true);
+              },
+            });
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        };
+
+        if ((window as TurnstileWindow).turnstile) {
+          renderCaptcha();
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.onload = renderCaptcha;
+        script.onerror = () => reject(new Error('Could not load Turnstile script'));
+        document.head.appendChild(script);
+      }).catch((error) => {
+        captchaPromise = undefined;
+        throw error;
+      });
+
+      return captchaPromise;
+    };
+
+    if (captchaContainer && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer.disconnect();
+          void ensureCaptcha().catch((error) => {
+            console.error('[ContactForm] Captcha initialization:', error);
+            setStatus('Verification is unavailable. Please contact me by email.', true);
+          });
+        }
+      }, { rootMargin: '500px' });
+      observer.observe(captchaContainer);
+    } else {
+      void ensureCaptcha().catch((error) => {
+        console.error('[ContactForm] Captcha initialization:', error);
+      });
+    }
+
+    form.addEventListener('focusin', () => {
+      void ensureCaptcha().catch((error) => {
+        console.error('[ContactForm] Captcha initialization:', error);
+      });
+    }, { once: true });
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -88,11 +176,19 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         return;
       }
 
-      const turnstile = (window as Window & { turnstile?: TurnstileApi }).turnstile;
-      const turnstileToken = turnstile?.getResponse() ?? '';
+      try {
+        await ensureCaptcha();
+      } catch (error) {
+        console.error('[ContactForm] Captcha unavailable:', error);
+        setStatus('Verification is unavailable. Please contact me by email.', true);
+        return;
+      }
 
-      if (!turnstile || !turnstileToken) {
-        setStatus('Please complete the verification and try again.', true);
+      const turnstile = (window as TurnstileWindow).turnstile;
+      const turnstileToken = turnstile?.getResponse(widgetId) ?? '';
+
+      if (!turnstileToken) {
+        setStatus('Please complete the verification and submit again.', true);
         return;
       }
 
@@ -119,16 +215,29 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
           body: JSON.stringify(payload),
         });
 
-        if (response.status !== 201) {
-          throw new Error('Contact request failed');
+        if (!response.ok) {
+          // Keep the status code for diagnosis, without exposing server internals.
+          throw new Error(`Contact service returned HTTP ${response.status}`);
         }
 
         form.reset();
         startedAt = Date.now();
-        turnstile.reset();
+        turnstile?.reset(widgetId);
         setStatus('Thanks — your message has been sent.');
-      } catch {
-        setStatus('Something went wrong. Please try again.', true);
+      } catch (error) {
+        console.error('[ContactForm] Message delivery failed:', error);
+        const message = error instanceof Error ? error.message : String(error);
+        const code = message.match(/HTTP (\d{3})/)?.[1];
+
+        if (code === '403' || code === '401') {
+          setStatus('Verification was rejected. Refresh the page and try again, or use email.', true);
+        } else if (code === '429') {
+          setStatus('Too many attempts. Please try again later or use email.', true);
+        } else if (code) {
+          setStatus(`Unable to send the message (HTTP ${code}). Please contact me by email.`, true);
+        } else {
+          setStatus('Cannot reach the message service. Please contact me by email.', true);
+        }
       } finally {
         form.removeAttribute('aria-busy');
         if (submitButton) submitButton.disabled = false;
