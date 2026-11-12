@@ -6,17 +6,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   <div class="contact-form__grid">
     <div class="contact-form__field">
       <label for="contact-name">Name</label>
-      <input id="contact-name" name="name" type="text" autocomplete="name" required />
+      <input id="contact-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" required />
     </div>
 
     <div class="contact-form__field">
       <label for="contact-email">Email</label>
-      <input id="contact-email" name="email" type="email" autocomplete="email" required />
+      <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required />
     </div>
 
     <div class="contact-form__field">
       <label for="contact-company">Company <span>(optional)</span></label>
-      <input id="contact-company" name="company" type="text" autocomplete="organization" />
+      <input id="contact-company" name="company" type="text" autocomplete="organization" maxlength="120" />
     </div>
 
     <div class="contact-form__field">
@@ -32,7 +32,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
   <div class="contact-form__field">
     <label for="contact-message">Message</label>
-    <textarea id="contact-message" name="message" rows="7" required></textarea>
+    <textarea id="contact-message" name="message" rows="7" minlength="10" maxlength="5000" required></textarea>
   </div>
 
   <div class="contact-form__honeypot" aria-hidden="true">
@@ -216,8 +216,20 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         });
 
         if (!response.ok) {
-          // Keep the status code for diagnosis, without exposing server internals.
-          throw new Error(`Contact service returned HTTP ${response.status}`);
+          // The backend returns a public, generic error label. Never log the submitted data.
+          const errorBody: unknown = await response.json().catch(() => null);
+          const serverError =
+            errorBody !== null &&
+            typeof errorBody === 'object' &&
+            'error' in errorBody &&
+            typeof errorBody.error === 'string'
+              ? errorBody.error
+              : '';
+          console.warn('[ContactForm] API rejected request:', {
+            status: response.status,
+            error: serverError,
+          });
+          throw new Error(`Contact service returned HTTP ${response.status}${serverError ? `: ${serverError}` : ''}`);
         }
 
         form.reset();
@@ -229,7 +241,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         const message = error instanceof Error ? error.message : String(error);
         const code = message.match(/HTTP (\d{3})/)?.[1];
 
-        if (code === '403' || code === '401') {
+        if (code === '400' && message.includes('Invalid form data')) {
+          setStatus('Check the fields: name must have at least 2 characters and message at least 10.', true);
+        } else if (code === '400' && message.includes('Invalid submission')) {
+          setStatus('The form was submitted too quickly. Please try again.', true);
+        } else if (code === '400' && message.includes('Verification failed')) {
+          setStatus('Security verification failed. Please reload the page and try again.', true);
+        } else if (code === '403' || code === '401') {
           setStatus('Verification was rejected. Refresh the page and try again, or use email.', true);
         } else if (code === '429') {
           setStatus('Too many attempts. Please try again later or use email.', true);
