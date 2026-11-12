@@ -1,206 +1,144 @@
 ---
 import { Image } from 'astro:assets';
-import profilePortrait from '../assets/emmanuele-hero-portrait.webp';
-import AccentText from '../components/AccentText.astro';
-import ActionLink from '../components/ActionLink.astro';
+import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import ContactForm from '../components/ContactForm.astro';
-import Eyebrow from '../components/Eyebrow.astro';
-import ServicesSection from '../components/ServicesSection.astro';
-import TextLink from '../components/TextLink.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 
 const currentYear = new Date().getFullYear();
-const hasServices = site.services.length > 0;
-const hasWork = site.projects.length > 0;
-const hasExpertise = site.expertise.technologies.length > 0;
-const hasProfile = Boolean(
-  site.profile.statement.trim() || site.profile.note.trim(),
-);
-const hasContact = Boolean(
-  site.contact.title.trim() || site.contact.note.trim() || site.contact.email.trim(),
-);
-
-const sectionVisibility: Record<string, boolean> = {
-  '#work': hasWork,
-  '#services': hasServices,
-  '#expertise': hasExpertise,
-  '#profile': hasProfile,
-  '#contact': hasContact,
-};
-
-const visibleNavigation = site.navigation.filter(
-  (item) => sectionVisibility[item.href] ?? true,
-);
-const visibleSectionCount = 1 + [
-  hasWork,
-  hasServices,
-  hasExpertise,
-  hasProfile,
-  hasContact,
-].filter(Boolean).length;
 ---
 
 <BaseLayout title={site.title} description={site.description}>
-  <header class="site-header shell">
-    <a class="wordmark" href="#top" aria-label={`${site.name}, home`}>
-      <span class="wordmark__mark" aria-hidden="true"></span>
-      {site.name}
-    </a>
-
-    {visibleNavigation.length > 0 && (
-      <nav aria-label="Primary navigation">
-        <ul class="site-nav">
-          {visibleNavigation.map((item) => (
-            <li><a href={item.href}>{item.label}</a></li>
-          ))}
+  <header class="masthead">
+    <div class="frame masthead__inner">
+      <a class="wordmark" href="#top" aria-label="Emmanuele Durante, homepage">
+        <span class="wordmark__mark" aria-hidden="true"></span>
+        <span class="wordmark__name"><strong>Emmanuele</strong><span>Durante</span></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="masthead__links">
+          {site.navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
         </ul>
       </nav>
-    )}
+      <a class="masthead__contact" href="#contact">Get in touch</a>
+    </div>
   </header>
 
   <main id="main-content">
-    <section class="hero shell" id="top" aria-labelledby="hero-title">
-      <div class="hero__heading">
-        <Eyebrow>{site.hero.eyebrow}</Eyebrow>
-        <h1 id="hero-title"><AccentText segments={site.hero.title} /></h1>
-      </div>
-
-      <figure class="hero__portrait">
-        <Image
-          src={profilePortrait}
-          alt="Emmanuele Durante wearing blue-framed glasses"
-          width={480}
-          height={600}
-          widths={[240, 360, 480]}
-          sizes="(min-width: 48rem) 15rem, 52vw"
-          loading="eager"
-          fetchpriority="high"
-          format="webp"
-          quality={85}
-        />
-      </figure>
-
-      <div class="hero__intro">
-        <p>{site.hero.introduction}</p>
-        <ActionLink href="#work" variant="accent">Explore my work</ActionLink>
-        <a class="hero__secondary-cta" href="#contact">Get in touch</a>
-      </div>
-
-      <p class="hero__index" aria-hidden="true">
-        01 — {String(visibleSectionCount).padStart(2, '0')}
-      </p>
-    </section>
-
-    {hasWork && (
-      <section class="work shell" id="work" aria-labelledby="work-title">
-        <div class="work__heading">
-          <Eyebrow>{site.work.eyebrow}</Eyebrow>
-          <div>
-            <h2 id="work-title">{site.work.title}</h2>
-            <p>{site.work.introduction}</p>
+    <section class="poster" id="top" aria-labelledby="hero-heading">
+      <div class="frame poster__grid">
+        <div class="poster__content">
+          <h1 id="hero-heading"><span>Frontend</span><span>&amp; commerce.</span></h1>
+          <div class="poster__bottom">
+            <p>{site.hero.introduction}</p>
+            <div class="poster__actions">
+              <a class="action-primary" href="#work">View my work</a>
+              <a class="action-secondary" href="#contact">Contact me</a>
+            </div>
           </div>
         </div>
-        <ol class="work__grid">
+        <figure class="poster__image">
+          <div class="portrait-print">
+            <Image
+              src={profilePortrait}
+              alt="Emmanuele Durante wearing blue-framed glasses, photographed in a workspace."
+              width={1122}
+              height={1402}
+              widths={[400, 640, 880, 1122]}
+              sizes="(min-width: 1024px) 36vw, (min-width: 700px) 43vw, 92vw"
+              format="webp"
+              quality={90}
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+          <figcaption><span>Emmanuele Durante</span><span>Based in Forlì, Italy</span></figcaption>
+        </figure>
+        <p class="poster__folio">Frontend &amp; commerce engineer</p>
+      </div>
+    </section>
+
+    <section class="projects" id="work" aria-labelledby="projects-heading">
+      <div class="frame">
+        <div class="projects__header">
+          <h2 id="projects-heading">Selected work.</h2>
+          <p>{site.work.introduction}</p>
+        </div>
+        <ol class="project-index">
           {site.projects.map((project) => (
-            <li class="work__card">
-              <div class="work__meta">
-                <span>{project.index}</span>
-                <span>{project.category}</span>
+            <li class="project-index__item">
+              <span class="project-index__number">{project.index}</span>
+              <div class="project-index__lead">
+                <p class="project-index__type">{project.category.replaceAll(' · ', ' / ')}</p>
+                <h3>{project.title}</h3>
               </div>
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
-              <ul class="work__tags" aria-label="Technologies">
-                {project.technologies.map((technology) => (
-                  <li>{technology}</li>
-                ))}
-              </ul>
+              <div class="project-index__details">
+                <p>{project.description}</p>
+                <ul aria-label="Technologies">
+                  {project.technologies.map((technology) => <li>{technology}</li>)}
+                </ul>
+              </div>
             </li>
           ))}
         </ol>
-      </section>
-    )}
+      </div>
+    </section>
 
-    <ServicesSection
-      eyebrow={site.servicesSection.eyebrow}
-      title={site.servicesSection.title}
-      services={site.services}
-      accent={site.presentation.accents.serviceItem}
-    />
+    <section class="capabilities" id="services" aria-labelledby="services-heading">
+      <div class="frame capabilities__layout">
+        <div class="capabilities__header">
+          <h2 id="services-heading">{site.servicesSection.title}</h2>
+          <p>From storefronts to the systems behind them.</p>
+        </div>
+        <ol class="capabilities__list">
+          {site.services.map((service) => (
+            <li>
+              <span>{service.index}</span>
+              <div>
+                <h3>{service.title}</h3>
+                <p>{service.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
 
-    {hasExpertise && (
-      <section
-        class="expertise shell"
-        id="expertise"
-        aria-labelledby="expertise-title"
-      >
-        <Eyebrow>{site.expertise.eyebrow}</Eyebrow>
-        <div class="expertise__content">
-          <h2 id="expertise-title">{site.expertise.title}</h2>
+    <section class="profile" id="profile" aria-labelledby="profile-heading">
+      <div class="frame profile__grid">
+        <div class="profile__statement">
+          <h2 id="profile-heading">{site.profile.statement}</h2>
+          <p>{site.profile.note}</p>
+        </div>
+        <div class="profile__tools" id="expertise">
+          <h3>{site.expertise.title}</h3>
           <p>{site.expertise.introduction}</p>
-          <ul class="technology-list" aria-label="Prioritized technologies">
-            {site.expertise.technologies.map((technology) => (
-              <li>{technology}</li>
-            ))}
+          <ul aria-label="Core technologies">
+            {site.expertise.technologies.map((technology) => <li>{technology}</li>)}
           </ul>
         </div>
-      </section>
-    )}
+      </div>
+    </section>
 
-    {hasProfile && (
-      <section
-        class="profile shell"
-        id="profile"
-        aria-labelledby={site.profile.statement ? 'profile-title' : undefined}
-        aria-label={site.profile.statement ? undefined : site.profile.eyebrow}
-      >
-        <Eyebrow>{site.profile.eyebrow}</Eyebrow>
-        <div class="profile__content">
-          {site.profile.statement && (
-            <h2 id="profile-title">{site.profile.statement}</h2>
-          )}
-          {site.profile.note && <p>{site.profile.note}</p>}
+    <section class="contact" id="contact" aria-labelledby="contact-heading">
+      <div class="frame contact__grid">
+        <div class="contact__copy">
+          <h2 id="contact-heading">{site.contact.title}</h2>
+          <p>{site.contact.note}</p>
+          <a href={`mailto:${site.contact.email}`} class="contact__email">{site.contact.email}</a>
         </div>
-      </section>
-    )}
-
-    {hasContact && (
-      <section
-        class="contact"
-        id="contact"
-        aria-labelledby={site.contact.title ? 'contact-title' : undefined}
-        aria-label={site.contact.title ? undefined : site.contact.eyebrow}
-      >
-        <div class="contact__inner shell">
-          <div class="contact__heading">
-            {site.presentation.accents.contactRule && (
-              <span class="contact__accent-rule" aria-hidden="true"></span>
-            )}
-            <Eyebrow>{site.contact.eyebrow}</Eyebrow>
-          </div>
-          {site.contact.title && <h2 id="contact-title">{site.contact.title}</h2>}
-          <div class="contact__details">
-            {site.contact.note && <p>{site.contact.note}</p>}
-            <ContactForm />
-            {site.contact.email && (
-              <p class="contact__fallback">
-                Prefer email?{' '}
-                <TextLink
-                  class="contact__email"
-                  href={`mailto:${site.contact.email}`}
-                >
-                  {site.contact.email}
-                </TextLink>
-              </p>
-            )}
-          </div>
+        <div class="contact__form">
+          <ContactForm />
         </div>
-      </section>
-    )}
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer shell">
-    <p>© {currentYear} {site.name}</p>
-    <TextLink href="#top">Back to top</TextLink>
+  <footer class="footer">
+    <div class="frame footer__inner">
+      <p>© {currentYear} {site.name}</p>
+      <p>Frontend &amp; commerce engineering</p>
+      <a href="#top">Back to top</a>
+    </div>
   </footer>
 </BaseLayout>
