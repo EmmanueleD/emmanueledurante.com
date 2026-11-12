@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import profilePortrait from '../assets/emmanuele-durante.png';
+import profilePortrait from '../assets/emmanuele-hero-portrait.webp';
 import AccentText from '../components/AccentText.astro';
 import ActionLink from '../components/ActionLink.astro';
 import ContactForm from '../components/ContactForm.astro';
@@ -69,11 +69,13 @@ const visibleSectionCount = 1 + [
       <figure class="hero__portrait">
         <Image
           src={profilePortrait}
-          alt="Portrait of Emmanuele Durante"
+          alt="Emmanuele Durante wearing blue-framed glasses"
           width={480}
           height={600}
           widths={[240, 360, 480]}
           sizes="(min-width: 48rem) 15rem, 52vw"
+          loading="eager"
+          fetchpriority="high"
           format="webp"
           quality={85}
         />
