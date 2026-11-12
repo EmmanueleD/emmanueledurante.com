@@ -1,5 +1,4 @@
 ---
-import '@fontsource-variable/instrument-sans';
 import '../styles/global.css';
 
 interface Props {
@@ -20,8 +19,11 @@ const openGraphImageUrl = new URL('/og-image.jpg', siteUrl);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:wght@400;700&family=Radio+Canada:wght@400;500&display=swap" rel="stylesheet" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#081A2C" />
+    <meta name="theme-color" content="#F9F8F4" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
