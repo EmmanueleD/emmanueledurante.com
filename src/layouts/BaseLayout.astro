@@ -1,20 +1,23 @@
 ---
 import '../styles/global.css';
+import { languagePath, languages, type Language } from '../data/locales';
 
 interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  lang?: Language;
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, lang = 'en' } = Astro.props;
+const ogLocale = { en: 'en_US', it: 'it_IT', es: 'es_ES' }[lang];
 const siteUrl = Astro.site ?? Astro.url;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 const openGraphImageUrl = new URL('/og-image.jpg', siteUrl);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -34,9 +37,14 @@ const openGraphImageUrl = new URL('/og-image.jpg', siteUrl);
     <meta name="theme-color" content="#F9F8F4" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonicalUrl} />
+    {languages.map((language) => (
+      <link rel="alternate" hreflang={language} href={new URL(languagePath(language), siteUrl)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL('/', siteUrl)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />

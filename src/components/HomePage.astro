@@ -1,0 +1,156 @@
+---
+import { Image } from 'astro:assets';
+import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
+import ContactForm from './ContactForm.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localizedSite, ui, languages, languagePath, type Language } from '../data/locales';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const site = localizedSite(lang);
+const labels = ui[lang];
+const currentYear = new Date().getFullYear();
+---
+
+<BaseLayout title={site.title} description={site.description} lang={lang}>
+  <header class="masthead">
+    <div class="frame masthead__inner">
+      <a class="wordmark" href="#top" aria-label={labels.homepageLabel}>
+        <span class="wordmark__mark" aria-hidden="true"></span>
+        <span class="wordmark__name"><strong>Emmanuele</strong><span>Durante</span></span>
+      </a>
+      <nav aria-label={labels.mainNavigation}>
+        <ul class="masthead__links">
+          {site.navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+      <nav class="language-switcher" aria-label={labels.languageSelector}>
+        {languages.map((code) => (
+          <a href={languagePath(code)} lang={code} hreflang={code} aria-label={code === 'en' ? 'English' : code === 'it' ? 'Italiano' : 'Español'} aria-current={code === lang ? 'page' : undefined}>{code.toUpperCase()}</a>
+        ))}
+      </nav>
+      <a class="masthead__contact" href="#contact">{labels.headerContact}</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="poster" id="top" aria-labelledby="hero-heading">
+      <div class="frame poster__grid">
+        <div class="poster__content">
+          <h1 id="hero-heading"><span>{labels.heroHeadingFirst}</span><span>{labels.heroHeadingSecond}</span></h1>
+          <div class="poster__bottom">
+            <p>{site.hero.introduction}</p>
+            <div class="poster__actions">
+              <a class="action-primary" href="#work">{labels.viewWork}</a>
+              <a class="action-secondary" href="#contact">{labels.contactMe}</a>
+            </div>
+          </div>
+        </div>
+        <figure class="poster__image">
+          <div class="portrait-print">
+            <Image
+              src={profilePortrait}
+              alt={labels.heroAlt}
+              width={1122}
+              height={1402}
+              widths={[320, 480, 640, 680, 800, 960]}
+              sizes="(min-width: 1024px) 36vw, (min-width: 700px) 43vw, 92vw"
+              format="webp"
+              quality={75}
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+          <figcaption><span>Emmanuele Durante</span><span>{labels.basedIn}</span></figcaption>
+        </figure>
+        <p class="poster__folio">{labels.heroFolio}</p>
+      </div>
+    </section>
+
+    <section class="projects" id="work" aria-labelledby="projects-heading">
+      <div class="frame">
+        <div class="projects__header">
+          <h2 id="projects-heading">{labels.selectedWork}</h2>
+          <p>{site.work.introduction}</p>
+        </div>
+        <ol class="project-index">
+          {site.projects.map((project) => (
+            <li class="project-index__item">
+              <span class="project-index__number">{project.index}</span>
+              <div class="project-index__lead">
+                <p class="project-index__type">{project.category.replaceAll(' · ', ' / ')}</p>
+                <h3>{project.title}</h3>
+              </div>
+              <div class="project-index__details">
+                <p>{project.description}</p>
+                <ul aria-label={labels.technologiesLabel}>
+                  {project.technologies.map((technology) => <li>{technology}</li>)}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="capabilities" id="services" aria-labelledby="services-heading">
+      <div class="frame capabilities__layout">
+        <div class="capabilities__header">
+          <h2 id="services-heading">{site.servicesSection.title}</h2>
+          <p>{labels.capabilitySubtitle}</p>
+        </div>
+        <ol class="capabilities__list">
+          {site.services.map((service) => (
+            <li>
+              <span>{service.index}</span>
+              <div>
+                <h3>{service.title}</h3>
+                <p>{service.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="profile" id="profile" aria-labelledby="profile-heading">
+      <div class="frame profile__grid">
+        <div class="profile__statement">
+          <h2 id="profile-heading">{site.profile.statement}</h2>
+          <p>{site.profile.note}</p>
+        </div>
+        <div class="profile__tools" id="expertise">
+          <h3>{site.expertise.title}</h3>
+          <p>{site.expertise.introduction}</p>
+          <ul aria-label={labels.coreTechnologiesLabel}>
+            {site.expertise.technologies.map((technology) => <li>{technology}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-heading">
+      <div class="frame contact__grid">
+        <div class="contact__copy">
+          <h2 id="contact-heading">{site.contact.title}</h2>
+          <p>{site.contact.note}</p>
+          <a href={`mailto:${site.contact.email}`} class="contact__email">{site.contact.email}</a>
+        </div>
+        <div class="contact__form">
+          <ContactForm lang={lang} />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="frame footer__inner">
+      <p>© {currentYear} {site.name}</p>
+      <p>{labels.footerSpecialty}</p>
+      <a href="#top">{labels.backToTop}</a>
+    </div>
+  </footer>
+</BaseLayout>
