@@ -159,6 +159,7 @@ export function localizedSite(language: Language) {
 export const ui = {
   en: {
     homepageLabel: 'Emmanuele Durante, homepage',
+    mainNavigation: 'Main navigation',
     languageSelector: 'Select language',
     headerContact: 'Get in touch',
     heroHeadingFirst: 'Frontend',
@@ -207,6 +208,7 @@ export const ui = {
   },
   it: {
     homepageLabel: 'Emmanuele Durante, pagina iniziale',
+    mainNavigation: 'Navigazione principale',
     languageSelector: 'Seleziona lingua',
     headerContact: 'Contattami',
     heroHeadingFirst: 'Frontend',
@@ -255,6 +257,7 @@ export const ui = {
   },
   es: {
     homepageLabel: 'Emmanuele Durante, página principal',
+    mainNavigation: 'Navegación principal',
     languageSelector: 'Seleccionar idioma',
     headerContact: 'Contáctame',
     heroHeadingFirst: 'Frontend',
