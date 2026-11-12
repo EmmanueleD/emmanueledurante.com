@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import profilePortrait from '../assets/emmanuele-hero-portrait.webp';
+import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import AccentText from '../components/AccentText.astro';
 import ActionLink from '../components/ActionLink.astro';
 import ContactForm from '../components/ContactForm.astro';
@@ -70,10 +70,10 @@ const visibleSectionCount = 1 + [
         <Image
           src={profilePortrait}
           alt="Emmanuele Durante wearing blue-framed glasses"
-          width={480}
-          height={600}
-          widths={[240, 360, 480]}
-          sizes="(min-width: 48rem) 15rem, 52vw"
+          width={1122}
+          height={1402}
+          widths={[240, 360, 480, 720, 960, 1122]}
+          sizes="(min-width: 48rem) 240px, min(52vw, 208px)"
           loading="eager"
           fetchpriority="high"
           format="webp"
