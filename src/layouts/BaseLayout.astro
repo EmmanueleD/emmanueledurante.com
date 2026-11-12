@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 import { languagePath, languages, type Language } from '../data/locales';
 
 interface Props {
@@ -54,6 +55,7 @@ const openGraphImageUrl = new URL('/og-image.jpg', siteUrl);
     <meta property="og:image:alt" content="Portrait of Emmanuele Durante" />
 
     <title>{title}</title>
+    <Analytics />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
