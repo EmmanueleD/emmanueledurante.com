@@ -1,8 +1,8 @@
 export const site = {
   name: 'Emmanuele Durante',
-  title: 'Emmanuele Durante — Frontend Developer for Shopify & E-commerce',
+  title: 'Emmanuele Durante — Frontend & Commerce Engineer',
   description:
-    'Emmanuele Durante is a Frontend Developer building and improving Shopify and e-commerce storefronts with modern JavaScript.',
+    'Frontend & commerce engineering with Vue, React, TypeScript, Shopify and Shopware 6. B2B commerce, integrations and AI-assisted development.',
 
   presentation: {
     accents: {
@@ -19,6 +19,7 @@ export const site = {
   },
 
   navigation: [
+    { label: 'Work', href: '#work' },
     { label: 'Services', href: '#services' },
     { label: 'Expertise', href: '#expertise' },
     { label: 'About', href: '#profile' },
@@ -26,70 +27,110 @@ export const site = {
   ],
 
   hero: {
-    eyebrow: 'Frontend Developer · Shopify · E-commerce',
+    eyebrow: 'Frontend & Commerce Engineer · B2B/B2C · AI-assisted development',
     title: [
-      { text: 'Shopify & frontend', accent: true },
-      { text: ' development for e-commerce teams.' },
+      { text: 'Frontend engineering', accent: true },
+      { text: ' for complex commerce problems.' },
     ],
     introduction:
-      'I build, improve and maintain e-commerce storefronts using Shopify and modern JavaScript.',
+      'I build web applications and e-commerce features that are easier to use, debug and maintain—from Vue and React interfaces to Shopify and Shopware 6.',
   },
 
-  projects: [],
+  work: {
+    eyebrow: 'Selected work',
+    title: 'Real problems. Maintainable solutions.',
+    introduction:
+      'A selection of anonymized work, focused on the technical contribution rather than client names.',
+  },
+
+  projects: [
+    {
+      index: '01',
+      category: 'B2B commerce · Shopware',
+      title: 'Controlled access for a private B2B storefront',
+      description:
+        'Implemented a restricted commerce flow with controlled registration, access rules, configuration-aware migrations and automated regression tests.',
+      technologies: ['Shopware 6', 'PHP / Symfony', 'Twig', 'PHPUnit'],
+    },
+    {
+      index: '02',
+      category: 'E-commerce · Shopify',
+      title: 'Refactoring a custom routine builder',
+      description:
+        'Reworked a large inline JavaScript implementation into a maintainable Web Component, centralizing business rules and improving lifecycle and cart-error handling.',
+      technologies: ['Shopify', 'Liquid', 'JavaScript', 'Web Components'],
+    },
+    {
+      index: '03',
+      category: 'Product interfaces · React',
+      title: 'Schema-driven forms with browser-generated PDFs',
+      description:
+        'Developed typed form flows, structured data models and browser-side PDF generation, with optimistic updates and automated tests.',
+      technologies: ['React', 'TypeScript', 'TanStack', 'Zod', 'pdf-lib'],
+    },
+    {
+      index: '04',
+      category: 'AI · Developer tooling',
+      title: 'AI-assisted development with independent verification',
+      description:
+        'Explored agent skills, Figma-to-code evaluation and test-first workflows, with an emphasis on independently checking generated results.',
+      technologies: ['AI agents', 'TDD', 'Developer tooling', 'Evaluation'],
+    },
+  ],
 
   servicesSection: {
-    eyebrow: 'Services',
-    title: 'What I can help with',
+    eyebrow: 'Capabilities',
+    title: 'Where I contribute',
   },
 
   services: [
     {
       index: '01',
-      title: 'Shopify storefronts',
+      title: 'B2B & B2C commerce',
       detail:
-        'Theme development, custom sections, integrations and focused storefront improvements.',
+        'Custom features and workflows on Shopware and Shopify, designed around real operational constraints.',
     },
     {
       index: '02',
-      title: 'Frontend implementation',
+      title: 'Web applications & UI systems',
       detail:
-        'Responsive, maintainable interfaces built from designs with modern JavaScript.',
+        'Vue, React and TypeScript interfaces, reusable components, API integrations and maintainable architecture.',
     },
     {
       index: '03',
-      title: 'E-commerce improvements',
+      title: 'Debugging & integrations',
       detail:
-        'Booking and payment integrations, bug fixing, performance work and practical UX improvements.',
+        'Tracing problems to their root cause, extending platforms safely and integrating third-party services.',
     },
     {
       index: '04',
-      title: 'Ongoing support',
+      title: 'Reliable delivery',
       detail:
-        'Reliable maintenance and development support for agencies and e-commerce teams.',
+        'Regression testing, accessible interfaces, clear documentation and tools that give teams control.',
     },
   ],
 
   expertise: {
     eyebrow: 'Expertise',
-    title: 'E-commerce platforms and frontend tools',
+    title: 'Technology, chosen for the problem',
     introduction:
-      'A focused set of technologies for building and maintaining production storefronts.',
-    technologies: ['Shopify', 'Shopware', 'Vue', 'React', 'TypeScript', 'Astro'],
+      '4+ years across production web applications and commerce platforms. Frontend first, with practical backend work on Shopware.',
+    technologies: ['Vue.js', 'React', 'TypeScript', 'Shopify', 'Shopware 6', 'PHP / Symfony', 'Astro', 'Testing'],
   },
 
   profile: {
     eyebrow: 'About',
     statement:
-      'I’m a frontend developer focused on e-commerce, with professional agency experience delivering production e-commerce projects.',
+      'I like getting to the root of a problem—and leaving the system easier to work with.',
     note:
-      'Based in Italy and available remotely across Europe for freelance projects, agency collaborations and remote job opportunities.',
+      'I have worked with agency teams, clients and backend developers since 2022. Based in Forlì, Italy; open to frontend and commerce engineering roles, remote collaboration and selected freelance projects.',
   },
 
   contact: {
     eyebrow: 'Contact',
-    title: 'Have something to build or improve?',
+    title: 'Looking for a frontend engineer?',
     note:
-      'Share your project, role or collaboration needs and I’ll get back to you.',
+      'Hiring for a role, or need help with a commerce product? Tell me what you are building.',
     email: 'hello@emmanueledurante.com',
   },
 } as const;

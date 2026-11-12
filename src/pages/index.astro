@@ -12,6 +12,7 @@ import { site } from '../data/site';
 
 const currentYear = new Date().getFullYear();
 const hasServices = site.services.length > 0;
+const hasWork = site.projects.length > 0;
 const hasExpertise = site.expertise.technologies.length > 0;
 const hasProfile = Boolean(
   site.profile.statement.trim() || site.profile.note.trim(),
@@ -21,6 +22,7 @@ const hasContact = Boolean(
 );
 
 const sectionVisibility: Record<string, boolean> = {
+  '#work': hasWork,
   '#services': hasServices,
   '#expertise': hasExpertise,
   '#profile': hasProfile,
@@ -31,6 +33,7 @@ const visibleNavigation = site.navigation.filter(
   (item) => sectionVisibility[item.href] ?? true,
 );
 const visibleSectionCount = 1 + [
+  hasWork,
   hasServices,
   hasExpertise,
   hasProfile,
@@ -78,13 +81,43 @@ const visibleSectionCount = 1 + [
 
       <div class="hero__intro">
         <p>{site.hero.introduction}</p>
-        <ActionLink href="#contact" variant="accent">Start a project</ActionLink>
+        <ActionLink href="#work" variant="accent">Explore my work</ActionLink>
+        <a class="hero__secondary-cta" href="#contact">Get in touch</a>
       </div>
 
       <p class="hero__index" aria-hidden="true">
         01 — {String(visibleSectionCount).padStart(2, '0')}
       </p>
     </section>
+
+    {hasWork && (
+      <section class="work shell" id="work" aria-labelledby="work-title">
+        <div class="work__heading">
+          <Eyebrow>{site.work.eyebrow}</Eyebrow>
+          <div>
+            <h2 id="work-title">{site.work.title}</h2>
+            <p>{site.work.introduction}</p>
+          </div>
+        </div>
+        <ol class="work__grid">
+          {site.projects.map((project) => (
+            <li class="work__card">
+              <div class="work__meta">
+                <span>{project.index}</span>
+                <span>{project.category}</span>
+              </div>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <ul class="work__tags" aria-label="Technologies">
+                {project.technologies.map((technology) => (
+                  <li>{technology}</li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
 
     <ServicesSection
       eyebrow={site.servicesSection.eyebrow}
