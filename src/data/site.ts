@@ -1,8 +1,8 @@
 export const site = {
   name: 'Emmanuele Durante',
-  title: 'Emmanuele Durante — Frontend & Commerce Engineer',
+  title: 'Emmanuele Durante — Frontend & E-commerce Engineer',
   description:
-    'Frontend & commerce engineering with Vue, React, TypeScript, Shopify and Shopware 6. B2B commerce, integrations and AI-assisted development.',
+    'Frontend & e-commerce engineering with Vue, React, TypeScript, Shopify and Shopware 6. B2B e-commerce, integrations and AI-assisted development.',
 
   presentation: {
     accents: {
@@ -27,10 +27,10 @@ export const site = {
   ],
 
   hero: {
-    eyebrow: 'Frontend & Commerce Engineer · B2B/B2C · AI-assisted development',
+    eyebrow: 'Frontend & E-commerce Engineer · B2B/B2C · AI-assisted development',
     title: [
       { text: 'Frontend engineering', accent: true },
-      { text: ' for complex commerce problems.' },
+      { text: ' for complex e-commerce problems.' },
     ],
     introduction:
       'I build web applications and e-commerce features that are easier to use, debug and maintain—from Vue and React interfaces to Shopify and Shopware 6.',
@@ -46,10 +46,10 @@ export const site = {
   projects: [
     {
       index: '01',
-      category: 'B2B commerce · Shopware',
+      category: 'B2B e-commerce · Shopware',
       title: 'Controlled access for a private B2B storefront',
       description:
-        'Implemented a restricted commerce flow with controlled registration, access rules, configuration-aware migrations and automated regression tests.',
+        'Implemented a restricted e-commerce workflow with controlled registration, access rules, configuration-aware migrations and automated regression tests.',
       technologies: ['Shopware 6', 'PHP / Symfony', 'Twig', 'PHPUnit'],
     },
     {
@@ -86,7 +86,7 @@ export const site = {
   services: [
     {
       index: '01',
-      title: 'B2B & B2C commerce',
+      title: 'B2B & B2C e-commerce',
       detail:
         'Custom features and workflows on Shopware and Shopify, designed around real operational constraints.',
     },
@@ -114,7 +114,7 @@ export const site = {
     eyebrow: 'Expertise',
     title: 'Technology, chosen for the problem',
     introduction:
-      '4+ years across production web applications and commerce platforms. Frontend first, with practical backend work on Shopware.',
+      '4+ years across production web applications and e-commerce platforms. Frontend first, with practical backend work on Shopware.',
     technologies: ['Vue.js', 'React', 'TypeScript', 'Shopify', 'Shopware 6', 'PHP / Symfony', 'Astro', 'Testing'],
   },
 
@@ -123,14 +123,14 @@ export const site = {
     statement:
       'I like getting to the root of a problem—and leaving the system easier to work with.',
     note:
-      'I have worked with agency teams, clients and backend developers since 2022. Based in Forlì, Italy; open to frontend and commerce engineering roles, remote collaboration and selected freelance projects.',
+      'I have worked with agency teams, clients and backend developers since 2022. Based in Forlì, Italy; open to frontend and e-commerce engineering roles, remote collaboration and selected freelance projects.',
   },
 
   contact: {
     eyebrow: 'Contact',
     title: 'Looking for a frontend engineer?',
     note:
-      'Hiring for a role, or need help with a commerce product? Tell me what you are building.',
+      'Hiring for a role, or need help with an e-commerce product? Tell me what you are building.',
     email: 'hello@emmanueledurante.com',
   },
 } as const;
