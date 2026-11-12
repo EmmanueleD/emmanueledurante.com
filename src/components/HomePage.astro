@@ -22,14 +22,14 @@ const currentYear = new Date().getFullYear();
         <span class="wordmark__mark" aria-hidden="true"></span>
         <span class="wordmark__name"><strong>Emmanuele</strong><span>Durante</span></span>
       </a>
-      <nav aria-label="Main navigation">
+      <nav aria-label={labels.mainNavigation}>
         <ul class="masthead__links">
           {site.navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
         </ul>
       </nav>
       <nav class="language-switcher" aria-label={labels.languageSelector}>
         {languages.map((code) => (
-          <a href={languagePath(code)} lang={code} hreflang={code} aria-current={code === lang ? 'page' : undefined}>{code.toUpperCase()}</a>
+          <a href={languagePath(code)} lang={code} hreflang={code} aria-label={code === 'en' ? 'English' : code === 'it' ? 'Italiano' : 'Español'} aria-current={code === lang ? 'page' : undefined}>{code.toUpperCase()}</a>
         ))}
       </nav>
       <a class="masthead__contact" href="#contact">{labels.headerContact}</a>
