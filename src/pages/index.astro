@@ -26,7 +26,6 @@ const heroTitle = site.hero.title.map((segment) => segment.text).join('');
     <section class="hero proof-grid" id="top" aria-labelledby="hero-title">
       <div class="shell hero__inner">
         <div class="hero__copy">
-          <div class="hero__label"><span class="line-accent" aria-hidden="true"></span> Frontend & commerce engineer</div>
           <h1 id="hero-title">{heroTitle}</h1>
           <p class="hero__intro">{site.hero.introduction}</p>
           <div class="hero__actions">
@@ -58,7 +57,6 @@ const heroTitle = site.hero.title.map((segment) => segment.text).join('');
     <section class="work-section" id="work" aria-labelledby="work-title">
       <div class="shell">
         <div class="section-head">
-          <span class="section-head__label">Selected work / {site.projects.length} projects</span>
           <h2 id="work-title">{site.work.title}</h2>
           <p>{site.work.introduction}</p>
         </div>
@@ -83,7 +81,6 @@ const heroTitle = site.hero.title.map((segment) => segment.text).join('');
     <section class="services-section" id="services" aria-labelledby="services-title">
       <div class="shell services-section__inner">
         <div class="services-section__intro">
-          <span class="section-head__label">Capabilities</span>
           <h2 id="services-title">{site.servicesSection.title}</h2>
         </div>
         <ol class="services-list">
@@ -103,7 +100,6 @@ const heroTitle = site.hero.title.map((segment) => segment.text).join('');
     <section class="profile-section" id="profile" aria-labelledby="profile-title">
       <div class="shell profile-section__inner">
         <div class="profile-section__statement">
-          <span class="section-head__label">About the engineer</span>
           <h2 id="profile-title">{site.profile.statement}</h2>
           <p>{site.profile.note}</p>
         </div>
@@ -120,7 +116,6 @@ const heroTitle = site.hero.title.map((segment) => segment.text).join('');
     <section class="contact-section proof-grid" id="contact" aria-labelledby="contact-title">
       <div class="shell contact-section__inner">
         <div class="contact-section__intro">
-          <span class="section-head__label">Get in touch</span>
           <h2 id="contact-title">{site.contact.title}</h2>
           <p>{site.contact.note}</p>
           <a class="contact-section__email" href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
