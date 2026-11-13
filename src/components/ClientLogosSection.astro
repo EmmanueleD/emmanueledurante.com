@@ -5,60 +5,49 @@ import type { ClientLogo } from '../data/clientLogos';
 interface Props {
   lang: Language;
   clients: readonly ClientLogo[];
-  /** For a review build only. Never put unverified customers in the production data. */
   preview?: boolean;
 }
 
-const { lang, clients, preview = false } = Astro.props;
-const copy = {
-  en: { title: 'Clients & collaborations', demo: 'Layout preview — client logos are not yet available', aria: 'Client logos' },
-  it: { title: 'Clienti e collaborazioni', demo: 'Anteprima del layout — loghi dei clienti ancora da inserire', aria: 'Loghi dei clienti' },
-  es: { title: 'Clientes y colaboraciones', demo: 'Vista previa del diseño — faltan los logotipos de los clientes', aria: 'Logotipos de clientes' },
+const { lang, clients } = Astro.props;
+const labels = {
+  en: { title: 'Clients & collaborations', aria: 'Companies and brands I have worked with' },
+  it: { title: 'Clienti e collaborazioni', aria: 'Aziende e marchi con cui ho lavorato' },
+  es: { title: 'Clientes y colaboraciones', aria: 'Empresas y marcas con las que he trabajado' },
 }[lang];
-const demoClients: ClientLogo[] = Array.from({ length: 5 }, (_, i) => ({
-  id: `demo-${i}`,
-  name: 'LOGO CLIENTE',
-  logoSrc: '',
-  approvedForDisplay: false,
-}));
-const shown = preview && clients.length === 0 ? demoClients : clients;
-const moving = shown.length >= 4;
+const moving = clients.length >= 4;
 ---
 
-{shown.length > 0 && (
+{clients.length > 0 && (
   <section class="clients" id="clients" aria-labelledby="clients-heading">
     <div class="frame clients__heading">
-      <h2 id="clients-heading">{copy.title}</h2>
-      {preview && clients.length === 0 && <p>{copy.demo}</p>}
+      <h2 id="clients-heading">{labels.title}</h2>
     </div>
-    <div class:list={['clients__marquee', { 'clients__marquee--moving': moving }]} aria-label={copy.aria}>
+    <div class:list={['clients__marquee', { 'clients__marquee--moving': moving }]} aria-label={labels.aria}>
       <div class="clients__track">
         <ul class="clients__logos">
-          {shown.map((client) => (
+          {clients.map((client) => (
             <li>
-              {client.logoSrc ? (
-                client.website ? (
-                  <a href={client.website} target="_blank" rel="noopener noreferrer" aria-label={client.name}>
-                    <img src={client.logoSrc} alt={client.name} loading="lazy" decoding="async" />
-                  </a>
-                ) : (
-                  <img src={client.logoSrc} alt={client.name} loading="lazy" decoding="async" />
-                )
+              {client.website ? (
+                <a href={client.website} target="_blank" rel="noopener noreferrer" aria-label={client.name}>
+                  {client.logoSrc
+                    ? <img src={client.logoSrc} alt={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                    : <span class="clients__placeholder">{client.name}</span>}
+                </a>
               ) : (
-                <span class="clients__placeholder">{client.name}</span>
+                client.logoSrc
+                  ? <img src={client.logoSrc} alt={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                  : <span class="clients__placeholder">{client.name}</span>
               )}
             </li>
           ))}
         </ul>
         {moving && (
           <ul class="clients__logos" aria-hidden="true">
-            {shown.map((client) => (
+            {clients.map((client) => (
               <li>
-                {client.logoSrc ? (
-                  <img src={client.logoSrc} alt="" loading="lazy" decoding="async" />
-                ) : (
-                  <span class="clients__placeholder">{client.name}</span>
-                )}
+                {client.logoSrc
+                  ? <img src={client.logoSrc} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                  : <span class="clients__placeholder">{client.name}</span>}
               </li>
             ))}
           </ul>
