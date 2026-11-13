@@ -45,9 +45,9 @@ const currentYear = new Date().getFullYear();
     <section class="poster" id="top" aria-labelledby="hero-heading">
       <div class="frame poster__grid">
         <div class="poster__content">
-          <h1 id="hero-heading"><span>{labels.heroHeadingFirst}</span><span>{labels.heroHeadingSecond}</span></h1>
+          <h1 id="hero-heading"><span data-cms-copy="hero_heading_first">{labels.heroHeadingFirst}</span><span data-cms-copy="hero_heading_second">{labels.heroHeadingSecond}</span></h1>
           <div class="poster__bottom">
-            <p>{site.hero.introduction}</p>
+            <p data-cms-copy="hero_intro">{site.hero.introduction}</p>
             <div class="poster__actions">
               <a class="action-primary" href="#work">{labels.viewWork}</a>
               <a class="action-secondary" href="#contact">{labels.contactMe}</a>
@@ -80,8 +80,8 @@ const currentYear = new Date().getFullYear();
     <section class="projects" id="work" aria-labelledby="projects-heading">
       <div class="frame">
         <div class="projects__header">
-          <h2 id="projects-heading">{labels.selectedWork}</h2>
-          <p>{site.work.introduction}</p>
+          <h2 id="projects-heading" data-cms-copy="work_title">{labels.selectedWork}</h2>
+          <p data-cms-copy="work_intro">{site.work.introduction}</p>
         </div>
         <ul class="project-index" data-cms-projects data-lang={lang}>
           {site.projects.map((project) => (
@@ -107,8 +107,8 @@ const currentYear = new Date().getFullYear();
     <section class="capabilities" id="services" aria-labelledby="services-heading">
       <div class="frame capabilities__layout">
         <div class="capabilities__header">
-          <h2 id="services-heading">{site.servicesSection.title}</h2>
-          <p>{labels.capabilitySubtitle}</p>
+          <h2 id="services-heading" data-cms-copy="services_heading">{site.servicesSection.title}</h2>
+          <p data-cms-copy="services_subtitle">{labels.capabilitySubtitle}</p>
         </div>
         <ul class="capabilities__list" data-cms-services data-lang={lang}>
           {site.services.map((service) => (
@@ -126,13 +126,13 @@ const currentYear = new Date().getFullYear();
     <section class="profile" id="profile" aria-labelledby="profile-heading">
       <div class="frame profile__grid">
         <div class="profile__statement">
-          <h2 id="profile-heading">{site.profile.statement}</h2>
-          <p>{site.profile.note}</p>
+          <h2 id="profile-heading" data-cms-copy="profile_statement">{site.profile.statement}</h2>
+          <p data-cms-copy="profile_note">{site.profile.note}</p>
         </div>
         <div class="profile__tools" id="expertise">
-          <h3>{site.expertise.title}</h3>
-          <p>{site.expertise.introduction}</p>
-          <ul aria-label={labels.coreTechnologiesLabel}>
+          <h3 data-cms-copy="expertise_heading">{site.expertise.title}</h3>
+          <p data-cms-copy="expertise_intro">{site.expertise.introduction}</p>
+          <ul aria-label={labels.coreTechnologiesLabel} data-cms-copy="expertise_technologies">
             {site.expertise.technologies.map((technology) => <li>{technology}</li>)}
           </ul>
         </div>
@@ -142,8 +142,8 @@ const currentYear = new Date().getFullYear();
     <section class="contact" id="contact" aria-labelledby="contact-heading">
       <div class="frame contact__grid">
         <div class="contact__copy">
-          <h2 id="contact-heading">{site.contact.title}</h2>
-          <p>{site.contact.note}</p>
+          <h2 id="contact-heading" data-cms-copy="contact_heading">{site.contact.title}</h2>
+          <p data-cms-copy="contact_intro">{site.contact.note}</p>
           <a href={`mailto:${site.contact.email}`} class="contact__email">{site.contact.email}</a>
         </div>
         <div class="contact__form">
@@ -164,5 +164,6 @@ const currentYear = new Date().getFullYear();
   </footer>
 <script>
   import "../scripts/loadPortfolioContent";
+  import "../scripts/loadHomepageCopy";
 </script>
 </BaseLayout>
