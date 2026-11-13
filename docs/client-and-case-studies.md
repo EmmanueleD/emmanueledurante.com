@@ -1,59 +1,57 @@
-# Portfolio content — client logos and case studies
+# Client logos, case studies and review workflow
 
-## Client logo strip
+## Client strip
 
-The logo strip appears only when `src/data/clientLogos.ts` contains **approved** entries.
-For each client, provide:
+The portfolio owner supplied 15 client/brand names in the 13 November 2026 conversation.
+They are kept in `src/data/clientLogos.ts`, in that order.
 
-- The brand's public display name;
-- A locally saved, optimized logo asset at `public/client-logos/<slug>.svg` or `.webp`;
-- An official public website URL (optional);
-- Confirmation that the brand and logo can be shown in the portfolio and in this context.
+Eight entries currently use publicly available remote logo images. The remaining
+seven use their actual names as typographic **fallbacks**, not fabricated logos.
+The image URLs should be replaced by local, optimized, permission-cleared files
+before the final production release; hotlinks add third-party requests and can break.
 
-Example entry:
+Official sites are linked where their identities could be matched confidently.
+`Welding` is ambiguous; leave its link empty until the exact company is confirmed.
+`Divani.Store` was matched to the public site and agency case-study.
 
-```ts
-{
-  id: 'verified-client-slug',
-  name: 'Actual client name',
-  logoSrc: '/client-logos/verified-client-slug.svg',
-  website: 'https://actual-client-website.example/',
-  approvedForDisplay: true,
-}
-```
+The strip is monochromatic, runs slowly and stops on hover/focus. Reduced-motion
+visitors get a non-animated horizontal list.
 
-No real client names or logos have been supplied yet, so the strip is **hidden on the
-production PR branch**. A separate Vercel-only design preview shows clearly
-labelled non-client placeholders to demonstrate size, spacing and motion.
+Do not imply endorsement by these brands. Confirm contractual rights to
+display client names and logos before merging.
 
-The strip moves only when there are four or more logos; motion pauses on hover or
-keyboard focus and stops for reduced-motion preferences.
+## Recommendations
+
+`src/components/TestimonialsSection.astro` implements a horizontal rail.
+Regular vertical mouse-wheel input scrolls horizontally when possible,
+while at either end normal page scrolling resumes. Horizontal trackpads and
+keyboard navigation still work. Previous/next buttons are available, and
+the visual scrollbar is hidden. The complete texts remain available by expanding
+each testimonial; original languages are always recoverable.
+
+The five recommendations are presently staged with
+`consentToPublish: false` in `src/data/testimonials.ts`. The special preview
+branch temporarily shows them for design review without changing the production
+PR's consent filter.
 
 ## Project case studies
 
-Details are kept in `src/data/projectCases.ts` in EN/IT/ES, keyed by the
-existing project indexes (internally only: **numbers are not displayed**).
+Details are kept in `src/data/projectCases.ts` in EN/IT/ES, keyed by project
+indexes. **Numbers are not shown** to visitors.
 
 Each project keeps a short summary and an expandable breakdown:
 - Challenge
 - Personal contribution
 - Approach and verification
 
-Technical stacks appear inside the breakdown instead of competing with the story.
 Only claims already present in the portfolio are included. Results, client names
-and screenshots have not been invented.
+and screenshots have not been invented. Public project links and images must
+be added only when appropriately cleared. Never publish private backoffice
+screenshots showing customer data, credentials, APIs, order or financial figures
+or internal-only logic.
 
-The `publicUrl` and `publicImage` fields in project case data may be set
-**only for approved public material**. Never upload client backoffices containing
-private/customer information, access credentials, sales figures, API tokens or
-non-public architecture.
+## Validation
 
-## Editorial safeguards
-
-A suggestion to ignore a former employer's objections is not a publication policy:
-check employment and client agreements, NDAs and brand usage permissions before
-naming clients. If unsure, keep anonymized case studies and use your own generic
-diagrams or screenshots recreated with synthetic data.
-
-Test the mobile layout, keyboard-accessible `<details>` and marquee behavior,
-then run `npm run check` and `npm run build` before merging.
+Run `npm run check` and `npm run build`. Test all three language routes,
+mouse-wheel scrolling without Shift, edge release to page scrolling, arrow
+buttons, narrow screens, reduced-motion settings and image fallbacks.
