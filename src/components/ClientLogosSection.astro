@@ -112,7 +112,7 @@ const moving = clients.length >= 4;
                   ? <img src={client.logoSrc} data-logo-label={client.name} alt={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
                   : <span class="clients__placeholder">{client.name}</span>
               )}
-              <span class="clients__all-name">{client.name}</span>
+              {client.logoSrc && <span class="clients__all-name">{client.name}</span>}
             </li>
           ))}
         </ul>
