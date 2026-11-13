@@ -8,34 +8,30 @@ interface Props {
 }
 
 const { lang, items } = Astro.props;
-
 const copy: Record<Language, {
-  title: string;
-  introduction: string;
-  readOriginal: string;
-  viewProfile: string;
-  translatedFrom: string;
+  title: string; introduction: string; readFull: string;
+  readOriginal: string; viewProfile: string;
 }> = {
   en: {
     title: 'What people say.',
-    introduction: 'Perspectives from people I have worked with.',
-    readOriginal: 'Read the original',
-    viewProfile: 'View profile',
-    translatedFrom: 'Translated from',
+    introduction: 'Feedback from people I have worked with.',
+    readFull: 'Read full recommendation',
+    readOriginal: 'Original in',
+    viewProfile: 'LinkedIn',
   },
   it: {
     title: 'Dicono di me.',
-    introduction: 'Le parole delle persone con cui ho lavorato.',
-    readOriginal: 'Leggi il testo originale',
-    viewProfile: 'Vedi il profilo',
-    translatedFrom: 'Tradotto da',
+    introduction: 'Le parole di chi ha lavorato con me.',
+    readFull: 'Leggi tutta la raccomandazione',
+    readOriginal: 'Originale in',
+    viewProfile: 'LinkedIn',
   },
   es: {
     title: 'Qué dicen de mí.',
-    introduction: 'La opinión de personas con las que he trabajado.',
-    readOriginal: 'Leer el texto original',
-    viewProfile: 'Ver perfil',
-    translatedFrom: 'Traducido del',
+    introduction: 'La opinión de quienes han trabajado conmigo.',
+    readFull: 'Leer la recomendación completa',
+    readOriginal: 'Original en',
+    viewProfile: 'LinkedIn',
   },
 };
 const languageNames: Record<Language, Record<Language, string>> = {
@@ -48,45 +44,41 @@ const labels = copy[lang];
 
 {items.length > 0 && (
   <section class="testimonials" id="testimonials" aria-labelledby="testimonials-heading">
-    <div class="frame testimonials__layout">
+    <div class="frame">
       <div class="testimonials__heading">
         <h2 id="testimonials-heading">{labels.title}</h2>
         <p>{labels.introduction}</p>
       </div>
-      <ol class="testimonials__list">
-        {items.map((item, index) => (
+      <ul class="testimonials__rail" aria-label={labels.title}>
+        {items.map((item) => (
           <li class="testimonials__item">
-            <span class="testimonials__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            <div class="testimonials__body">
-              <blockquote lang={lang}>
-                <p>“{item.text[lang]}”</p>
-              </blockquote>
-              <div class="testimonials__credit">
+            <article class="testimonial">
+              <details class="testimonial__details">
+                <summary>
+                  <span class="testimonial__excerpt" lang={lang}>“{item.text[lang]}”</span>
+                  <span class="testimonial__read-more">{labels.readFull}</span>
+                </summary>
+                <div class="testimonial__expanded">
+                  <blockquote lang={lang}><p>“{item.text[lang]}”</p></blockquote>
+                  {lang !== item.sourceLanguage && (
+                    <details class="testimonial__original">
+                      <summary>{labels.readOriginal} {languageNames[lang][item.sourceLanguage]}</summary>
+                      <p lang={item.sourceLanguage}>{item.text[item.sourceLanguage]}</p>
+                    </details>
+                  )}
+                </div>
+              </details>
+              <footer class="testimonial__credit">
                 <div>
                   <strong>{item.author}</strong>
                   <span>{item.role}{item.company ? ` · ${item.company}` : ''}</span>
                 </div>
-                {item.profileUrl && (
-                  <a href={item.profileUrl} target="_blank" rel="noopener noreferrer">
-                    {labels.viewProfile}
-                  </a>
-                )}
-              </div>
-              {lang !== item.sourceLanguage && (
-                <details class="testimonials__original">
-                  <summary>
-                    {labels.readOriginal} · {languageNames[lang][item.sourceLanguage]}
-                  </summary>
-                  <p lang={item.sourceLanguage}>{item.text[item.sourceLanguage]}</p>
-                  <p class="testimonials__translation-note">
-                    {labels.translatedFrom} {languageNames[lang][item.sourceLanguage]}
-                  </p>
-                </details>
-              )}
-            </div>
+                {item.profileUrl && <a href={item.profileUrl} target="_blank" rel="noopener noreferrer">{labels.viewProfile}</a>}
+              </footer>
+            </article>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   </section>
 )}
