@@ -159,7 +159,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       return captchaPromise;
     };
 
-    if (captchaContainer && 'IntersectionObserver' in window) {
+    // In deployment previews without a Turnstile site key, do not display
+    // an alarming verification error just because the contact area is visible.
+    // A real submit attempt still reports that verification is unavailable.
+    if (siteKey && captchaContainer && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
           observer.disconnect();
@@ -170,17 +173,19 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         }
       }, { rootMargin: '500px' });
       observer.observe(captchaContainer);
-    } else {
+    } else if (siteKey) {
       void ensureCaptcha().catch((error) => {
         console.error('[ContactForm] Captcha initialization:', error);
       });
     }
 
-    form.addEventListener('focusin', () => {
-      void ensureCaptcha().catch((error) => {
-        console.error('[ContactForm] Captcha initialization:', error);
-      });
-    }, { once: true });
+    if (siteKey) {
+      form.addEventListener('focusin', () => {
+        void ensureCaptcha().catch((error) => {
+          console.error('[ContactForm] Captcha initialization:', error);
+        });
+      }, { once: true });
+    }
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
