@@ -3,6 +3,9 @@ import { Image } from 'astro:assets';
 import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import ContactForm from './ContactForm.astro';
 import TestimonialsSection from './TestimonialsSection.astro';
+import ClientLogosSection from './ClientLogosSection.astro';
+import { getVisibleClientLogos } from '../data/clientLogos';
+import { projectCases, projectCaseLabels } from '../data/projectCases';
 import { getPublishedTestimonials } from '../data/testimonials';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { privacyCopy, privacyPath } from '../data/privacy';
@@ -16,6 +19,7 @@ const { lang } = Astro.props;
 const site = localizedSite(lang);
 const labels = ui[lang];
 const approvedTestimonials = getPublishedTestimonials();
+const approvedClientLogos = getVisibleClientLogos();
 const testimonialNavLabels: Record<Language, string> = { en: 'Testimonials', it: 'Dicono di me', es: 'Opiniones' };
 const navigation = approvedTestimonials.length > 0
   ? [site.navigation[0], { href: '#testimonials', label: testimonialNavLabels[lang] }, ...site.navigation.slice(1)]
@@ -78,29 +82,55 @@ const currentYear = new Date().getFullYear();
       </div>
     </section>
 
+    <ClientLogosSection lang={lang} clients={approvedClientLogos} />
+
     <section class="projects" id="work" aria-labelledby="projects-heading">
       <div class="frame">
         <div class="projects__header">
           <h2 id="projects-heading">{labels.selectedWork}</h2>
           <p>{site.work.introduction}</p>
         </div>
-        <ol class="project-index">
+        <ul class="project-index">
           {site.projects.map((project) => (
             <li class="project-index__item">
-              <span class="project-index__number">{project.index}</span>
               <div class="project-index__lead">
                 <p class="project-index__type">{project.category.replaceAll(' · ', ' / ')}</p>
                 <h3>{project.title}</h3>
               </div>
               <div class="project-index__details">
                 <p>{project.description}</p>
-                <ul aria-label={labels.technologiesLabel}>
-                  {project.technologies.map((technology) => <li>{technology}</li>)}
-                </ul>
+                <details class="project-study">
+                  <summary>{projectCaseLabels[lang].expand}</summary>
+                  <dl class="project-study__grid">
+                    <div>
+                      <dt>{projectCaseLabels[lang].challenge}</dt>
+                      <dd>{projectCases[lang][project.index].challenge}</dd>
+                    </div>
+                    <div>
+                      <dt>{projectCaseLabels[lang].contribution}</dt>
+                      <dd>{projectCases[lang][project.index].contribution}</dd>
+                    </div>
+                    <div>
+                      <dt>{projectCaseLabels[lang].verification}</dt>
+                      <dd>{projectCases[lang][project.index].verification}</dd>
+                    </div>
+                  </dl>
+                  {projectCases[lang][project.index].publicImage && (
+                    <figure class="project-study__figure">
+                      <img src={projectCases[lang][project.index].publicImage} alt={projectCases[lang][project.index].publicImageAlt ?? ''} loading="lazy" />
+                    </figure>
+                  )}
+                  {projectCases[lang][project.index].publicUrl && (
+                    <a class="project-study__link" href={projectCases[lang][project.index].publicUrl} target="_blank" rel="noopener noreferrer">{projectCaseLabels[lang].site}</a>
+                  )}
+                  <ul class="project-study__technologies" aria-label={labels.technologiesLabel}>
+                    {project.technologies.map((technology) => <li>{technology}</li>)}
+                  </ul>
+                </details>
               </div>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
 
@@ -112,17 +142,16 @@ const currentYear = new Date().getFullYear();
           <h2 id="services-heading">{site.servicesSection.title}</h2>
           <p>{labels.capabilitySubtitle}</p>
         </div>
-        <ol class="capabilities__list">
+        <ul class="capabilities__list">
           {site.services.map((service) => (
             <li>
-              <span>{service.index}</span>
               <div>
                 <h3>{service.title}</h3>
                 <p>{service.detail}</p>
               </div>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
 
