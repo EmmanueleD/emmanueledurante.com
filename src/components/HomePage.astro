@@ -6,7 +6,7 @@ import TestimonialsSection from './TestimonialsSection.astro';
 import ClientLogosSection from './ClientLogosSection.astro';
 import { getVisibleClientLogos } from '../data/clientLogos';
 import { projectCases, projectCaseLabels } from '../data/projectCases';
-import { getPublishedTestimonials } from '../data/testimonials';
+import { testimonials } from '../data/testimonials';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { privacyCopy, privacyPath } from '../data/privacy';
 import { localizedSite, ui, languages, languagePath, type Language } from '../data/locales';
@@ -18,7 +18,8 @@ interface Props {
 const { lang } = Astro.props;
 const site = localizedSite(lang);
 const labels = ui[lang];
-const approvedTestimonials = getPublishedTestimonials();
+// Visual review only: deliberately show all staged quotes on this noindex preview.
+const approvedTestimonials = testimonials;
 const approvedClientLogos = getVisibleClientLogos();
 const testimonialNavLabels: Record<Language, string> = { en: 'Testimonials', it: 'Dicono di me', es: 'Opiniones' };
 const navigation = approvedTestimonials.length > 0
@@ -27,7 +28,7 @@ const navigation = approvedTestimonials.length > 0
 const currentYear = new Date().getFullYear();
 ---
 
-<BaseLayout title={site.title} description={site.description} lang={lang}>
+<BaseLayout title={site.title} description={site.description} lang={lang} noindex={true}>
   <header class="masthead">
     <div class="frame masthead__inner">
       <a class="wordmark" href="#top">
