@@ -16,6 +16,8 @@ const labels = {
     next: 'Next client',
     pause: 'Pause movement',
     resume: 'Resume movement',
+    all: 'View all clients',
+    hideAll: 'Clients directory', 
   },
   it: {
     title: 'Clienti e collaborazioni',
@@ -24,6 +26,8 @@ const labels = {
     next: 'Cliente successivo',
     pause: 'Metti in pausa',
     resume: 'Riprendi movimento',
+    all: 'Vedi tutti i clienti',
+    hideAll: 'Elenco completo dei clienti',
   },
   es: {
     title: 'Clientes y colaboraciones',
@@ -32,6 +36,8 @@ const labels = {
     next: 'Cliente siguiente',
     pause: 'Pausar movimiento',
     resume: 'Reanudar movimiento',
+    all: 'Ver todos los clientes',
+    hideAll: 'Lista completa de clientes',
   },
 }[lang];
 const moving = clients.length >= 4;
@@ -89,11 +95,32 @@ const moving = clients.length >= 4;
         )}
       </div>
     </div>
-    {moving && (
-      <div class="frame clients__accessibility">
+    <div class="frame clients__accessibility">
+      <details class="clients__all">
+        <summary>{labels.all} ({clients.length})</summary>
+        <ul class="clients__all-list" aria-label={labels.hideAll}>
+          {clients.map((client) => (
+            <li>
+              {client.website ? (
+                <a href={client.website} target="_blank" rel="noopener noreferrer">
+                  {client.logoSrc
+                    ? <img src={client.logoSrc} data-logo-label={client.name} alt={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                    : <span class="clients__placeholder">{client.name}</span>}
+                </a>
+              ) : (
+                client.logoSrc
+                  ? <img src={client.logoSrc} data-logo-label={client.name} alt={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                  : <span class="clients__placeholder">{client.name}</span>
+              )}
+              <span class="clients__all-name">{client.name}</span>
+            </li>
+          ))}
+        </ul>
+      </details>
+      {moving && (
         <button type="button" class="clients__pause" data-client-pause aria-pressed="false">{labels.pause}</button>
-      </div>
-    )}
+      )}
+    </div>
   </section>
 )}
 
