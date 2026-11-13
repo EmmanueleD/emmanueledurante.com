@@ -205,8 +205,16 @@ a:hover { text-decoration-color: var(--color-mark); }
 .clients__controls { display: flex; gap: var(--space-2); margin-left: auto; }
 .clients__controls button { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--color-muted); border-radius: 0; background: transparent; color: var(--color-ink); cursor: pointer; font-size: 22px; line-height: 1; }
 .clients__controls button:hover { background: var(--color-ink); color: var(--color-paper); }
-.clients__accessibility { display: flex; justify-content: flex-end; margin-top: var(--space-2); }
+.clients__accessibility { display: flex; justify-content: space-between; gap: var(--space-4); align-items: flex-start; margin-top: var(--space-2); }
 .clients__pause { border: 0; background: transparent; color: var(--color-muted); cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; padding: 6px 0; }
+.clients__all { min-width: 0; max-width: 100%; }
+.clients__all > summary { cursor: pointer; width: fit-content; font-size: 12px; font-weight: 600; padding: 6px 0; color: var(--color-muted); text-decoration: underline; text-underline-offset: 3px; }
+.clients__all-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); column-gap: var(--space-4); row-gap: var(--space-5); margin-top: var(--space-5); margin-bottom: var(--space-4); width: min(100%, 1280px); }
+.clients__all-list li { display: flex; flex-direction: column; gap: var(--space-2); justify-content: end; min-width: 0; }
+.clients__all-list a { min-height: 70px; display: grid; place-items: center; text-align: center; }
+.clients__all-list img { max-width: 100%; max-height: 54px; width: auto; height: auto; object-fit: contain; filter: grayscale(1); }
+.clients__all-name { font-size: 12px; color: var(--color-muted); line-height: 1.4; text-align: center; }
+
 
 /* Compact horizontally scrollable testimonials, no numbers or stacked quotes. */
 .testimonials { padding-block: var(--space-7); background: var(--color-paper-2); }
