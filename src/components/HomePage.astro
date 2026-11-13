@@ -5,7 +5,6 @@ import ContactForm from './ContactForm.astro';
 import TestimonialsSection from './TestimonialsSection.astro';
 import ClientLogosSection from './ClientLogosSection.astro';
 import { getVisibleClientLogos } from '../data/clientLogos';
-import { projectCases, projectCaseLabels } from '../data/projectCases';
 import { getPublishedTestimonials } from '../data/testimonials';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { privacyCopy, privacyPath } from '../data/privacy';
@@ -99,34 +98,9 @@ const currentYear = new Date().getFullYear();
               </div>
               <div class="project-index__details">
                 <p>{project.description}</p>
-                <details class="project-study">
-                  <summary>{projectCaseLabels[lang].expand}</summary>
-                  <dl class="project-study__grid">
-                    <div>
-                      <dt>{projectCaseLabels[lang].challenge}</dt>
-                      <dd>{projectCases[lang][project.index].challenge}</dd>
-                    </div>
-                    <div>
-                      <dt>{projectCaseLabels[lang].contribution}</dt>
-                      <dd>{projectCases[lang][project.index].contribution}</dd>
-                    </div>
-                    <div>
-                      <dt>{projectCaseLabels[lang].verification}</dt>
-                      <dd>{projectCases[lang][project.index].verification}</dd>
-                    </div>
-                  </dl>
-                  {projectCases[lang][project.index].publicImage && (
-                    <figure class="project-study__figure">
-                      <img src={projectCases[lang][project.index].publicImage} alt={projectCases[lang][project.index].publicImageAlt ?? ''} loading="lazy" />
-                    </figure>
-                  )}
-                  {projectCases[lang][project.index].publicUrl && (
-                    <a class="project-study__link" href={projectCases[lang][project.index].publicUrl} target="_blank" rel="noopener noreferrer">{projectCaseLabels[lang].site}</a>
-                  )}
-                  <ul class="project-study__technologies" aria-label={labels.technologiesLabel}>
-                    {project.technologies.map((technology) => <li>{technology}</li>)}
-                  </ul>
-                </details>
+                <ul aria-label={labels.technologiesLabel}>
+                  {project.technologies.map((technology) => <li>{technology}</li>)}
+                </ul>
               </div>
             </li>
           ))}
