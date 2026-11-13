@@ -5,37 +5,64 @@ import type { ClientLogo } from '../data/clientLogos';
 interface Props {
   lang: Language;
   clients: readonly ClientLogo[];
-  preview?: boolean;
 }
 
 const { lang, clients } = Astro.props;
 const labels = {
-  en: { title: 'Clients & collaborations', aria: 'Companies and brands I have worked with' },
-  it: { title: 'Clienti e collaborazioni', aria: 'Aziende e marchi con cui ho lavorato' },
-  es: { title: 'Clientes y colaboraciones', aria: 'Empresas y marcas con las que he trabajado' },
+  en: {
+    title: 'Clients & collaborations',
+    aria: 'Companies and brands I have worked with',
+    previous: 'Previous client',
+    next: 'Next client',
+    pause: 'Pause movement',
+    resume: 'Resume movement',
+  },
+  it: {
+    title: 'Clienti e collaborazioni',
+    aria: 'Aziende e marchi con cui ho lavorato',
+    previous: 'Cliente precedente',
+    next: 'Cliente successivo',
+    pause: 'Metti in pausa',
+    resume: 'Riprendi movimento',
+  },
+  es: {
+    title: 'Clientes y colaboraciones',
+    aria: 'Empresas y marcas con las que he trabajado',
+    previous: 'Cliente anterior',
+    next: 'Cliente siguiente',
+    pause: 'Pausar movimiento',
+    resume: 'Reanudar movimiento',
+  },
 }[lang];
 const moving = clients.length >= 4;
 ---
 
 {clients.length > 0 && (
-  <section class="clients" id="clients" aria-labelledby="clients-heading">
+  <section class="clients" id="clients" aria-labelledby="clients-heading"
+    data-client-marquee data-pause-label={labels.pause} data-resume-label={labels.resume}>
     <div class="frame clients__heading">
       <h2 id="clients-heading">{labels.title}</h2>
+      {moving && (
+        <div class="clients__controls">
+          <button type="button" data-client-step="-1" aria-label={labels.previous}>←</button>
+          <button type="button" data-client-step="1" aria-label={labels.next}>→</button>
+        </div>
+      )}
     </div>
     <div class:list={['clients__marquee', { 'clients__marquee--moving': moving }]} aria-label={labels.aria}>
-      <div class="clients__track">
-        <ul class="clients__logos">
+      <div class="clients__track" data-client-track>
+        <ul class="clients__logos" data-client-original>
           {clients.map((client) => (
             <li>
               {client.website ? (
                 <a href={client.website} target="_blank" rel="noopener noreferrer" aria-label={client.name}>
                   {client.logoSrc
-                    ? <img src={client.logoSrc} alt={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                    ? <img src={client.logoSrc} alt={client.name} data-logo-label={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
                     : <span class="clients__placeholder">{client.name}</span>}
                 </a>
               ) : (
                 client.logoSrc
-                  ? <img src={client.logoSrc} alt={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                  ? <img src={client.logoSrc} alt={client.name} data-logo-label={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
                   : <span class="clients__placeholder">{client.name}</span>
               )}
             </li>
@@ -45,14 +72,94 @@ const moving = clients.length >= 4;
           <ul class="clients__logos" aria-hidden="true">
             {clients.map((client) => (
               <li>
-                {client.logoSrc
-                  ? <img src={client.logoSrc} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-                  : <span class="clients__placeholder">{client.name}</span>}
+                {client.website ? (
+                  <a href={client.website} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label={client.name}>
+                    {client.logoSrc
+                      ? <img src={client.logoSrc} alt="" data-logo-label={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                      : <span class="clients__placeholder">{client.name}</span>}
+                  </a>
+                ) : (
+                  client.logoSrc
+                    ? <img src={client.logoSrc} alt="" data-logo-label={client.name} loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+                    : <span class="clients__placeholder">{client.name}</span>
+                )}
               </li>
             ))}
           </ul>
         )}
       </div>
     </div>
+    {moving && (
+      <div class="frame clients__accessibility">
+        <button type="button" class="clients__pause" data-client-pause aria-pressed="false">{labels.pause}</button>
+      </div>
+    )}
   </section>
 )}
+
+<script>
+  for (const section of document.querySelectorAll<HTMLElement>('[data-client-marquee]')) {
+    const track = section.querySelector<HTMLElement>('[data-client-track]');
+    const original = section.querySelector<HTMLElement>('[data-client-original]');
+    if (!track || !original) continue;
+
+    // Remote assets may expire or forbid hotlinks. Preserve the verified brand
+    // name rather than showing a broken image or an unrelated substitute.
+    for (const image of section.querySelectorAll<HTMLImageElement>('img[data-logo-label]')) {
+      const showFallback = () => {
+        const replacement = document.createElement('span');
+        replacement.className = 'clients__placeholder';
+        replacement.textContent = image.dataset.logoLabel || image.alt;
+        image.replaceWith(replacement);
+      };
+      image.addEventListener('error', showFallback, { once: true });
+      if (image.complete && image.naturalWidth === 0) showFallback();
+    }
+
+    const duplicate = original.nextElementSibling;
+    if (!duplicate) continue;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pauseButton = section.querySelector<HTMLButtonElement>('[data-client-pause]');
+    let offset = 0;
+    let lastFrame = 0;
+    let paused = false;
+
+    const render = () => {
+      const width = original.getBoundingClientRect().width;
+      if (width <= 0) return;
+      offset = ((offset % width) + width) % width;
+      track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+    };
+
+    const tick = (time: number) => {
+      if (!lastFrame) lastFrame = time;
+      const elapsed = Math.min((time - lastFrame) / 1000, 0.06);
+      lastFrame = time;
+      if (!paused && !reducedMotion.matches && !document.hidden) {
+        offset += 33 * elapsed;
+        render();
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+
+    for (const button of section.querySelectorAll<HTMLButtonElement>('[data-client-step]')) {
+      button.addEventListener('click', () => {
+        const firstLogo = original.querySelector<HTMLElement>('li');
+        if (!firstLogo) return;
+        const gap = parseFloat(getComputedStyle(original).columnGap) || 0;
+        offset += Number(button.dataset.clientStep) * (firstLogo.getBoundingClientRect().width + gap);
+        render();
+      });
+    }
+
+    pauseButton?.addEventListener('click', () => {
+      paused = !paused;
+      pauseButton.textContent = paused
+        ? section.dataset.resumeLabel || 'Resume'
+        : section.dataset.pauseLabel || 'Pause';
+      pauseButton.setAttribute('aria-pressed', String(paused));
+    });
+  }
+</script>
