@@ -10,7 +10,7 @@ interface Props {
 const { lang, items } = Astro.props;
 const copy: Record<Language, {
   title: string; introduction: string; readFull: string;
-  readOriginal: string; viewProfile: string;
+  readOriginal: string; viewProfile: string; previous: string; next: string;
 }> = {
   en: {
     title: 'What people say.',
@@ -18,6 +18,8 @@ const copy: Record<Language, {
     readFull: 'Read full recommendation',
     readOriginal: 'Original in',
     viewProfile: 'LinkedIn',
+    previous: 'Previous recommendation',
+    next: 'Next recommendation',
   },
   it: {
     title: 'Dicono di me.',
@@ -25,6 +27,8 @@ const copy: Record<Language, {
     readFull: 'Leggi tutta la raccomandazione',
     readOriginal: 'Originale in',
     viewProfile: 'LinkedIn',
+    previous: 'Raccomandazione precedente',
+    next: 'Raccomandazione successiva',
   },
   es: {
     title: 'Qué dicen de mí.',
@@ -32,6 +36,8 @@ const copy: Record<Language, {
     readFull: 'Leer la recomendación completa',
     readOriginal: 'Original en',
     viewProfile: 'LinkedIn',
+    previous: 'Recomendación anterior',
+    next: 'Recomendación siguiente',
   },
 };
 const languageNames: Record<Language, Record<Language, string>> = {
@@ -48,8 +54,12 @@ const labels = copy[lang];
       <div class="testimonials__heading">
         <h2 id="testimonials-heading">{labels.title}</h2>
         <p>{labels.introduction}</p>
+        <div class="testimonials__controls" aria-label={labels.title}>
+          <button type="button" data-rail-step="-1" aria-label={labels.previous}>←</button>
+          <button type="button" data-rail-step="1" aria-label={labels.next}>→</button>
+        </div>
       </div>
-      <ul class="testimonials__rail" aria-label={labels.title}>
+      <ul class="testimonials__rail" aria-label={labels.title} tabindex="0" data-testimonials-rail>
         {items.map((item) => (
           <li class="testimonials__item">
             <article class="testimonial">
@@ -82,3 +92,36 @@ const labels = copy[lang];
     </div>
   </section>
 )}
+
+<script>
+  // Adapt vertical wheel input to horizontal scrolling, without requiring Shift.
+  // At either end of the rail, allow the page to scroll vertically as usual.
+  for (const section of document.querySelectorAll<HTMLElement>('.testimonials')) {
+    const rail = section.querySelector<HTMLElement>('[data-testimonials-rail]');
+    if (!rail) continue;
+
+    rail.addEventListener('wheel', (event: WheelEvent) => {
+      if (event.ctrlKey || event.metaKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      if (event.target instanceof Element && event.target.closest('.testimonial__expanded')) return;
+      const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16
+        : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? rail.clientWidth : 1;
+      const delta = event.deltaY * unit;
+      const maxLeft = Math.max(0, rail.scrollWidth - rail.clientWidth);
+      const next = Math.max(0, Math.min(maxLeft, rail.scrollLeft + delta));
+      if (Math.abs(next - rail.scrollLeft) > 0.5) {
+        event.preventDefault();
+        rail.scrollLeft = next;
+      }
+    }, { passive: false });
+
+    for (const button of section.querySelectorAll<HTMLButtonElement>('[data-rail-step]')) {
+      button.addEventListener('click', () => {
+        const direction = Number(button.dataset.railStep);
+        const firstCard = rail.querySelector<HTMLElement>('.testimonials__item');
+        if (!firstCard) return;
+        const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+        rail.scrollBy({ left: direction * (firstCard.offsetWidth + gap), behavior: 'smooth' });
+      });
+    }
+  }
+</script>
