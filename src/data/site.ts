@@ -1,8 +1,8 @@
 export const site = {
   name: 'Emmanuele Durante',
-  title: 'Emmanuele Durante — Frontend & E-commerce Engineer',
+  title: 'Emmanuele Durante — Frontend Developer',
   description:
-    'Frontend & e-commerce engineering with Vue, React, TypeScript, Shopify and Shopware 6. B2B e-commerce, integrations and AI-assisted development.',
+    'Frontend Developer building and improving web applications, custom interfaces and e-commerce workflows. Experience with Vue, React, Shopify and Shopware 6.',
 
   presentation: {
     accents: {
@@ -27,20 +27,20 @@ export const site = {
   ],
 
   hero: {
-    eyebrow: 'Frontend & E-commerce Engineer · B2B/B2C · AI-assisted development',
+    eyebrow: 'Frontend Developer · Web applications · E-commerce',
     title: [
-      { text: 'Frontend engineering', accent: true },
-      { text: ' for complex e-commerce problems.' },
+      { text: 'Frontend development', accent: true },
+      { text: ' for complex web applications.' },
     ],
     introduction:
-      'I build web applications and e-commerce features that are easier to use, debug and maintain—from Vue and React interfaces to Shopify and Shopware 6.',
+      'I build and improve web interfaces, custom features and e-commerce workflows. I focus on understanding requirements, solving problems at their source and leaving code easier to maintain.',
   },
 
   work: {
     eyebrow: 'Selected work',
     title: 'Real problems. Maintainable solutions.',
     introduction:
-      'A selection of anonymized work, focused on the technical contribution rather than client names.',
+      'Selected work from production projects, focused on the problem, my contribution and the technical choices behind it.',
   },
 
   projects: [
@@ -49,7 +49,7 @@ export const site = {
       category: 'B2B e-commerce · Shopware',
       title: 'Controlled access for a private B2B storefront',
       description:
-        'Implemented a restricted e-commerce workflow with controlled registration, access rules, configuration-aware migrations and automated regression tests.',
+        'A private B2B storefront required controlled registration and access. I implemented the workflow, access rules, configuration-aware migrations and regression tests.',
       technologies: ['Shopware 6', 'PHP / Symfony', 'Twig', 'PHPUnit'],
     },
     {
@@ -57,7 +57,7 @@ export const site = {
       category: 'E-commerce · Shopify',
       title: 'Refactoring a custom routine builder',
       description:
-        'Reworked a large custom feature. JavaScript implementation into a maintainable Web Component, centralizing business rules and improving lifecycle and cart-error handling.',
+        'A large custom routine builder combined complex business rules and cart interactions. I refactored it into a Web Component, centralizing the rules and improving lifecycle and cart-error handling.',
       technologies: ['Shopify', 'Liquid', 'JavaScript', 'Web Components'],
     },
     {
@@ -65,7 +65,7 @@ export const site = {
       category: 'Product interfaces · React',
       title: 'Schema-driven forms with browser-generated PDFs',
       description:
-        'Developed typed form flows, structured data models and browser-side PDF generation, with optimistic updates and automated tests.',
+        'Built schema-driven form workflows with typed data models and browser-side PDF generation, including optimistic updates and automated tests.',
       technologies: ['React', 'TypeScript', 'TanStack', 'Zod', 'pdf-lib'],
     },
     {
@@ -73,7 +73,7 @@ export const site = {
       category: 'AI · Developer tooling',
       title: 'AI-assisted development with independent verification',
       description:
-        'R&D. Explored agent skills, Figma-to-code evaluation and test-first workflows, with an emphasis on independently checking generated results.',
+        'R&D. Evaluated agent skills and Figma-to-code workflows using test-first approaches and independent checks of generated results.',
       technologies: ['AI agents', 'TDD', 'Developer tooling', 'Evaluation'],
     },
   ],
@@ -123,12 +123,12 @@ export const site = {
     statement:
       'I like getting to the root of a problem—and leaving the system easier to work with.',
     note:
-      'I have worked with agency teams, clients and backend developers since 2022. Based in Forlì, Italy; open to frontend and e-commerce engineering roles, remote collaboration and selected freelance projects.',
+      'I have worked with agency teams, clients and backend developers since 2022. Based in Forlì, Italy; open to Frontend Developer roles, including remote positions, and collaborations with product teams and agencies.',
   },
 
   contact: {
     eyebrow: 'Contact',
-    title: 'Looking for a frontend engineer?',
+    title: 'Looking for a frontend developer?',
     note:
       'Hiring for a role, or need help with an e-commerce product? Tell me what you are building.',
     email: 'hello@emmanueledurante.com',
