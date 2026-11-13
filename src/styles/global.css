@@ -217,7 +217,7 @@ a:hover { text-decoration-color: var(--color-mark); }
 
 
 /* Compact horizontally scrollable testimonials, no numbers or stacked quotes. */
-.testimonials { padding-block: var(--space-7); background: var(--color-paper-2); }
+.testimonials { padding-block: var(--space-7); background: #ffffff; }
 .testimonials__heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-5); }
 .testimonials__heading h2 { font: 700 clamp(34px,4vw,58px)/1 var(--font-display); letter-spacing: var(--tracking-display); }
 .testimonials__heading p { font-size: 15px; line-height: 1.5; color: var(--color-ink-2); }
