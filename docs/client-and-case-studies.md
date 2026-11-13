@@ -5,17 +5,19 @@
 The portfolio owner supplied 15 client/brand names in the 13 November 2026 conversation.
 They are kept in `src/data/clientLogos.ts`, in that order.
 
-Eight entries currently use publicly available remote logo images. The remaining
-seven use their actual names as typographic **fallbacks**, not fabricated logos.
+Nine entries currently use public remote logo images. The remaining six
+use their actual names as typographic **fallbacks**, not fabricated logos.
 The image URLs should be replaced by local, optimized, permission-cleared files
 before the final production release; hotlinks add third-party requests and can break.
 
 Official sites are linked where their identities could be matched confidently.
-`Welding` is ambiguous; leave its link empty until the exact company is confirmed.
+The owner identified Welding specifically as **Teloneria Welding** and supplied its URL.
 `Divani.Store` was matched to the public site and agency case-study.
 
-The strip is monochromatic, runs slowly and stops on hover/focus. Reduced-motion
-visitors get a non-animated horizontal list.
+The strip is monochromatic and runs continuously at approximately 33 px/s without
+stopping on hover. Previous/next arrows move one logo at a time, an explicit
+pause/resume control is provided, and the system reduced-motion setting
+disables automatic movement while leaving the arrows usable.
 
 Do not imply endorsement by these brands. Confirm contractual rights to
 display client names and logos before merging.
@@ -25,11 +27,12 @@ display client names and logos before merging.
 `src/components/TestimonialsSection.astro` implements a horizontal rail.
 Regular vertical mouse-wheel input scrolls horizontally when possible,
 while at either end normal page scrolling resumes. Horizontal trackpads and
-keyboard navigation still work. Previous/next buttons are available, and
+keyboard navigation still work. Scroll snapping is disabled so it cannot prevent
+incremental wheel input from traversing all items. Previous/next buttons are available, and
 the visual scrollbar is hidden. The complete texts remain available by expanding
 each testimonial; original languages are always recoverable.
 
-The five recommendations are presently staged with
+The six recommendations (including Clarissa Abbruzzese) are presently staged with
 `consentToPublish: false` in `src/data/testimonials.ts`. The special preview
 branch temporarily shows them for design review without changing the production
 PR's consent filter.
