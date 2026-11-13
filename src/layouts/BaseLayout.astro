@@ -16,6 +16,16 @@ const portraitAlt = { en: 'Portrait of Emmanuele Durante', it: 'Ritratto di Emma
 const siteUrl = Astro.site ?? Astro.url;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 const openGraphImageUrl = new URL('/og-image.jpg', siteUrl);
+const personStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': new URL('/#person', siteUrl).href,
+  name: 'Emmanuele Durante',
+  url: new URL('/', siteUrl).href,
+  jobTitle: 'Frontend & E-commerce Engineer',
+  knowsAbout: ['Vue.js', 'React', 'Astro', 'TypeScript', 'Shopify', 'Shopware 6', 'B2B e-commerce'],
+  sameAs: ['https://www.linkedin.com/in/e14e/'],
+};
 ---
 
 <!doctype html>
@@ -61,6 +71,7 @@ const openGraphImageUrl = new URL('/og-image.jpg', siteUrl);
     <meta name="twitter:image" content={openGraphImageUrl} />
 
     <title>{title}</title>
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(personStructuredData)} />}
     <Analytics />
   </head>
   <body>
