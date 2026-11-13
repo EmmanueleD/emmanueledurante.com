@@ -214,10 +214,13 @@ a:hover { text-decoration-color: var(--color-mark); }
 .clients__logos img { display: block; max-width: 100%; max-height: 64px; object-fit: contain; filter: grayscale(1); opacity: .88; transition: opacity var(--motion-short),filter var(--motion-short); }
 .clients__logos a:hover img { opacity: 1; filter: none; }
 .clients__placeholder { color: var(--color-ink-2); font-size: clamp(17px,1.8vw,24px); font-family: var(--font-display); font-weight: 700; letter-spacing: -.035em; white-space: nowrap; }
-.clients__marquee--moving .clients__track { animation: client-marquee 84s linear infinite; }
-.clients__marquee--moving:hover .clients__track,
-.clients__marquee--moving:focus-within .clients__track { animation-play-state: paused; }
-@keyframes client-marquee { to { transform: translateX(-50%); } }
+/* JavaScript controls the continuous motion so arrows can reposition one logo.
+   Hover and focus do not stop the animation; the explicit pause button does. */
+.clients__controls { display: flex; gap: var(--space-2); margin-left: auto; }
+.clients__controls button { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--color-muted); border-radius: 0; background: transparent; color: var(--color-ink); cursor: pointer; font-size: 22px; line-height: 1; }
+.clients__controls button:hover { background: var(--color-ink); color: var(--color-paper); }
+.clients__accessibility { display: flex; justify-content: flex-end; margin-top: var(--space-2); }
+.clients__pause { border: 0; background: transparent; color: var(--color-muted); cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; padding: 6px 0; }
 
 /* Compact horizontally scrollable testimonials, no numbers or stacked quotes. */
 .testimonials { padding-block: var(--space-7); background: var(--color-paper-2); }
@@ -227,9 +230,9 @@ a:hover { text-decoration-color: var(--color-mark); }
 .testimonials__controls { display: flex; align-items: center; gap: var(--space-2); margin-left: auto; }
 .testimonials__controls button { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--color-muted); border-radius: 0; background: transparent; color: var(--color-ink); cursor: pointer; font-size: 22px; font-weight: 500; line-height: 1; }
 .testimonials__controls button:hover { background: var(--color-ink); color: var(--color-paper); }
-.testimonials__rail { display: flex; overflow-x: auto; overscroll-behavior-inline: contain; gap: clamp(52px,7vw,104px); scroll-snap-type: x proximity; scrollbar-width: none; scroll-padding-inline: 2px; padding-bottom: 0; }
+.testimonials__rail { display: flex; overflow-x: auto; overscroll-behavior-inline: contain; gap: clamp(52px,7vw,104px); scrollbar-width: none; padding-bottom: 0; }
 .testimonials__rail::-webkit-scrollbar { display: none; }
-.testimonials__item { flex: 0 0 min(82vw,410px); scroll-snap-align: start; min-width: 0; }
+.testimonials__item { flex: 0 0 min(82vw,410px); min-width: 0; }
 .testimonial { height: 100%; min-width: 0; display: flex; flex-direction: column; border-top: 2px solid var(--color-ink); padding-top: var(--space-4); }
 .testimonial__details { flex: 1 0 auto; }
 .testimonial__details > summary { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); cursor: pointer; }
@@ -258,6 +261,5 @@ a:hover { text-decoration-color: var(--color-mark); }
   .testimonials__rail { margin-right: calc(-1 * var(--gutter)); padding-right: var(--gutter); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .clients__marquee { overflow-x: auto; }
-  .clients__marquee--moving .clients__track { animation: none; }
+  .clients__pause { display: none; }
 }
