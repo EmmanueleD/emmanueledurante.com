@@ -65,7 +65,7 @@ const labels = copy[lang];
             <article class="testimonial">
               <details class="testimonial__details">
                 <summary>
-                  <span class="testimonial__excerpt" lang={lang}>“{item.text[lang]}”</span>
+                  <span class="testimonial__excerpt" lang={lang}>“{item.excerpt?.[lang] ?? item.text[lang]}”</span>
                   <span class="testimonial__read-more">{labels.readFull}</span>
                 </summary>
                 <div class="testimonial__expanded">
@@ -94,33 +94,40 @@ const labels = copy[lang];
 )}
 
 <script>
-  // Adapt vertical wheel input to horizontal scrolling, without requiring Shift.
-  // At either end of the rail, allow the page to scroll vertically as usual.
+  // Vertical wheel input navigates the entire horizontal rail.
+  // When the rail reaches either end, native page scrolling resumes.
+  // Do not use CSS scroll-snap: snapping can counteract incremental wheel input.
   for (const section of document.querySelectorAll<HTMLElement>('.testimonials')) {
     const rail = section.querySelector<HTMLElement>('[data-testimonials-rail]');
     if (!rail) continue;
 
-    rail.addEventListener('wheel', (event: WheelEvent) => {
-      if (event.ctrlKey || event.metaKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-      if (event.target instanceof Element && event.target.closest('.testimonial__expanded')) return;
-      const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16
-        : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? rail.clientWidth : 1;
+    section.addEventListener('wheel', (event: WheelEvent) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      if (event.target instanceof Element &&
+          event.target.closest('button, a, .testimonial__details[open]')) return;
+
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? rail.clientWidth : 1;
       const delta = event.deltaY * unit;
       const maxLeft = Math.max(0, rail.scrollWidth - rail.clientWidth);
-      const next = Math.max(0, Math.min(maxLeft, rail.scrollLeft + delta));
-      if (Math.abs(next - rail.scrollLeft) > 0.5) {
+      const current = rail.scrollLeft;
+      const next = Math.max(0, Math.min(maxLeft, current + delta));
+      if (Math.abs(next - current) > 0.1) {
         event.preventDefault();
         rail.scrollLeft = next;
       }
     }, { passive: false });
 
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     for (const button of section.querySelectorAll<HTMLButtonElement>('[data-rail-step]')) {
       button.addEventListener('click', () => {
-        const direction = Number(button.dataset.railStep);
         const firstCard = rail.querySelector<HTMLElement>('.testimonials__item');
         if (!firstCard) return;
         const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
-        rail.scrollBy({ left: direction * (firstCard.offsetWidth + gap), behavior: 'smooth' });
+        rail.scrollBy({
+          left: Number(button.dataset.railStep) * (firstCard.getBoundingClientRect().width + gap),
+          behavior: reducedMotion.matches ? 'instant' : 'smooth',
+        });
       });
     }
   }
