@@ -16,8 +16,8 @@
   --color-field-ink: oklch(97.5% 0.005 90);
   --color-mark: oklch(57% 0.215 29);
   --color-mark-ink: oklch(97.5% 0.005 90);
-  --font-display: "Radio Canada Big", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Radio Canada", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--local-radio-canada-big), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--local-radio-canada), ui-sans-serif, system-ui, sans-serif;
   --font-outlier: var(--font-display);
   --radius-card: 0;
   --radius-pill: 0;

@@ -23,7 +23,7 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
   en: {
     title: 'Privacy notice.',
     metaTitle: 'Privacy notice — Emmanuele Durante',
-    metaDescription: 'How this website handles personal data sent through the contact form, security checks and privacy-focused analytics.',
+    metaDescription: 'How personal data is handled through the contact form and security protections on this website.',
     updated: 'Updated 13 November 2026',
     intro: 'This notice explains how personal data is handled when you visit emmanueledurante.com or send a message using its contact form.',
     backHome: 'Back to homepage',
@@ -49,13 +49,13 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
         title: '3. Purposes and lawful bases',
         paragraphs: [
           'Contact requests are used only to answer messages and evaluate opportunities or professional collaborations. The legal basis is Article 6(1)(b) GDPR for pre-contractual steps requested by the sender when applicable, or Article 6(1)(f) GDPR (legitimate interest in responding to enquiries) for other communications.',
-          'Protecting the contact form against spam and abuse relies on the legitimate interest in securing the website and communications (Article 6(1)(f) GDPR). Privacy-focused, aggregated audience measurement is used to assess and improve the website, on the basis of a legitimate interest where personal data is involved (Article 6(1)(f) GDPR).',
+          'Protecting the contact form against spam and abuse relies on the legitimate interest in securing the website and communications (Article 6(1)(f) GDPR).',
         ],
       },
       {
         title: '4. Service providers',
         paragraphs: [
-          'The website is hosted on Vercel. Contact requests are sent over HTTPS to an API hosted on Hetzner infrastructure and delivered via Infomaniak email services. Cloudflare Turnstile helps distinguish human visitors from bots. Vercel Web Analytics provides aggregated website statistics.',
+          'The website and its contact API are hosted on Hetzner infrastructure. Contact requests are sent over HTTPS to the API and delivered via Infomaniak email services. Cloudflare Turnstile helps distinguish human visitors from bots. Web fonts are served directly from this website.',
           'These providers may process information necessary to perform their respective services. Cloudflare also describes processing for the improvement of Turnstile in its own privacy notice.',
         ],
       },
@@ -67,9 +67,9 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
         ],
       },
       {
-        title: '6. Analytics, cookies and security',
+        title: '6. Cookies and security',
         paragraphs: [
-          'The site uses Vercel Web Analytics for aggregated traffic statistics. According to Vercel, the service does not use third-party tracking cookies, and does not store identifying visitor data as part of individual page-view records. No advertising or profiling trackers are configured in this website.',
+          'No audience-measurement, advertising, or profiling trackers are configured on this website. The fonts are self-hosted and do not require visitors to contact Google Fonts.',
           'Cloudflare Turnstile is loaded when you approach or interact with the contact form. It processes technical signals to detect automated submissions, and may use security-related cookies or similar mechanisms as described in Cloudflare’s notice.',
         ],
       },
@@ -85,7 +85,7 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
   it: {
     title: 'Privacy e dati personali.',
     metaTitle: 'Informativa privacy — Emmanuele Durante',
-    metaDescription: 'Come vengono trattati i dati inviati tramite il modulo di contatto, le verifiche di sicurezza e le statistiche del sito.',
+    metaDescription: 'Come vengono trattati i dati inviati tramite il modulo di contatto e i controlli di sicurezza.',
     updated: 'Aggiornata il 13 novembre 2026',
     intro: 'Questa informativa descrive come vengono trattati i dati personali quando visiti emmanueledurante.com o invii un messaggio dal modulo di contatto.',
     backHome: 'Torna alla homepage',
@@ -111,13 +111,13 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
         title: '3. Finalità e basi giuridiche',
         paragraphs: [
           'I dati del contatto sono utilizzati per rispondere ai messaggi e valutare opportunità o collaborazioni professionali. La base giuridica è l’art. 6, par. 1, lett. b) GDPR per misure precontrattuali richieste dall’interessato, quando applicabile, oppure l’art. 6, par. 1, lett. f) GDPR (legittimo interesse a rispondere alle comunicazioni) negli altri casi.',
-          'La protezione del modulo da spam e abusi si basa sul legittimo interesse alla sicurezza del sito e delle comunicazioni (art. 6, par. 1, lett. f) GDPR). Le statistiche aggregate servono a comprendere e migliorare il sito, sulla base del legittimo interesse, nei limiti in cui comportino trattamento di dati personali.',
+          'La protezione del modulo da spam e abusi si basa sul legittimo interesse alla sicurezza del sito e delle comunicazioni (art. 6, par. 1, lett. f) GDPR).',
         ],
       },
       {
         title: '4. Fornitori utilizzati',
         paragraphs: [
-          'Il sito è ospitato su Vercel. I messaggi del modulo vengono inviati tramite HTTPS a un’API ospitata su infrastruttura Hetzner e recapitati attraverso il servizio email Infomaniak. Cloudflare Turnstile protegge il modulo dagli invii automatizzati. Vercel Web Analytics fornisce statistiche aggregate sulle visite.',
+          'Il sito e la relativa API di contatto sono ospitati su infrastruttura Hetzner. I messaggi del modulo sono inviati tramite HTTPS all’API e recapitati attraverso il servizio email Infomaniak. Cloudflare Turnstile protegge il modulo dagli invii automatizzati. I font sono distribuiti direttamente dal sito.',
           'Questi fornitori possono trattare le informazioni necessarie all’erogazione dei rispettivi servizi. Cloudflare descrive inoltre, nella propria informativa, trattamenti finalizzati al miglioramento di Turnstile.',
         ],
       },
@@ -129,9 +129,9 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
         ],
       },
       {
-        title: '6. Statistiche, cookie e sicurezza',
+        title: '6. Cookie e sicurezza',
         paragraphs: [
-          'Il sito utilizza Vercel Web Analytics per statistiche aggregate sul traffico. Secondo Vercel, il servizio non impiega cookie di tracciamento di terze parti e non conserva dati identificativi nei singoli eventi di visualizzazione delle pagine. Nel sito non sono configurati tracker pubblicitari o di profilazione.',
+          'Il sito non utilizza strumenti di analisi delle visite, tracker pubblicitari o di profilazione. I font sono ospitati localmente e non richiedono collegamenti dei visitatori a Google Fonts.',
           'Cloudflare Turnstile viene caricato quando ci si avvicina al modulo di contatto o si interagisce con esso. Tratta segnali tecnici per riconoscere gli invii automatizzati e può impiegare cookie o meccanismi analoghi per finalità di sicurezza, secondo quanto indicato nell’informativa Cloudflare.',
         ],
       },
@@ -147,7 +147,7 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
   es: {
     title: 'Privacidad y datos personales.',
     metaTitle: 'Política de privacidad — Emmanuele Durante',
-    metaDescription: 'Cómo se tratan los datos enviados por el formulario de contacto, las verificaciones de seguridad y las estadísticas del sitio.',
+    metaDescription: 'Cómo se tratan los datos enviados por el formulario de contacto y los controles de seguridad.',
     updated: 'Actualizada el 13 de noviembre de 2026',
     intro: 'Esta información explica cómo se tratan los datos personales cuando visitas emmanueledurante.com o envías un mensaje mediante el formulario de contacto.',
     backHome: 'Volver a la página principal',
@@ -173,13 +173,13 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
         title: '3. Finalidades y bases jurídicas',
         paragraphs: [
           'Los datos de contacto se utilizan para responder mensajes y valorar oportunidades o colaboraciones profesionales. La base jurídica es el art. 6.1.b) del RGPD para medidas precontractuales solicitadas por la persona interesada cuando corresponda, o el art. 6.1.f) (interés legítimo en responder a las consultas) para otras comunicaciones.',
-          'La protección del formulario frente a spam y abusos se basa en el interés legítimo de proteger el sitio y las comunicaciones (art. 6.1.f del RGPD). Las estadísticas agregadas se utilizan para entender y mejorar el sitio, sobre la base del interés legítimo cuando impliquen tratamiento de datos personales.',
+          'La protección del formulario frente a spam y abusos se basa en el interés legítimo de proteger el sitio y las comunicaciones (art. 6.1.f del RGPD).',
         ],
       },
       {
         title: '4. Proveedores',
         paragraphs: [
-          'El sitio está alojado en Vercel. Los mensajes del formulario se envían por HTTPS a una API alojada en infraestructura de Hetzner y se entregan mediante el servicio de correo electrónico Infomaniak. Cloudflare Turnstile protege el formulario frente a envíos automatizados. Vercel Web Analytics ofrece estadísticas agregadas de las visitas.',
+          'El sitio y su API de contacto están alojados en infraestructura de Hetzner. Los mensajes del formulario se envían por HTTPS a la API y se entregan mediante el servicio de correo electrónico Infomaniak. Cloudflare Turnstile protege el formulario frente a envíos automatizados. Las fuentes se sirven directamente desde este sitio.',
           'Estos proveedores pueden tratar la información necesaria para prestar sus respectivos servicios. Cloudflare describe además en su aviso de privacidad el tratamiento de datos para mejorar Turnstile.',
         ],
       },
@@ -191,9 +191,9 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
         ],
       },
       {
-        title: '6. Estadísticas, cookies y seguridad',
+        title: '6. Cookies y seguridad',
         paragraphs: [
-          'El sitio utiliza Vercel Web Analytics para estadísticas agregadas del tráfico. Según Vercel, el servicio no emplea cookies de seguimiento de terceros ni conserva datos identificativos en los eventos individuales de visualización de páginas. No hay herramientas de publicidad o de perfilado configuradas en este sitio.',
+          'El sitio no utiliza herramientas de análisis de visitas ni rastreadores publicitarios o de perfilado. Las fuentes están alojadas localmente y no requieren que los visitantes se conecten a Google Fonts.',
           'Cloudflare Turnstile se carga al acercarse al formulario de contacto o interactuar con él. Procesa señales técnicas para detectar envíos automatizados y puede utilizar cookies o mecanismos similares por motivos de seguridad, según su aviso de privacidad.',
         ],
       },
@@ -210,7 +210,6 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
 
 export const privacyResources = [
   { name: 'GDPR — EU Regulation 2016/679', href: 'https://eur-lex.europa.eu/eli/reg/2016/679/oj/' },
-  { name: 'Vercel Web Analytics', href: 'https://vercel.com/docs/analytics/privacy-policy' },
   { name: 'Cloudflare Turnstile', href: 'https://www.cloudflare.com/turnstile-privacy-policy/' },
   { name: 'Hetzner', href: 'https://www.hetzner.com/legal/privacy-policy/' },
   { name: 'Infomaniak', href: 'https://www.infomaniak.com/en/legal/general-data-protection-regulation' },
