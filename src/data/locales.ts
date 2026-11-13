@@ -159,11 +159,12 @@ export function localizedSite(language: Language) {
 export const ui = {
   en: {
     homepageLabel: 'Emmanuele Durante, homepage',
+    skipToContent: 'Skip to content',
     mainNavigation: 'Main navigation',
     languageSelector: 'Select language',
     headerContact: 'Get in touch',
     heroHeadingFirst: 'Frontend',
-    : '& e-commerce.',
+    heroHeadingSecond: '& e-commerce.',
     heroAlt: 'Emmanuele Durante wearing blue-framed glasses, photographed in a workspace.',
     viewWork: 'View my work',
     contactMe: 'Contact me',
@@ -208,6 +209,7 @@ export const ui = {
   },
   it: {
     homepageLabel: 'Emmanuele Durante, pagina iniziale',
+    skipToContent: 'Vai al contenuto',
     mainNavigation: 'Navigazione principale',
     languageSelector: 'Seleziona lingua',
     headerContact: 'Contattami',
@@ -257,6 +259,7 @@ export const ui = {
   },
   es: {
     homepageLabel: 'Emmanuele Durante, página principal',
+    skipToContent: 'Ir al contenido',
     mainNavigation: 'Navegación principal',
     languageSelector: 'Seleccionar idioma',
     headerContact: 'Contáctame',
