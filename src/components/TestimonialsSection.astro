@@ -1,0 +1,92 @@
+---
+import type { Language } from '../data/locales';
+import type { Testimonial } from '../data/testimonials';
+
+interface Props {
+  lang: Language;
+  items: readonly Testimonial[];
+}
+
+const { lang, items } = Astro.props;
+
+const copy: Record<Language, {
+  title: string;
+  introduction: string;
+  readOriginal: string;
+  viewProfile: string;
+  translatedFrom: string;
+}> = {
+  en: {
+    title: 'What people say.',
+    introduction: 'Perspectives from people I have worked with.',
+    readOriginal: 'Read the original',
+    viewProfile: 'View profile',
+    translatedFrom: 'Translated from',
+  },
+  it: {
+    title: 'Dicono di me.',
+    introduction: 'Le parole delle persone con cui ho lavorato.',
+    readOriginal: 'Leggi il testo originale',
+    viewProfile: 'Vedi il profilo',
+    translatedFrom: 'Tradotto da',
+  },
+  es: {
+    title: 'Qué dicen de mí.',
+    introduction: 'La opinión de personas con las que he trabajado.',
+    readOriginal: 'Leer el texto original',
+    viewProfile: 'Ver perfil',
+    translatedFrom: 'Traducido del',
+  },
+};
+const languageNames: Record<Language, Record<Language, string>> = {
+  en: { en: 'English', it: 'Italian', es: 'Spanish' },
+  it: { en: 'inglese', it: 'italiano', es: 'spagnolo' },
+  es: { en: 'inglés', it: 'italiano', es: 'español' },
+};
+const labels = copy[lang];
+---
+
+{items.length > 0 && (
+  <section class="testimonials" id="testimonials" aria-labelledby="testimonials-heading">
+    <div class="frame testimonials__layout">
+      <div class="testimonials__heading">
+        <h2 id="testimonials-heading">{labels.title}</h2>
+        <p>{labels.introduction}</p>
+      </div>
+      <ol class="testimonials__list">
+        {items.map((item, index) => (
+          <li class="testimonials__item">
+            <span class="testimonials__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <div class="testimonials__body">
+              <blockquote lang={lang}>
+                <p>“{item.text[lang]}”</p>
+              </blockquote>
+              <div class="testimonials__credit">
+                <div>
+                  <strong>{item.author}</strong>
+                  <span>{item.role}{item.company ? ` · ${item.company}` : ''}</span>
+                </div>
+                {item.profileUrl && (
+                  <a href={item.profileUrl} target="_blank" rel="noopener noreferrer">
+                    {labels.viewProfile}
+                  </a>
+                )}
+              </div>
+              {lang !== item.sourceLanguage && (
+                <details class="testimonials__original">
+                  <summary>
+                    {labels.readOriginal} · {languageNames[lang][item.sourceLanguage]}
+                  </summary>
+                  <p lang={item.sourceLanguage}>{item.text[item.sourceLanguage]}</p>
+                  <p class="testimonials__translation-note">
+                    {labels.translatedFrom} {languageNames[lang][item.sourceLanguage]}
+                  </p>
+                </details>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+)}
