@@ -83,7 +83,7 @@ const currentYear = new Date().getFullYear();
           <h2 id="projects-heading">{labels.selectedWork}</h2>
           <p>{site.work.introduction}</p>
         </div>
-        <ul class="project-index">
+        <ul class="project-index" data-cms-projects data-lang={lang}>
           {site.projects.map((project) => (
             <li class="project-index__item">
               <div class="project-index__lead">
@@ -110,7 +110,7 @@ const currentYear = new Date().getFullYear();
           <h2 id="services-heading">{site.servicesSection.title}</h2>
           <p>{labels.capabilitySubtitle}</p>
         </div>
-        <ul class="capabilities__list">
+        <ul class="capabilities__list" data-cms-services data-lang={lang}>
           {site.services.map((service) => (
             <li>
               <div>
@@ -162,4 +162,7 @@ const currentYear = new Date().getFullYear();
       <a href="#top">{labels.backToTop}</a>
     </div>
   </footer>
+<script>
+  import "../scripts/loadPortfolioContent";
+</script>
 </BaseLayout>
