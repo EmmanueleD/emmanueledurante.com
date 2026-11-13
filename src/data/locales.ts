@@ -29,10 +29,10 @@ type ContentTranslation = {
 const contentTranslations: Record<'it' | 'es', ContentTranslation> = {
   it: {
     title: 'Emmanuele Durante — Frontend & E-commerce Engineer',
-    description: 'Frontend ed e-commerce engineering con Vue, React, TypeScript, Shopify e Shopware 6. B2B e-commerce, API integrations e AI-assisted development.',
+    description: 'Frontend & e-commerce engineering con Vue, React, TypeScript, Shopify e Shopware 6. B2B e-commerce, API integrations e AI-assisted development.',
     navigation: ['Lavori', 'Servizi', 'Competenze', 'Chi sono', 'Contatti'],
     heroIntroduction: 'Sviluppo web app e feature e-commerce facili da usare, analizzare e mantenere: dalle UI Vue e React a Shopify e Shopware 6.',
-    workIntroduction: 'Una selezione di lavori anonimizzati, concentrata sul contributo tecnico anziché sui nomi dei clienti.',
+    workIntroduction: 'Una selezione degli ultimi lavori svolti.',
     projects: [
       {
         category: 'B2B e-commerce · Shopware',
@@ -42,7 +42,7 @@ const contentTranslations: Record<'it' | 'es', ContentTranslation> = {
       {
         category: 'E-commerce · Shopify',
         title: 'Refactoring di un custom routine builder',
-        description: 'Refactoring di una grande implementazione inline JavaScript in un Web Component manutenibile, con business rules centralizzate e migliore gestione del lifecycle e degli errori del cart.',
+        description: 'Refactoring di una grande funzionalità custom. JavaScript in un Web Component manutenibile, con business rules centralizzate e migliore gestione del lifecycle e degli errori del cart.',
       },
       {
         category: 'Product UI · React',
@@ -52,7 +52,7 @@ const contentTranslations: Record<'it' | 'es', ContentTranslation> = {
       {
         category: 'AI · Developer tooling',
         title: 'AI-assisted development con verifica indipendente',
-        description: 'Valutazione di AI agent skills, workflow Figma-to-code e approcci test-first, con attenzione alla verifica indipendente degli output generati.',
+        description: 'R&D. Valutazione di AI agent skills, workflow Figma-to-code e approcci test-first, con attenzione alla verifica indipendente degli output generati.',
       },
     ],
     capabilitiesTitle: 'Di cosa mi occupo',
@@ -83,10 +83,10 @@ const contentTranslations: Record<'it' | 'es', ContentTranslation> = {
   },
   es: {
     title: 'Emmanuele Durante — Frontend & E-commerce Engineer',
-    description: 'Frontend y e-commerce engineering con Vue, React, TypeScript, Shopify y Shopware 6. B2B e-commerce, API integrations y AI-assisted development.',
+    description: 'Frontend & e-commerce engineering con Vue, React, TypeScript, Shopify y Shopware 6. B2B e-commerce, API integrations y AI-assisted development.',
     navigation: ['Proyectos', 'Servicios', 'Tecnologías', 'Sobre mí', 'Contacto'],
     heroIntroduction: 'Desarrollo web apps y features de e-commerce fáciles de usar, hacer debugging y mantener: desde UI con Vue y React hasta Shopify y Shopware 6.',
-    workIntroduction: 'Una selección de trabajos anonimizados, centrada en la contribución técnica y no en los nombres de los clientes.',
+    workIntroduction: 'Una selección de los ultimos trabajos realizados.',
     projects: [
       {
         category: 'B2B e-commerce · Shopware',
@@ -96,7 +96,7 @@ const contentTranslations: Record<'it' | 'es', ContentTranslation> = {
       {
         category: 'E-commerce · Shopify',
         title: 'Refactoring de un custom routine builder',
-        description: 'Refactoring de una implementación extensa de JavaScript inline hacia un Web Component mantenible, con business rules centralizadas y mejor manejo del lifecycle y los cart errors.',
+        description: 'Refactoring de una implementación extensa custom. JavaScript hacia un Web Component mantenible, con business rules centralizadas y mejor manejo del lifecycle y los cart errors.',
       },
       {
         category: 'Product UI · React',
@@ -106,7 +106,7 @@ const contentTranslations: Record<'it' | 'es', ContentTranslation> = {
       {
         category: 'AI · Developer tooling',
         title: 'AI-assisted development con verificación independiente',
-        description: 'Evaluación de AI agent skills, workflows Figma-to-code y procesos test-first, priorizando la verificación independiente de los outputs generados.',
+        description: 'R&D. Evaluación de AI agent skills, workflows Figma-to-code y procesos test-first, priorizando la verificación independiente de los outputs generados.',
       },
     ],
     capabilitiesTitle: 'En qué puedo contribuir',
