@@ -2,17 +2,18 @@ name: portfolio
 
 services:
   site:
-    build:
-      context: ..
-      dockerfile: deploy/Dockerfile
-      args:
-        PUBLIC_TURNSTILE_SITE_KEY: ${PUBLIC_TURNSTILE_SITE_KEY:?Set PUBLIC_TURNSTILE_SITE_KEY in deploy/.env}
-    image: portfolio-site:local
+    image: nginx:stable-alpine
     container_name: portfolio-web
     restart: unless-stopped
-    # The preview is accessible only from the VPS. No public DNS changes.
     ports:
       - "127.0.0.1:8088:80"
+    # Files are built by GitHub Actions and synced as an unprivileged user.
+    # No Docker access is granted to the GitHub deployment SSH key.
+    volumes:
+      - type: bind
+        source: /srv/portfolio/public
+        target: /usr/share/nginx/html
+        read_only: true
     networks:
       - contact-proxy
 
