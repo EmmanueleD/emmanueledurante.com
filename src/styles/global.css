@@ -188,7 +188,7 @@ a:hover { text-decoration-color: var(--color-mark); }
 .project-index__details li { font-size: 13px; color: var(--color-muted); }
 
 /* Verified client logos only; duplicate images are decorative to screen readers. */
-.clients { padding-block: var(--space-6); border-block: 1px solid var(--color-rule); overflow: hidden; background: var(--color-paper); }
+.clients { padding-block: var(--space-6); border-block: 1px solid var(--color-rule); overflow: hidden; background: #ffffff; }
 .clients__heading { display: flex; gap: var(--space-4); align-items: baseline; justify-content: space-between; flex-wrap: wrap; margin-bottom: var(--space-5); }
 .clients__heading h2 { font: 700 clamp(20px,2.25vw,30px)/1.1 var(--font-display); letter-spacing: var(--tracking-display); }
 .clients__heading p { font-size: 13px; color: var(--color-muted); }
