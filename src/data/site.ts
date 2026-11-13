@@ -57,7 +57,7 @@ export const site = {
       category: 'E-commerce · Shopify',
       title: 'Refactoring a custom routine builder',
       description:
-        'Reworked a large inline JavaScript implementation into a maintainable Web Component, centralizing business rules and improving lifecycle and cart-error handling.',
+        'Reworked a large custom feature. JavaScript implementation into a maintainable Web Component, centralizing business rules and improving lifecycle and cart-error handling.',
       technologies: ['Shopify', 'Liquid', 'JavaScript', 'Web Components'],
     },
     {
@@ -73,7 +73,7 @@ export const site = {
       category: 'AI · Developer tooling',
       title: 'AI-assisted development with independent verification',
       description:
-        'Explored agent skills, Figma-to-code evaluation and test-first workflows, with an emphasis on independently checking generated results.',
+        'R&D. Explored agent skills, Figma-to-code evaluation and test-first workflows, with an emphasis on independently checking generated results.',
       technologies: ['AI agents', 'TDD', 'Developer tooling', 'Evaluation'],
     },
   ],
