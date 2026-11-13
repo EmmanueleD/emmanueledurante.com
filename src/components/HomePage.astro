@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import ContactForm from './ContactForm.astro';
+import TestimonialsSection from './TestimonialsSection.astro';
+import { getPublishedTestimonials } from '../data/testimonials';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { privacyCopy, privacyPath } from '../data/privacy';
 import { localizedSite, ui, languages, languagePath, type Language } from '../data/locales';
@@ -13,6 +15,11 @@ interface Props {
 const { lang } = Astro.props;
 const site = localizedSite(lang);
 const labels = ui[lang];
+const approvedTestimonials = getPublishedTestimonials();
+const testimonialNavLabels: Record<Language, string> = { en: 'Testimonials', it: 'Dicono di me', es: 'Opiniones' };
+const navigation = approvedTestimonials.length > 0
+  ? [site.navigation[0], { href: '#testimonials', label: testimonialNavLabels[lang] }, ...site.navigation.slice(1)]
+  : site.navigation;
 const currentYear = new Date().getFullYear();
 ---
 
@@ -25,7 +32,7 @@ const currentYear = new Date().getFullYear();
       </a>
       <nav aria-label={labels.mainNavigation}>
         <ul class="masthead__links">
-          {site.navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          {navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
         </ul>
       </nav>
       <nav class="language-switcher" aria-label={labels.languageSelector}>
@@ -96,6 +103,8 @@ const currentYear = new Date().getFullYear();
         </ol>
       </div>
     </section>
+
+    <TestimonialsSection lang={lang} items={approvedTestimonials} />
 
     <section class="capabilities" id="services" aria-labelledby="services-heading">
       <div class="frame capabilities__layout">
