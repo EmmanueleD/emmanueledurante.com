@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-import Analytics from '@vercel/analytics/astro';
-import { getImage } from 'astro:assets';
+
+import { getImage, Font } from 'astro:assets';
 import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import { languagePath, languages, ui, type Language } from '../data/locales';
 
@@ -48,17 +48,9 @@ const personStructuredData = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <!-- Preserve the existing typography without delaying the first render. -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:wght@400;700&family=Radio+Canada:wght@400;500&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:wght@400;700&family=Radio+Canada:wght@400;500&display=swap" />
-    </noscript>
+    <!-- The requested font files are downloaded during the Astro build and served locally. -->
+    <Font cssVariable="--local-radio-canada-big" preload />
+    <Font cssVariable="--local-radio-canada" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#F9F8F4" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -91,7 +83,7 @@ const personStructuredData = {
 
     <title>{title}</title>
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(personStructuredData)} />}
-    <Analytics />
+
   </head>
   <body>
     <a class="skip-link" href="#main-content">{ui[lang].skipToContent}</a>
