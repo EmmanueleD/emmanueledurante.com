@@ -1,22 +1,19 @@
 ---
 import type { Language } from '../data/locales';
-import type { Testimonial } from '../data/testimonials';
 
 interface Props {
   lang: Language;
-  items: readonly Testimonial[];
 }
 
-const { lang, items } = Astro.props;
+const { lang } = Astro.props;
 const copy: Record<Language, {
   title: string; introduction: string; readFull: string;
-  readOriginal: string; viewProfile: string; previous: string; next: string;
+  viewProfile: string; previous: string; next: string;
 }> = {
   en: {
     title: 'What people say.',
     introduction: 'Feedback from people I have worked with.',
     readFull: 'Read full recommendation',
-    readOriginal: 'Original in',
     viewProfile: 'LinkedIn',
     previous: 'Previous recommendation',
     next: 'Next recommendation',
@@ -25,7 +22,6 @@ const copy: Record<Language, {
     title: 'Dicono di me.',
     introduction: 'Le parole di chi ha lavorato con me.',
     readFull: 'Leggi tutta la raccomandazione',
-    readOriginal: 'Originale in',
     viewProfile: 'LinkedIn',
     previous: 'Raccomandazione precedente',
     next: 'Raccomandazione successiva',
@@ -34,101 +30,65 @@ const copy: Record<Language, {
     title: 'Qué dicen de mí.',
     introduction: 'La opinión de quienes han trabajado conmigo.',
     readFull: 'Leer la recomendación completa',
-    readOriginal: 'Original en',
     viewProfile: 'LinkedIn',
     previous: 'Recomendación anterior',
     next: 'Recomendación siguiente',
   },
 };
-const languageNames: Record<Language, Record<Language, string>> = {
-  en: { en: 'English', it: 'Italian', es: 'Spanish' },
-  it: { en: 'inglese', it: 'italiano', es: 'spagnolo' },
-  es: { en: 'inglés', it: 'italiano', es: 'español' },
-};
 const labels = copy[lang];
 ---
 
-{items.length > 0 && (
-  <section class="testimonials" id="testimonials" aria-labelledby="testimonials-heading">
-    <div class="frame">
-      <div class="testimonials__heading">
-        <h2 id="testimonials-heading">{labels.title}</h2>
-        <p>{labels.introduction}</p>
-        <div class="testimonials__controls" aria-label={labels.title}>
-          <button type="button" data-rail-step="-1" aria-label={labels.previous}>←</button>
-          <button type="button" data-rail-step="1" aria-label={labels.next}>→</button>
-        </div>
+<!-- Runtime-loaded: no data is embedded into a static build.
+     The section stays absent until PocketBase returns approved records. -->
+<section
+  class="testimonials"
+  id="testimonials"
+  aria-labelledby="testimonials-heading"
+  data-testimonials-cms
+  data-language={lang}
+  data-cms-url="https://cms.emmanueledurante.com"
+  hidden
+>
+  <div class="frame">
+    <div class="testimonials__heading">
+      <h2 id="testimonials-heading">{labels.title}</h2>
+      <p>{labels.introduction}</p>
+      <div class="testimonials__controls" aria-label={labels.title}>
+        <button type="button" data-rail-step="-1" aria-label={labels.previous}>←</button>
+        <button type="button" data-rail-step="1" aria-label={labels.next}>→</button>
       </div>
-      <ul class="testimonials__rail" aria-label={labels.title} tabindex="0" data-testimonials-rail>
-        {items.map((item) => (
-          <li class="testimonials__item">
-            <article class="testimonial">
-              <details class="testimonial__details">
-                <summary>
-                  <span class="testimonial__excerpt" lang={lang}>“{item.excerpt?.[lang] ?? item.text[lang]}”</span>
-                  <span class="testimonial__read-more">{labels.readFull}</span>
-                </summary>
-                <div class="testimonial__expanded">
-                  <blockquote lang={lang}><p>“{item.text[lang]}”</p></blockquote>
-                  {lang !== item.sourceLanguage && (
-                    <details class="testimonial__original">
-                      <summary>{labels.readOriginal} {languageNames[lang][item.sourceLanguage]}</summary>
-                      <p lang={item.sourceLanguage}>{item.text[item.sourceLanguage]}</p>
-                    </details>
-                  )}
-                </div>
-              </details>
-              <footer class="testimonial__credit">
-                <div>
-                  <strong>{item.author}</strong>
-                  <span>{item.role}{item.company ? ` · ${item.company}` : ''}</span>
-                </div>
-                {item.profileUrl && <a href={item.profileUrl} target="_blank" rel="noopener noreferrer">{labels.viewProfile}</a>}
-              </footer>
-            </article>
-          </li>
-        ))}
-      </ul>
     </div>
-  </section>
-)}
+    <ul class="testimonials__rail" aria-label={labels.title} tabindex="0" data-testimonials-rail></ul>
+  </div>
+
+  <template data-testimonial-template>
+    <li class="testimonials__item">
+      <article class="testimonial">
+        <details class="testimonial__details">
+          <summary>
+            <span class="testimonial__excerpt" data-testimonial-excerpt></span>
+            <span class="testimonial__read-more">{labels.readFull}</span>
+          </summary>
+          <div class="testimonial__expanded">
+            <blockquote><p data-testimonial-text></p></blockquote>
+            <details class="testimonial__original" data-testimonial-original hidden>
+              <summary data-testimonial-original-title></summary>
+              <p data-testimonial-original-text></p>
+            </details>
+          </div>
+        </details>
+        <footer class="testimonial__credit">
+          <div>
+            <strong data-testimonial-author></strong>
+            <span data-testimonial-role></span>
+          </div>
+          <a data-testimonial-profile target="_blank" rel="noopener noreferrer" hidden>{labels.viewProfile}</a>
+        </footer>
+      </article>
+    </li>
+  </template>
+</section>
 
 <script>
-  // Vertical wheel input navigates the entire horizontal rail.
-  // When the rail reaches either end, native page scrolling resumes.
-  // Do not use CSS scroll-snap: snapping can counteract incremental wheel input.
-  for (const section of document.querySelectorAll<HTMLElement>('.testimonials')) {
-    const rail = section.querySelector<HTMLElement>('[data-testimonials-rail]');
-    if (!rail) continue;
-
-    section.addEventListener('wheel', (event: WheelEvent) => {
-      if (event.ctrlKey || event.metaKey || event.shiftKey) return;
-      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-      if (event.target instanceof Element &&
-          event.target.closest('button, a, .testimonial__details[open]')) return;
-
-      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? rail.clientWidth : 1;
-      const delta = event.deltaY * unit;
-      const maxLeft = Math.max(0, rail.scrollWidth - rail.clientWidth);
-      const current = rail.scrollLeft;
-      const next = Math.max(0, Math.min(maxLeft, current + delta));
-      if (Math.abs(next - current) > 0.1) {
-        event.preventDefault();
-        rail.scrollLeft = next;
-      }
-    }, { passive: false });
-
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    for (const button of section.querySelectorAll<HTMLButtonElement>('[data-rail-step]')) {
-      button.addEventListener('click', () => {
-        const firstCard = rail.querySelector<HTMLElement>('.testimonials__item');
-        if (!firstCard) return;
-        const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
-        rail.scrollBy({
-          left: Number(button.dataset.railStep) * (firstCard.getBoundingClientRect().width + gap),
-          behavior: reducedMotion.matches ? 'instant' : 'smooth',
-        });
-      });
-    }
-  }
+  import '../scripts/loadTestimonials';
 </script>
