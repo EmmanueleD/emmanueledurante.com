@@ -1,60 +1,43 @@
-# Client logos, case studies and review workflow
+# Portfolio — client brands and project presentation
 
-## Client strip
+## Clients
 
-The portfolio owner supplied 15 client/brand names in the 13 November 2026 conversation.
-They are kept in `src/data/clientLogos.ts`, in that order.
+The owner supplied 15 client names and their official website domains.
+They live in `src/data/clientLogos.ts`, in the requested order.
 
-Nine entries currently use public remote logo images. The remaining six
-use their actual names as typographic **fallbacks**, not fabricated logos.
-The image URLs should be replaced by local, optimized, permission-cleared files
-before the final production release; hotlinks add third-party requests and can break.
+Nine clients currently reference publicly visible third-party logo image URLs.
+The remaining six (Mamata, Limpido Design, Divani.Store, Korff,
+Teloneria Welding, Rimini Terme) have **no reliable logo file provided yet**:
+the component shows the real brand name, not a fabricated logo.
+Remote image loading can also fail due to changes or hotlink restrictions;
+in that case the brand name is shown automatically instead.
 
-Official sites are linked where their identities could be matched confidently.
-The owner identified Welding specifically as **Teloneria Welding** and supplied its URL.
-`Divani.Store` was matched to the public site and agency case-study.
+The animation shows every entry in sequence, with previous/next controls,
+an explicit pause button and reduced-motion support. The compact
+“View all clients” disclosure under the strip opens a static directory
+containing all 15 entries, avoiding the need to wait for the full loop.
 
-The strip is monochromatic and runs continuously at approximately 33 px/s without
-stopping on hover. Previous/next arrows move one logo at a time, an explicit
-pause/resume control is provided, and the system reduced-motion setting
-disables automatic movement while leaving the arrows usable.
+Before final publication, obtain permission to display the brands and replace
+remote URL hotlinks with approved, optimized SVG/PNG/WebP assets hosted locally.
+Do not treat the fact that a logo is publicly visible as blanket permission.
 
-Do not imply endorsement by these brands. Confirm contractual rights to
-display client names and logos before merging.
+## Project work section
 
-## Recommendations
+Following owner feedback, the original compact project descriptions and
+technology lists were restored. The generated case-study details, expanders
+and associated data file were removed. Visible ordinal numbers stay removed.
 
-`src/components/TestimonialsSection.astro` implements a horizontal rail.
-Regular vertical mouse-wheel input scrolls horizontally when possible,
-while at either end normal page scrolling resumes. Horizontal trackpads and
-keyboard navigation still work. Scroll snapping is disabled so it cannot prevent
-incremental wheel input from traversing all items. Previous/next buttons are available, and
-the visual scrollbar is hidden. The complete texts remain available by expanding
-each testimonial; original languages are always recoverable.
+## Contact form in previews
 
-The six recommendations (including Clarissa Abbruzzese) are presently staged with
-`consentToPublish: false` in `src/data/testimonials.ts`. The special preview
-branch temporarily shows them for design review without changing the production
-PR's consent filter.
+The Vercel `PUBLIC_TURNSTILE_SITE_KEY` environment variable currently has
+a production target only. In preview deployments without that public key,
+the contact form cannot initialize Cloudflare Turnstile, so it cannot submit
+successfully. The form now shows an error **only after a submit attempt**,
+not when a visitor merely scrolls past it. It remains a live contact form
+in production when Turnstile is configured.
 
-## Project case studies
+## Verification
 
-Details are kept in `src/data/projectCases.ts` in EN/IT/ES, keyed by project
-indexes. **Numbers are not shown** to visitors.
-
-Each project keeps a short summary and an expandable breakdown:
-- Challenge
-- Personal contribution
-- Approach and verification
-
-Only claims already present in the portfolio are included. Results, client names
-and screenshots have not been invented. Public project links and images must
-be added only when appropriately cleared. Never publish private backoffice
-screenshots showing customer data, credentials, APIs, order or financial figures
-or internal-only logic.
-
-## Validation
-
-Run `npm run check` and `npm run build`. Test all three language routes,
-mouse-wheel scrolling without Shift, edge release to page scrolling, arrow
-buttons, narrow screens, reduced-motion settings and image fallbacks.
+Vercel builds check Astro compilation. A manual review is still needed for:
+language pages, image loading, mouse/touch carousel, keyboard use, and
+contact form behavior in the preview and production environments.
