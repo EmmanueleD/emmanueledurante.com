@@ -4,7 +4,6 @@ import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import ContactForm from './ContactForm.astro';
 import TestimonialsSection from './TestimonialsSection.astro';
 import ClientLogosSection from './ClientLogosSection.astro';
-import { getVisibleClientLogos } from '../data/clientLogos';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { privacyCopy, privacyPath } from '../data/privacy';
 import { localizedSite, ui, languages, languagePath, type Language } from '../data/locales';
@@ -16,7 +15,6 @@ interface Props {
 const { lang } = Astro.props;
 const site = localizedSite(lang);
 const labels = ui[lang];
-const approvedClientLogos = getVisibleClientLogos();
 const testimonialNavLabels: Record<Language, string> = { en: 'Testimonials', it: 'Dicono di me', es: 'Opiniones' };
 const navigation = [site.navigation[0], { href: '#testimonials', label: testimonialNavLabels[lang] }, ...site.navigation.slice(1)];
 const currentYear = new Date().getFullYear();
@@ -77,7 +75,7 @@ const currentYear = new Date().getFullYear();
       </div>
     </section>
 
-    <ClientLogosSection lang={lang} clients={approvedClientLogos} />
+    <ClientLogosSection lang={lang} />
 
     <section class="projects" id="work" aria-labelledby="projects-heading">
       <div class="frame">
