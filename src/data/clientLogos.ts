@@ -1,11 +1,12 @@
 /** Client names supplied explicitly by the portfolio owner.
- * URLs were matched to public brand sites; the precise identity of "Welding"
- * remains to be confirmed, so no site is linked for it.
+ * All client identities and URLs were supplied or confirmed by the owner.
+ * "Welding" refers specifically to Teloneria Welding.
  *
  * Some logo images are referenced from public brand/retailer resources.
  * Replace these with permission-cleared local SVG/WebP assets before final
  * production publication; avoid long-term third-party image hotlinks.
- * Entries lacking logoSrc are rendered as text wordmarks, never fake logos.
+ * Entries lacking a confirmed logo image are rendered as text wordmarks,
+ * not fabricated logos. On image error, the component also falls back to text.
  */
 export interface ClientLogo {
   id: string;
@@ -24,8 +25,8 @@ export const clientLogos: readonly ClientLogo[] = [
   { id: 'limpido-design', name: 'Limpido Design', website: 'https://www.limpidodesign.com/' },
   { id: 'divani-store', name: 'Divani.Store', website: 'https://divani.store/' },
   { id: 'korff', name: 'Korff', website: 'https://www.korff.it/' },
-  { id: 'welding', name: 'Welding' },
-  { id: 'camst', name: 'Camst', website: 'https://camstgroup.com/' },
+  { id: 'welding', name: 'Teloneria Welding', website: 'https://www.teloneriawelding.it/' },
+  { id: 'camst', name: 'Camst Group', website: 'https://camstgroup.com/', logoSrc: 'https://www.confindustriaemilia.it/flex/images/u/n/i/D.b3371ad56baa8a53591b/Camst_Group_PAYOFF_CMYK.jpg' },
   { id: 'bonfiglioli', name: 'Bonfiglioli', website: 'https://www.bonfiglioli.com/italy/it/', logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Bonfiglioli_corporate_logo_color.jpg' },
   { id: 'rimini-terme', name: 'Rimini Terme', website: 'https://riminiterme.com/' },
   { id: 'il-lanificio', name: 'Il Lanificio', website: 'https://www.illanificio.com/', logoSrc: 'https://www.mcarthurglen.com/globalassets-v12/01-brands/il-lanificio/assets/il-lanificio-brand-logo-1080x1080.jpg' },
