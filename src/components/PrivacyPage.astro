@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { languagePath, type Language } from '../data/locales';
+import { privacyCopy, privacyResources } from '../data/privacy';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const copy = privacyCopy[lang];
+---
+
+<BaseLayout
+  title={copy.metaTitle}
+  description={copy.metaDescription}
+  lang={lang}
+  alternateRoute="privacy/"
+>
+  <main class="privacy-page" id="main-content">
+    <div class="frame privacy-page__inner">
+      <nav aria-label={copy.backHome}>
+        <a class="privacy-page__back" href={languagePath(lang)}>← {copy.backHome}</a>
+      </nav>
+      <header class="privacy-page__header">
+        <p class="privacy-page__eyebrow">Emmanuele Durante</p>
+        <h1>{copy.title}</h1>
+        <p class="privacy-page__intro">{copy.intro}</p>
+        <p class="privacy-page__date">{copy.updated}</p>
+      </header>
+      <article class="privacy-page__content">
+        {copy.sections.map((section) => (
+          <section class="privacy-page__section">
+            <h2>{section.title}</h2>
+            {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </section>
+        ))}
+        <section class="privacy-page__section privacy-page__resources">
+          <h2>{copy.resourcesHeading}</h2>
+          <ul>
+            {privacyResources.map((resource) => (
+              <li><a href={resource.href} target="_blank" rel="noopener noreferrer">{resource.name}</a></li>
+            ))}
+          </ul>
+        </section>
+      </article>
+      <footer class="privacy-page__footer">
+        <a href={languagePath(lang)}>{copy.backHome}</a>
+        <a href="mailto:hello@emmanueledurante.com">hello@emmanueledurante.com</a>
+      </footer>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .privacy-page { min-height: 100svh; background: var(--color-paper); color: var(--color-ink); }
+  .privacy-page__inner { padding-block: clamp(28px, 5vw, 70px); }
+  .privacy-page__back { display: inline-block; font-size: 14px; color: var(--color-ink-2); text-decoration: underline; text-underline-offset: 4px; }
+  .privacy-page__header { max-width: 850px; padding-block: clamp(50px, 8vw, 110px) clamp(42px, 6vw, 80px); border-bottom: 1px solid var(--color-muted); }
+  .privacy-page__eyebrow { font-size: 13px; text-transform: uppercase; letter-spacing: .1em; }
+  h1 { margin-top: 22px; font-size: clamp(52px, 8vw, 105px); font-weight: 500; letter-spacing: -.055em; line-height: .98; }
+  .privacy-page__intro { max-width: 62ch; margin-top: 32px; font-size: clamp(18px, 2.3vw, 23px); line-height: 1.48; }
+  .privacy-page__date { margin-top: 24px; font-size: 14px; color: var(--color-ink-2); }
+  .privacy-page__content { max-width: 850px; }
+  .privacy-page__section { padding-block: 36px; border-bottom: 1px solid var(--color-muted); }
+  .privacy-page__section h2 { font-size: clamp(22px, 2.9vw, 31px); font-weight: 500; letter-spacing: -.025em; line-height: 1.2; }
+  .privacy-page__section p { max-width: 75ch; margin-top: 18px; font-size: 16px; line-height: 1.7; overflow-wrap: anywhere; }
+  .privacy-page__resources ul { margin-top: 18px; padding-left: 20px; display: grid; gap: 12px; }
+  .privacy-page__resources a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+  .privacy-page__footer { display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; padding-block: 40px; font-size: 14px; }
+  .privacy-page__footer a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+  @media (max-width: 600px) {
+    .privacy-page__header { padding-block: 55px 45px; }
+    .privacy-page__section { padding-block: 28px; }
+  }
+</style>

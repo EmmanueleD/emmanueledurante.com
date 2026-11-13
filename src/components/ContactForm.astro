@@ -1,5 +1,6 @@
 ---
 import { ui, type Language } from '../data/locales';
+import { privacyCopy, privacyPath } from '../data/privacy';
 
 interface Props { lang: Language; }
 const { lang } = Astro.props;
@@ -61,7 +62,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     <button type="submit">{formText.submit}</button>
     <p class="contact-form__status" data-contact-status role="status" aria-live="polite"></p>
   </div>
+  <p class="contact-form__privacy">{privacyCopy[lang].formNotice} <a href={privacyPath(lang)}>{privacyCopy[lang].formLink}</a>.</p>
 </form>
+
+<style>
+  .contact-form__privacy { max-width: 65ch; font-size: 13px; line-height: 1.5; color: var(--color-ink-2); }
+  .contact-form__privacy a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; }
+</style>
 
 <script>
   // Load the captcha only when the contact section is approached or used.

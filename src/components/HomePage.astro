@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import ContactForm from './ContactForm.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { privacyCopy, privacyPath } from '../data/privacy';
 import { localizedSite, ui, languages, languagePath, type Language } from '../data/locales';
 
 interface Props {
@@ -151,6 +152,7 @@ const currentYear = new Date().getFullYear();
       <p>© {currentYear} {site.name}</p>
       <p>{labels.footerSpecialty}</p>
       <a href="https://www.linkedin.com/in/e14e/" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
+      <a href={privacyPath(lang)}>{privacyCopy[lang].linkLabel}</a>
       <a href="#top">{labels.backToTop}</a>
     </div>
   </footer>
