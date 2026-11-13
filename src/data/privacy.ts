@@ -90,8 +90,8 @@ export const privacyCopy: Record<Language, PrivacyCopy> = {
     intro: 'Questa informativa descrive come vengono trattati i dati personali quando visiti emmanueledurante.com o invii un messaggio dal modulo di contatto.',
     backHome: 'Torna alla homepage',
     linkLabel: 'Privacy',
-    formNotice: 'I dati inviati saranno utilizzati per gestire la richiesta. Leggi l’',
-    formLink: 'informativa privacy',
+    formNotice: 'I dati inviati saranno utilizzati per gestire la richiesta. Consulta l’informativa completa sulla',
+    formLink: 'privacy',
     resourcesHeading: 'Informazioni sui fornitori',
     sections: [
       {
