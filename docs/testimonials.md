@@ -11,7 +11,7 @@ in English, Italian and Spanish. Keep the original text verbatim.
 
 ## 2. Add the entry
 
-Edit `src/data/testimonials.ts`. Replace the empty array with real entries.
+Edit `src/data/testimonials.ts`. The file already contains four real LinkedIn recommendations\n(staged with `consentToPublish: false`). After permission is obtained, change only\nthe corresponding flag to `true`. For additional recommendations, append a new entry.
 Example **structure only** (the placeholders below must never be published):
 
 ```ts
@@ -45,3 +45,20 @@ and entries with empty text, are not rendered. Do not invent testimonials, names
 Run `npm run check` and `npm run build`, review `/`, `/it/`, and `/es/`,
 test the original-language toggle from a keyboard, and then deploy.
 No third-party widget, database, runtime translation, or tracking is involved.
+
+## Existing LinkedIn recommendations (13 November 2026)
+
+The HTML supplied contains five recommendations. Four are staged with full original text,
+translations, attribution and public profile links:
+
+- Valentina Maraio (original: English)
+- Fabio Trovato (original: Italian)
+- Maria Chiara Barbaro (original: Italian)
+- Marco Le Piane (original: Italian)
+
+Camilla Tofani's recommendation is cut short by LinkedIn's “... more” expansion.
+Retrieve the **full original text** before adding it; do not infer the missing passage.
+
+These posts being public on LinkedIn does not itself verify permission to republish
+on a separate website, so the four current entries remain unpublished pending approval.
+The visible source-language text must stay unchanged; translate only the other variants.
