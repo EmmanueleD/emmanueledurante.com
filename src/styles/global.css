@@ -216,6 +216,9 @@ a:hover { text-decoration-color: var(--color-mark); }
 .clients__all-name { font-size: 12px; color: var(--color-muted); line-height: 1.4; text-align: center; }
 
 
+/* Hidden CMS sections/controls must not be displayed until data loads. */
+.clients[hidden], .clients [hidden], .testimonials[hidden] { display: none !important; }
+
 /* Compact horizontally scrollable testimonials, no numbers or stacked quotes. */
 .testimonials { padding-block: var(--space-7); background: #ffffff; }
 .testimonials__heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-5); }
