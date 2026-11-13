@@ -17,10 +17,9 @@ export interface Testimonial {
 }
 
 /**
- * These four recommendations have complete text in the supplied HTML.
+ * Five real recommendations have been supplied with their complete original text.
  * They are STAGED, not published: consent to republish on this website is
- * not yet confirmed. Camilla Tofani's recommendation was truncated ("… more")
- * and must be retrieved in full before adding it.
+ * not yet confirmed for each author.
  */
 export const testimonials: readonly Testimonial[] = [
   {
@@ -33,6 +32,19 @@ export const testimonials: readonly Testimonial[] = [
       en: 'Studying with Emmanuele was a pleasure. His curiosity for three.js brought up interesting conversations about 3D data visualization and inspiring web animation. We worked together on a few projects and his passion for clean code and well-organized app structure makes him the best coding colleague.',
       it: 'Studiare con Emmanuele è stato un piacere. La sua curiosità per three.js ha dato vita a conversazioni interessanti sulla visualizzazione di dati 3D e sulle animazioni web. Abbiamo lavorato insieme ad alcuni progetti e la sua passione per il codice pulito e per una struttura ben organizzata delle applicazioni lo rende il miglior collega con cui programmare.',
       es: 'Estudiar con Emmanuele fue un placer. Su curiosidad por three.js dio lugar a conversaciones interesantes sobre visualización de datos 3D y animaciones web inspiradoras. Trabajamos juntos en algunos proyectos, y su pasión por el código limpio y una estructura de aplicaciones bien organizada lo convierte en el mejor compañero para programar.',
+    },
+    consentToPublish: false,
+  },
+  {
+    id: 'camilla-tofani',
+    author: 'Camilla Tofani',
+    role: 'Fractional CTO',
+    profileUrl: 'https://www.linkedin.com/in/camilla-tofani/',
+    sourceLanguage: 'it',
+    text: {
+      it: "Ho lavorato con Emmanuele a diversi progetti lavorativi e non.\nHa una forte capacità di lavorare in team. È un bravissimo ascoltatore ed è sempre stato aperto al confronto chiarendo le sue posizioni quando qualcosa per lui doveva essere fatta diversamente. Senza mai prevaricare nessuno, con assoluto rispetto degli altri e di se stesso.\nA chiunque si dovesse trovare a scegliere se avere Emmanuele come risorsa per il proprio progetto dico di scegliere lui tra tutti.\nIn lui c'è curiosità e voglia di crescere professionalmente ed umanamente. Quando c'è qualcosa che professionalmente non conosce da tutto se stesso per capirla profondamente.",
+      en: "I worked with Emmanuele on several projects, both professional and otherwise.\nHe has a strong ability to work in a team. He is an excellent listener and has always been open to discussion, explaining his point of view when he believed something should be done differently. He never imposes himself on anyone and shows absolute respect for others and for himself.\nTo anyone deciding whether to have Emmanuele on their project, I would say: choose him over anyone else.\nHe is curious and eager to grow, both professionally and personally. When he encounters something he does not know in his field, he gives his all to understand it in depth.",
+      es: "He trabajado con Emmanuele en varios proyectos, tanto profesionales como de otro tipo.\nTiene una gran capacidad para trabajar en equipo. Sabe escuchar muy bien y siempre ha estado abierto al diálogo, explicando su punto de vista cuando consideraba que algo debía hacerse de otra manera. Nunca se impone sobre nadie y muestra un respeto absoluto por los demás y por sí mismo.\nA cualquiera que tenga que decidir si contar con Emmanuele para su proyecto, le diría que lo elija por encima de cualquier otra persona.\nTiene curiosidad y ganas de crecer tanto profesional como personalmente. Cuando se encuentra con algo que no conoce en su ámbito profesional, lo da todo por comprenderlo en profundidad.",
     },
     consentToPublish: false,
   },
