@@ -54,6 +54,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
   <div
     class="contact-form__turnstile"
+    role="group"
     data-turnstile-sitekey={turnstileSiteKey}
     aria-label={formText.captcha}
   ></div>
