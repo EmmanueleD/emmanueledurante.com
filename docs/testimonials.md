@@ -11,7 +11,8 @@ in English, Italian and Spanish. Keep the original text verbatim.
 
 ## 2. Add the entry
 
-Edit `src/data/testimonials.ts`. The file already contains four real LinkedIn recommendations\n(staged with `consentToPublish: false`). After permission is obtained, change only\nthe corresponding flag to `true`. For additional recommendations, append a new entry.
+Edit `src/data/testimonials.ts`. The file already contains five real LinkedIn recommendations
+(staged with `consentToPublish: false`). After permission is obtained, change only\nthe corresponding flag to `true`. For additional recommendations, append a new entry.
 Example **structure only** (the placeholders below must never be published):
 
 ```ts
@@ -48,17 +49,16 @@ No third-party widget, database, runtime translation, or tracking is involved.
 
 ## Existing LinkedIn recommendations (13 November 2026)
 
-The HTML supplied contains five recommendations. Four are staged with full original text,
+The HTML supplied contained five recommendations; the user also supplied the untruncated
+original text of Camilla Tofani. All five are staged with the complete original text,
 translations, attribution and public profile links:
 
 - Valentina Maraio (original: English)
+- Camilla Tofani (original: Italian)
 - Fabio Trovato (original: Italian)
 - Maria Chiara Barbaro (original: Italian)
 - Marco Le Piane (original: Italian)
 
-Camilla Tofani's recommendation is cut short by LinkedIn's “... more” expansion.
-Retrieve the **full original text** before adding it; do not infer the missing passage.
-
 These posts being public on LinkedIn does not itself verify permission to republish
-on a separate website, so the four current entries remain unpublished pending approval.
+on a separate website, so all five current entries remain unpublished pending approval.
 The visible source-language text must stay unchanged; translate only the other variants.
