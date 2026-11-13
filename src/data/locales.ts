@@ -164,7 +164,7 @@ export const ui = {
     languageSelector: 'Select language',
     headerContact: 'Get in touch',
     heroHeadingFirst: 'Frontend',
-    : '& e-commerce.',
+    heroHeadingSecond: '& e-commerce.',
     heroAlt: 'Emmanuele Durante wearing blue-framed glasses, photographed in a workspace.',
     viewWork: 'View my work',
     contactMe: 'Contact me',
