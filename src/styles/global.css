@@ -215,3 +215,7 @@ a:hover { text-decoration-color: var(--color-mark); }
   .testimonials__heading h2 { font-size: clamp(54px,11vw,85px); }
   .testimonials__item { grid-template-columns: 30px minmax(0,1fr); gap: var(--space-3); }
 }
+
+/* Preserve paragraph breaks in testimonials supplied by their authors. */
+.testimonials__body blockquote p,
+.testimonials__original > p:not(.testimonials__translation-note) { white-space: pre-line; }
