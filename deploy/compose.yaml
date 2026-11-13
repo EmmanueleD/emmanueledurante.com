@@ -1,0 +1,22 @@
+name: portfolio
+
+services:
+  site:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      args:
+        PUBLIC_TURNSTILE_SITE_KEY: ${PUBLIC_TURNSTILE_SITE_KEY:?Set PUBLIC_TURNSTILE_SITE_KEY in deploy/.env}
+    image: portfolio-site:local
+    container_name: portfolio-web
+    restart: unless-stopped
+    # The preview is accessible only from the VPS. No public DNS changes.
+    ports:
+      - "127.0.0.1:8088:80"
+    networks:
+      - contact-proxy
+
+networks:
+  contact-proxy:
+    external: true
+    name: ${CONTACT_DOCKER_NETWORK:?Set CONTACT_DOCKER_NETWORK in deploy/.env}
