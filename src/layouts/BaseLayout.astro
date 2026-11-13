@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
+import { getImage } from 'astro:assets';
+import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import { languagePath, languages, ui, type Language } from '../data/locales';
 
 interface Props {
@@ -15,7 +17,18 @@ const ogLocale = { en: 'en_US', it: 'it_IT', es: 'es_ES' }[lang];
 const portraitAlt = { en: 'Portrait of Emmanuele Durante', it: 'Ritratto di Emmanuele Durante', es: 'Retrato de Emmanuele Durante' }[lang];
 const siteUrl = Astro.site ?? Astro.url;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
-const openGraphImageUrl = new URL('/og-image.jpg', siteUrl);
+// Build the social-preview image from the same portrait displayed in the hero.
+// A content-hashed URL also makes social platforms fetch new artwork after updates.
+const previewImage = await getImage({
+  src: profilePortrait,
+  width: 1200,
+  height: 630,
+  format: 'jpeg',
+  quality: 85,
+  fit: 'cover',
+  position: 'top',
+});
+const openGraphImageUrl = new URL(previewImage.src, siteUrl);
 const personStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
