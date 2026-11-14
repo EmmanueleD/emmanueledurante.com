@@ -1,17 +1,25 @@
 ---
 import HomePage from '../../components/HomePage.astro';
 
-export function getStaticPaths() {
-  return [
-    { params: { lang: 'it' } },
-    { params: { lang: 'es' } },
-  ];
-}
+export const prerender = false;
+const rawLang = Astro.params.lang;
+const supported = rawLang === 'it' || rawLang === 'es';
+const lang = supported ? rawLang : 'en';
 
-const lang = Astro.params.lang;
-if (lang !== 'it' && lang !== 'es') {
-  throw new Error('Unsupported locale');
+// Unsupported locale routes must not become indexable duplicate homepages.
+if (!supported) {
+  Astro.response.status = 404;
+  Astro.response.statusText = 'Not Found';
+} else {
+  Astro.response.headers.set('Cache-Control', 'private, no-store');
 }
 ---
 
-<HomePage lang={lang} />
+{supported ? (
+  <HomePage lang={lang} />
+) : (
+  <html lang="en">
+    <head><meta charset="utf-8" /><meta name="robots" content="noindex" /><title>Not found</title></head>
+    <body><h1>Not found</h1></body>
+  </html>
+)}
