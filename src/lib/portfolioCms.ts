@@ -1,8 +1,9 @@
 /**
  * Server-side, anonymous PocketBase data access for the portfolio.
  *
- * Used only by Astro on-demand pages and llms.txt.
- * A failed CMS request returns null so the caller can render a static fallback.
+ * Used by Astro while generating static pages and llms.txt for Hetzner.
+ * After editing content in PocketBase, rerun the Hetzner deployment workflow
+ * to regenerate the public pages. A failed request uses embedded fallbacks.
  * Public list rules are enforced by PocketBase; testimonials are also filtered
  * here to prevent including records without explicit publication + consent.
  */

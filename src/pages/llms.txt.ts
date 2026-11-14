@@ -2,9 +2,9 @@ import type { APIRoute } from 'astro';
 import { site } from '../data/site';
 import { loadPortfolioCms, visibleProjects, visibleServices, makeCopyReader } from '../lib/portfolioCms';
 
-// Optional machine-readable overview, not a replacement for semantic HTML,
-// sitemap.xml, robots.txt, or the public localized pages themselves.
-export const prerender = false;
+// Optional machine-readable overview, generated during the static build.
+// Not a replacement for semantic HTML, sitemap.xml, robots.txt, or public pages.
+export const prerender = true;
 
 function oneline(value: string): string {
   return value.replace(/\s+/g, ' ').replace(/[\[\]<>]/g, '').trim().slice(0, 600);
@@ -49,7 +49,7 @@ export const GET: APIRoute = async () => {
   return new Response(lines.join('\n'), {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
-      'Cache-Control': 'private, no-store',
+      'Cache-Control': 'public, max-age=3600',
       'X-Content-Type-Options': 'nosniff',
     },
   });
