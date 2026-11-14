@@ -2,6 +2,10 @@
 import { Image } from 'astro:assets';
 import profilePortrait from '../assets/emmanuele-hero-no-earbuds-hires.webp';
 import ContactForm from './ContactForm.astro';
+import TestimonialsSection from './TestimonialsSection.astro';
+import ClientLogosSection from './ClientLogosSection.astro';
+import { getVisibleClientLogos } from '../data/clientLogos';
+import { loadPortfolioCms, makeCopyReader, visibleProjects, visibleServices, visibleClients, approvedTestimonials } from '../lib/portfolioCms';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { privacyCopy, privacyPath } from '../data/privacy';
 import { localizedSite, ui, languages, languagePath, type Language } from '../data/locales';
@@ -13,10 +17,26 @@ interface Props {
 const { lang } = Astro.props;
 const site = localizedSite(lang);
 const labels = ui[lang];
+const cms = await loadPortfolioCms();
+const copy = makeCopyReader(cms.copy, lang);
+const projects = visibleProjects(cms.projects, lang) ?? site.projects;
+const services = visibleServices(cms.services, lang) ?? site.services;
+const clients = visibleClients(cms.clients) ?? getVisibleClientLogos();
+// Launch scope: keep the client logos implemented and populated, but hidden until approved.
+const showClientLogos = false;
+const testimonials = approvedTestimonials(cms.testimonials);
+const expertise = copy('expertise_technologies', site.expertise.technologies.join(', '))
+  .split(',').map((tag) => tag.trim()).filter(Boolean);
+const pageTitle = copy('seo_title', site.title);
+const pageDescription = copy('seo_description', site.description);
+const testimonialNavLabels: Record<Language, string> = { en: 'Testimonials', it: 'Dicono di me', es: 'Opiniones' };
+const navigation = testimonials.length
+  ? [site.navigation[0], { href: '#testimonials', label: testimonialNavLabels[lang] }, ...site.navigation.slice(1)]
+  : site.navigation;
 const currentYear = new Date().getFullYear();
 ---
 
-<BaseLayout title={site.title} description={site.description} lang={lang}>
+<BaseLayout title={pageTitle} description={pageDescription} lang={lang} pageWorks={projects.map((project) => ({ name: project.title, description: project.description }))}>
   <header class="masthead">
     <div class="frame masthead__inner">
       <a class="wordmark" href="#top">
@@ -25,7 +45,7 @@ const currentYear = new Date().getFullYear();
       </a>
       <nav aria-label={labels.mainNavigation}>
         <ul class="masthead__links">
-          {site.navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          {navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
         </ul>
       </nav>
       <nav class="language-switcher" aria-label={labels.languageSelector}>
@@ -41,9 +61,9 @@ const currentYear = new Date().getFullYear();
     <section class="poster" id="top" aria-labelledby="hero-heading">
       <div class="frame poster__grid">
         <div class="poster__content">
-          <h1 id="hero-heading"><span>{labels.heroHeadingFirst}</span><span>{labels.heroHeadingSecond}</span></h1>
+          <h1 id="hero-heading"><span>{copy('hero_heading_first', labels.heroHeadingFirst)}</span><span>{copy('hero_heading_second', labels.heroHeadingSecond)}</span></h1>
           <div class="poster__bottom">
-            <p>{site.hero.introduction}</p>
+            <p>{copy('hero_intro', site.hero.introduction)}</p>
             <div class="poster__actions">
               <a class="action-primary" href="#work">{labels.viewWork}</a>
               <a class="action-secondary" href="#contact">{labels.contactMe}</a>
@@ -71,16 +91,17 @@ const currentYear = new Date().getFullYear();
       </div>
     </section>
 
-    <section class="projects" id="work" aria-labelledby="projects-heading">
+    {showClientLogos && <ClientLogosSection lang={lang} clients={clients} />}
+
+    <section class="projects" id="work" aria-labelledby="projects-heading" hidden={projects.length === 0}>
       <div class="frame">
         <div class="projects__header">
-          <h2 id="projects-heading">{labels.selectedWork}</h2>
-          <p>{site.work.introduction}</p>
+          <h2 id="projects-heading">{copy('work_title', labels.selectedWork)}</h2>
+          <p>{copy('work_intro', site.work.introduction)}</p>
         </div>
-        <ol class="project-index">
-          {site.projects.map((project) => (
+        <ul class="project-index">
+          {projects.map((project) => (
             <li class="project-index__item">
-              <span class="project-index__number">{project.index}</span>
               <div class="project-index__lead">
                 <p class="project-index__type">{project.category.replaceAll(' · ', ' / ')}</p>
                 <h3>{project.title}</h3>
@@ -93,41 +114,42 @@ const currentYear = new Date().getFullYear();
               </div>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
 
-    <section class="capabilities" id="services" aria-labelledby="services-heading">
+    <TestimonialsSection lang={lang} items={testimonials} />
+
+    <section class="capabilities" id="services" aria-labelledby="services-heading" hidden={services.length === 0}>
       <div class="frame capabilities__layout">
         <div class="capabilities__header">
-          <h2 id="services-heading">{site.servicesSection.title}</h2>
-          <p>{labels.capabilitySubtitle}</p>
+          <h2 id="services-heading">{copy('services_heading', site.servicesSection.title)}</h2>
+          <p>{copy('services_subtitle', labels.capabilitySubtitle)}</p>
         </div>
-        <ol class="capabilities__list">
-          {site.services.map((service) => (
+        <ul class="capabilities__list">
+          {services.map((service) => (
             <li>
-              <span>{service.index}</span>
               <div>
                 <h3>{service.title}</h3>
                 <p>{service.detail}</p>
               </div>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
 
     <section class="profile" id="profile" aria-labelledby="profile-heading">
       <div class="frame profile__grid">
         <div class="profile__statement">
-          <h2 id="profile-heading">{site.profile.statement}</h2>
-          <p>{site.profile.note}</p>
+          <h2 id="profile-heading">{copy('profile_statement', site.profile.statement)}</h2>
+          <p>{copy('profile_note', site.profile.note)}</p>
         </div>
         <div class="profile__tools" id="expertise">
-          <h3>{site.expertise.title}</h3>
-          <p>{site.expertise.introduction}</p>
+          <h3>{copy('expertise_heading', site.expertise.title)}</h3>
+          <p>{copy('expertise_intro', site.expertise.introduction)}</p>
           <ul aria-label={labels.coreTechnologiesLabel}>
-            {site.expertise.technologies.map((technology) => <li>{technology}</li>)}
+            {expertise.map((technology) => <li>{technology}</li>)}
           </ul>
         </div>
       </div>
@@ -136,8 +158,8 @@ const currentYear = new Date().getFullYear();
     <section class="contact" id="contact" aria-labelledby="contact-heading">
       <div class="frame contact__grid">
         <div class="contact__copy">
-          <h2 id="contact-heading">{site.contact.title}</h2>
-          <p>{site.contact.note}</p>
+          <h2 id="contact-heading">{copy('contact_heading', site.contact.title)}</h2>
+          <p>{copy('contact_intro', site.contact.note)}</p>
           <a href={`mailto:${site.contact.email}`} class="contact__email">{site.contact.email}</a>
         </div>
         <div class="contact__form">

@@ -1,7 +1,10 @@
 import { defineConfig, fontProviders } from 'astro/config';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   site: 'https://emmanueledurante.com',
+  // Only the three homepages are rendered on demand; all other routes stay static.
+  adapter: vercel(),
   // Download during build; browsers fetch these fonts from our own domain.
   fonts: [
     {

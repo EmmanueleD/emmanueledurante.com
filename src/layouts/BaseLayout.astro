@@ -11,9 +11,11 @@ interface Props {
   noindex?: boolean;
   lang?: Language;
   alternateRoute?: string;
+  /** Portfolio items actually present in the page HTML (for semantic discovery). */
+  pageWorks?: readonly { name: string; description: string }[];
 }
 
-const { title, description, noindex = false, lang = 'en', alternateRoute = '' } = Astro.props;
+const { title, description, noindex = false, lang = 'en', alternateRoute = '', pageWorks = [] } = Astro.props;
 const ogLocale = { en: 'en_US', it: 'it_IT', es: 'es_ES' }[lang];
 const portraitAlt = { en: 'Portrait of Emmanuele Durante', it: 'Ritratto di Emmanuele Durante', es: 'Retrato de Emmanuele Durante' }[lang];
 const siteUrl = Astro.site ?? Astro.url;
@@ -31,7 +33,6 @@ const previewImage = await getImage({
 });
 const openGraphImageUrl = new URL(previewImage.src, siteUrl);
 const personStructuredData = {
-  '@context': 'https://schema.org',
   '@type': 'Person',
   '@id': new URL('/#person', siteUrl).href,
   name: 'Emmanuele Durante',
@@ -40,6 +41,38 @@ const personStructuredData = {
   knowsAbout: ['Vue.js', 'React', 'Astro', 'TypeScript', 'Shopify', 'Shopware 6', 'B2B e-commerce'],
   sameAs: ['https://www.linkedin.com/in/e14e/'],
 };
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    personStructuredData,
+    {
+      '@type': 'WebSite',
+      '@id': new URL('/#website', siteUrl).href,
+      name: 'Emmanuele Durante',
+      url: new URL('/', siteUrl).href,
+      inLanguage: ['en', 'it', 'es'],
+    },
+    {
+      '@type': 'WebPage',
+      '@id': canonicalUrl.href + '#webpage',
+      url: canonicalUrl.href,
+      name: title,
+      description,
+      inLanguage: lang,
+      about: { '@id': new URL('/#person', siteUrl).href },
+      ...(pageWorks.length ? {
+        hasPart: pageWorks.map(({ name, description }) => ({
+          '@type': 'CreativeWork',
+          name,
+          description,
+          creator: { '@id': new URL('/#person', siteUrl).href },
+        })),
+      } : {}),
+    },
+  ],
+};
+// Avoid embedding a literal closing script tag supplied from CMS data.
+const safeStructuredData = JSON.stringify(structuredData).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
@@ -82,7 +115,7 @@ const personStructuredData = {
     <meta name="twitter:image" content={openGraphImageUrl} />
 
     <title>{title}</title>
-    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(personStructuredData)} />}
+    {!noindex && <script type="application/ld+json" set:html={safeStructuredData} />}
 
   </head>
   <body>
