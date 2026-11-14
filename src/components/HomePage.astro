@@ -22,6 +22,8 @@ const copy = makeCopyReader(cms.copy, lang);
 const projects = visibleProjects(cms.projects, lang) ?? site.projects;
 const services = visibleServices(cms.services, lang) ?? site.services;
 const clients = visibleClients(cms.clients) ?? getVisibleClientLogos();
+// Launch scope: keep the client logos implemented and populated, but hidden until approved.
+const showClientLogos = false;
 const testimonials = approvedTestimonials(cms.testimonials);
 const expertise = copy('expertise_technologies', site.expertise.technologies.join(', '))
   .split(',').map((tag) => tag.trim()).filter(Boolean);
@@ -89,7 +91,7 @@ const currentYear = new Date().getFullYear();
       </div>
     </section>
 
-    <ClientLogosSection lang={lang} clients={clients} />
+    {showClientLogos && <ClientLogosSection lang={lang} clients={clients} />}
 
     <section class="projects" id="work" aria-labelledby="projects-heading" hidden={projects.length === 0}>
       <div class="frame">
