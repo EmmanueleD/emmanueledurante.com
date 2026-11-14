@@ -129,7 +129,7 @@ export function visibleClients(rows: DataRow[] | null): ClientLogo[] | null {
       const validId = /^[a-zA-Z0-9_-]+$/;
       const storedLogo =
         validId.test(collectionId) && validId.test(id) && filename
-          ? `${CMS_ORIGIN}/api/files/${collectionId}/${id}/${encodeURIComponent(filename)}?thumb=400x0`
+          ? `${CMS_ORIGIN}/api/files/${collectionId}/${id}/${encodeURIComponent(filename)}`
           : undefined;
       return {
         id: value(row, 'slug') || id,
