@@ -1,5 +1,9 @@
 ---
 import HomePage from '../components/HomePage.astro';
+
+// Fresh server-rendered HTML is available to users and crawlers on each request.
+export const prerender = false;
+Astro.response.headers.set('Cache-Control', 'private, no-store');
 ---
 
 <HomePage lang="en" />
