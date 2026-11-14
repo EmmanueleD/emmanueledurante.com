@@ -1,0 +1,45 @@
+name: Validate static portfolio build
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Build static Astro pages
+        env:
+          PUBLIC_TURNSTILE_SITE_KEY: 0x4AAAAAAE8uZBegLmgCl5IR
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build
+          test -f dist/index.html
+          test -f dist/it/index.html
+          test -f dist/es/index.html
+          test -f dist/llms.txt
+          test -f dist/sitemap.xml
+          test -f dist/it/privacy/index.html
+          if grep -q 'test seo' dist/it/index.html; then
+            echo 'Unexpected SEO test title' >&2
+            exit 1
+          fi
+          if grep -q 'id="clients"' dist/it/index.html; then
+            echo 'Client logo section should remain hidden at launch' >&2
+            exit 1
+          fi
