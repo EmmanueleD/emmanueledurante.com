@@ -3,7 +3,7 @@
  * Static Astro text remains in the DOM until the CMS returns valid rows.
  * No HTML is injected; all user-editable fields are rendered via textContent.
  */
-type Lang = 'en' | 'it' | 'es';
+export type Lang = 'en' | 'it' | 'es';
 
 interface CopyRow {
   slug: string;

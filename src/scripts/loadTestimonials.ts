@@ -4,7 +4,7 @@
  * Fail closed on the client as well: only published + consent-cleared records render.
  * Always use textContent for untrusted content, never innerHTML.
  */
-type Lang = 'en' | 'it' | 'es';
+export type Lang = 'en' | 'it' | 'es';
 
 interface CmsTestimonial {
   id: string;
