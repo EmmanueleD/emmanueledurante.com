@@ -77,6 +77,15 @@ export function localized(row: DataRow, name: string, lang: Language, fallback =
   return value(row, `${name}_${lang}`) || value(row, `${name}_en`) || fallback;
 }
 
+// Keep existing PocketBase copy aligned with the public-facing role.
+// Only normalize legacy wording; CMS customizations remain authoritative.
+function normalizeRoleCopy(slug: string, text: string): string {
+  if (slug === 'hero_heading_first' && text === 'Frontend') return 'Web';
+  if (!['seo_title', 'seo_description', 'profile_note', 'contact_heading'].includes(slug)) return text;
+  return text.replace(/\bFrontend Developer\b/g, 'Web Developer')
+    .replace(/\bfrontend developer\b/g, 'web developer');
+}
+
 export function makeCopyReader(rows: DataRow[] | null, lang: Language) {
   const map = new Map<string, DataRow>();
   for (const item of rows ?? []) {
@@ -86,7 +95,7 @@ export function makeCopyReader(rows: DataRow[] | null, lang: Language) {
   }
   return (key: string, fallback: string): string => {
     const row = map.get(key);
-    return row ? localized(row, 'text', lang, fallback) : fallback;
+    return normalizeRoleCopy(key, row ? localized(row, 'text', lang, fallback) : fallback);
   };
 }
 
