@@ -1,5 +1,5 @@
 {
-  "name": "Emmanuele Durante — Frontend & E-commerce Engineer",
+  "name": "Emmanuele Durante — Web Developer · E-commerce expertise",
   "short_name": "Emmanuele Durante",
   "start_url": "/",
   "display": "browser",
@@ -7,7 +7,7 @@
   "theme_color": "#D93936",
   "icons": [
     {
-      "src": "/favicon-192.png",
+      "src": "/favicon-192.png?v=2",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"

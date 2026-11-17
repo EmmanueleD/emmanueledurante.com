@@ -1,8 +1,8 @@
 export const site = {
   name: 'Emmanuele Durante',
-  title: 'Emmanuele Durante — Frontend Developer',
+  title: 'Emmanuele Durante — Web Developer',
   description:
-    'Frontend Developer building and improving web applications, custom interfaces and e-commerce workflows. Experience with Vue, React, Shopify and Shopware 6.',
+    'Web Developer building and improving web applications, custom interfaces and e-commerce workflows. Experience with Vue, React, Shopify and Shopware 6.',
 
   presentation: {
     accents: {
@@ -27,9 +27,9 @@ export const site = {
   ],
 
   hero: {
-    eyebrow: 'Frontend Developer · Web applications · E-commerce',
+    eyebrow: 'Web Developer · Web applications · E-commerce',
     title: [
-      { text: 'Frontend development', accent: true },
+      { text: 'Web development', accent: true },
       { text: ' for complex web applications.' },
     ],
     introduction:
@@ -123,12 +123,12 @@ export const site = {
     statement:
       'I like getting to the root of a problem—and leaving the system easier to work with.',
     note:
-      'I have worked with agency teams, clients and backend developers since 2022. Based in Forlì, Italy; open to Frontend Developer roles, including remote positions, and collaborations with product teams and agencies.',
+      'I have worked with agency teams, clients and backend developers since 2022. Based in Forlì, Italy; open to Web Developer roles, including remote positions, and collaborations with product teams and agencies.',
   },
 
   contact: {
     eyebrow: 'Contact',
-    title: 'Looking for a frontend developer?',
+    title: 'Looking for a web developer?',
     note:
       'Hiring for a role, or need help with an e-commerce product? Tell me what you are building.',
     email: 'hello@emmanueledurante.com',
