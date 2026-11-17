@@ -62,7 +62,7 @@ a:hover { text-decoration-color: var(--color-mark); }
 .masthead { background: var(--color-paper); }
 .masthead__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); min-height: 96px; }
 .wordmark { display: flex; align-items: center; gap: var(--space-3); flex: 0 0 auto; text-decoration: none; }
-.wordmark__mark { width: 40px; height: 40px; background: var(--color-mark); flex: 0 0 auto; }
+.wordmark__mark { display: block; width: 40px; height: 40px; flex: 0 0 auto; }
 .wordmark__name { display: flex; flex-direction: column; font: 400 21px/.90 var(--font-display); letter-spacing: -.035em; }
 .wordmark__name strong { font-weight: 700; }
 .masthead__links { display: flex; flex-wrap: wrap; gap: clamp(12px,2.3vw,36px); }
