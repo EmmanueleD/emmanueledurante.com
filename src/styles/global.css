@@ -8,11 +8,12 @@
   --color-ink-2: #3E3E3E;
   --color-muted: #40474D;
   --color-rule: #DCDFE4;
-  --color-primary: #00A7E1;
-  --color-accent: #D93535;
+  --color-primary: #D93535;
+  --color-accent: #00A7E1;
   --color-accent-ink: #13294B;
+  --color-primary-ink: #FFFFFF;
   --color-error: #B00020;
-  --color-focus: var(--color-accent);
+  --color-focus: var(--color-primary);
   --color-field: #13294B;
   --color-field-ink: #F5F5FA;
   --color-mark: #00A7E1;
@@ -56,7 +57,7 @@ img { max-width: 100%; }
 a { color: inherit; text-underline-offset: .25em; }
 a:hover { text-decoration-color: var(--color-accent); }
 :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
-::selection { background: var(--color-primary); color: var(--color-accent-ink); }
+::selection { background: var(--color-primary); color: var(--color-primary-ink); }
 .frame { width: min(calc(100% - 2 * var(--gutter)), var(--container)); margin-inline: auto; }
 .skip-link { position: fixed; top: 8px; left: 8px; z-index: 99; padding: var(--space-3); background: var(--color-ink); color: var(--color-paper); transform: translateY(-170%); }
 .skip-link:focus { transform: translateY(0); }
@@ -83,7 +84,7 @@ a:hover { text-decoration-color: var(--color-accent); }
 .poster__bottom { margin-top: clamp(36px,5vh,64px); display: grid; grid-template-columns: minmax(0,1fr) minmax(0,.75fr); gap: var(--space-5); align-items: end; }
 .poster__bottom > p { max-width: 33ch; font-size: 17px; line-height: 1.52; color: var(--color-ink-2); }
 .poster__actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
-.action-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; min-width: 160px; padding: 0 var(--space-4); color: var(--color-accent-ink); background: var(--color-primary); font-weight: 500; font-size: 15px; text-decoration: none; transition: background-color var(--motion-short) ease-out; }
+.action-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; min-width: 160px; padding: 0 var(--space-4); color: var(--color-primary-ink); background: var(--color-primary); font-weight: 500; font-size: 15px; text-decoration: none; transition: background-color var(--motion-short) ease-out; }
 .action-primary:hover { background: var(--color-ink); color: var(--color-paper); }
 .action-secondary { font-size: 15px; font-weight: 500; text-decoration: underline var(--color-accent); text-decoration-thickness: 1px; }
 .poster__image { align-self: center; width: 100%; min-width: 0; }
@@ -133,7 +134,7 @@ a:hover { text-decoration-color: var(--color-accent); }
 .contact-form textarea { resize: vertical; min-height: 120px; }
 .contact-form__honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .contact-form__actions { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
-.contact-form button { min-height: 52px; padding: 0 var(--space-5); border: 0; border-radius: 0; background: var(--color-primary); color: var(--color-accent-ink); font-weight: 500; cursor: pointer; transition: background-color var(--motion-short) ease-out; }
+.contact-form button { min-height: 52px; padding: 0 var(--space-5); border: 0; border-radius: 0; background: var(--color-primary); color: var(--color-primary-ink); font-weight: 500; cursor: pointer; transition: background-color var(--motion-short) ease-out; }
 .contact-form button:hover:not(:disabled) { background: var(--color-ink); color: var(--color-paper); }
 .contact-form button:disabled { cursor: wait; opacity: .55; }
 .contact-form__status { color: var(--color-muted); font-size: 14px; line-height: 1.4; min-height: 1.5em; }
