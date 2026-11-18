@@ -12,7 +12,7 @@
   --color-accent: #D93535;
   --color-accent-ink: #13294B;
   --color-error: #B00020;
-  --color-focus: #13294B;
+  --color-focus: var(--color-accent);
   --color-field: #13294B;
   --color-field-ink: #F5F5FA;
   --color-mark: #00A7E1;
@@ -264,4 +264,4 @@ a:hover { text-decoration-color: var(--color-accent); }
 
 body { color: var(--color-ink-2); }
 h1, h2, h3, .masthead { color: var(--color-ink); }
-.capabilities { --color-ink: var(--color-field-ink); --color-focus: var(--color-primary); }
+.capabilities { --color-ink: var(--color-field-ink); }
