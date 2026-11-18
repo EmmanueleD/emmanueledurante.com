@@ -2,20 +2,20 @@
 /* Keep typography, composition and accessibility; apply the red accent sparingly. */
 /* Preserve: genuine portrait, project descriptions, accessible anchors, original contact form and handlers. */
 :root {
-  --color-paper: #FAF8F5;
-  --color-paper-2: #F2EFEB;
-  --color-paper-3: #E9E4DF;
-  --color-ink: #0B1F3B;
-  --color-ink-2: #253C57;
-  --color-muted: #526376;
-  --color-rule: #D5CFCA;
-  --color-accent: #C13E32;
-  --color-accent-ink: #FAF8F5;
-  --color-focus: #C13E32;
-  --color-field: #0B1F3B;
-  --color-field-ink: #FAF8F5;
-  --color-mark: #C13E32;
-  --color-mark-ink: #FAF8F5;
+  --color-paper: #F5F5FA;
+  --color-paper-2: #E8E7F0;
+  --color-paper-3: #DEE3ED;
+  --color-ink: #173954;
+  --color-ink-2: #284B68;
+  --color-muted: #486077;
+  --color-rule: #CCD4DE;
+  --color-accent: #B81A19;
+  --color-accent-ink: #F5F5FA;
+  --color-focus: #B81A19;
+  --color-field: #32658E;
+  --color-field-ink: #F5F5FA;
+  --color-mark: #B81A19;
+  --color-mark-ink: #F5F5FA;
   --font-display: var(--local-radio-canada-big), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--local-radio-canada), ui-sans-serif, system-ui, sans-serif;
   --font-outlier: var(--font-display);
@@ -83,7 +83,7 @@ a:hover { text-decoration-color: var(--color-accent); }
 .poster__bottom > p { max-width: 33ch; font-size: 17px; line-height: 1.52; color: var(--color-ink-2); }
 .poster__actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
 .action-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; min-width: 160px; padding: 0 var(--space-4); color: var(--color-accent-ink); background: var(--color-accent); font-weight: 500; font-size: 15px; text-decoration: none; transition: background-color var(--motion-short) ease-out; }
-.action-primary:hover { background: #A93329; color: var(--color-accent-ink); }
+.action-primary:hover { background: #981614; color: var(--color-accent-ink); }
 .action-secondary { font-size: 15px; font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; }
 .poster__image { align-self: center; width: 100%; min-width: 0; }
 .portrait-print { width: 100%; aspect-ratio: 1 / 1; overflow: clip; isolation: isolate; background: var(--color-paper-2); position: relative; }
@@ -133,7 +133,7 @@ a:hover { text-decoration-color: var(--color-accent); }
 .contact-form__honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .contact-form__actions { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
 .contact-form button { min-height: 52px; padding: 0 var(--space-5); border: 0; border-radius: 0; background: var(--color-accent); color: var(--color-accent-ink); font-weight: 500; cursor: pointer; transition: background-color var(--motion-short) ease-out; }
-.contact-form button:hover:not(:disabled) { background: #A93329; }
+.contact-form button:hover:not(:disabled) { background: #981614; }
 .contact-form button:disabled { cursor: wait; opacity: .55; }
 .contact-form__status { color: var(--color-muted); font-size: 14px; line-height: 1.4; min-height: 1.5em; }
 .contact-form__status[data-state="error"] { color: var(--color-accent); }
