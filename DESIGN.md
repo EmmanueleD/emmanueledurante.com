@@ -1,36 +1,38 @@
 ---
-version: 5
+version: 6
 name: Emmanuele Durante
-design_system: Hallmark Grid editorial layout with approved midnight navy, cream and warm terracotta palette
+design_system: Hallmark Grid editorial layout with midnight navy, off-white and red
 status: approved
 updated: 2026-11-18
 ---
 
-# Emmanuele Durante — Identity
+# Emmanuele Durante — Visual identity
 
-The site owner selected the midnight navy / cream / warm terracotta combination on 18 November 2026. Keep the existing Swiss editorial Grid-inspired layout, content hierarchy and local typography, replacing the previous ultramarine, black and Swiss-red palette.
+Final palette selected on 18 November 2026 after comparison with warm terracotta and green/rose variants. Maintain the established Swiss-inspired editorial composition, type system, portrait, factual work examples and functionality.
 
-## Main palette
-- Midnight navy: `#0B1F3B` — logo foreground bar, primary typography and dark field.
-- Cream: `#FAF8F5` — dominant background and text on navy.
-- Warm terracotta: `#C64A2F` — logo silhouette and sparse decorative accents.
+## Primary colors
 
-Functional supporting shades: paper-alt `#F2EFEB`, muted navy `#526376`, border `#D5CFCA`, accessible accent `#A63820`. The principal terracotta is about 4.48:1 against cream and is decorative only at small text sizes. Use the darker accessible accent for small links/buttons with cream text.
+- Midnight navy `#0B1F3B` — primary text, dark services section and horizontal logo bar.
+- Off-white `#FAF8F5` — primary background, icon background and light text on dark surfaces.
+- Red `#C13E32` — solid D-shaped logo, key call-to-action buttons, focus and selected accents.
 
-## Logo
-- Solid terracotta D silhouette, with a flat left edge and sharp square ends.
-- A crisp, square-ended navy horizontal bar crosses in front.
-- No typography inside the symbol, no shadows, gradients or rounded bar caps.
-- `public/brand-mark.svg` for the header (transparent), `public/favicon.svg` for the icon (cream background), matching PNG, ICO and Apple touch assets. Cache version v4.
+Supporting variants are for UI utility, not new brand colors: light secondary background `#F2EFEB`, navy secondary text `#526376`, hairline borders `#D5CFCA` and darker red hover `#A93329`.
 
-## Usage
-- Mostly cream background, navy text and sections; accent terracotta should be scarce.
-- Dark service section uses navy and cream, without low-contrast terracotta text.
-- Primary CTAs use the darker terracotta for accessibility.
-- Keep keyboard focus visible and all interactive states legible.
-- Preserve portrait, mobile responsive layout, footer, navigation, testimonial CMS, actual portfolio facts and multilingual copy.
+The red against the off-white background meets WCAG AA contrast for normal text (approximately 4.95:1); navy contrasts even more strongly.
 
-## Technical constraints
-- Astro and CSS; keep the responsive image handling, alternate languages, SEO metadata and structured data.
-- Do not change contact form, consent checks, Turnstile, submission endpoint or existing labels.
-- Existing GitHub Actions validates PRs, then deploys approved merges to Hetzner.
+## Symbol
+
+A solid red D-shaped silhouette, flat left edge and crisp corners, overlaid by a square-ended navy horizontal bar. The bar clearly crosses in front. No gradients, shadows or round bar ends. Keep the logo geometry unchanged; recolor only.
+
+- Transparent header logo: `public/brand-mark.svg`.
+- Cream-backed vector favicon: `public/favicon.svg`.
+- Matching ICO, PNG 48/192 and iOS touch icon.
+- Cache-busting icon and mark URLs versioned `v=5`.
+
+## Site usage
+
+- Off-white dominates light surfaces; navy is used for typography and the services field.
+- Red is reserved for logo and meaningful interaction states / CTAs.
+- Preserve multilingual (English, Italian, Spanish) content, copy, layout, CMS integrations and responsive styling.
+- Preserve the contact form inputs, privacy language, Turnstile and submission behavior.
+- PR validation precedes merging; the existing GitHub Action deploys `main` to Hetzner.
